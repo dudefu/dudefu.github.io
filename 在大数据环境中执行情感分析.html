@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="情感分析情感分析是利用文本分析来挖掘各种观点的数据来源的过程。通常情况下，情感分析是在从互联网和各种社交媒体平台收集的数据上执行的。政治家和政府经常利用情感分析来了解人们如何看待他们和他们的政策。随着社交媒体的出现，人们可以从各种不同来源（比如移动设备和 Web 浏览器）捕获数据，并用不同的数据格式存储这些数据。由于社交媒体内容对于传统存储系统（比如 RDBMS、关系数据库管理系统）是非结构化的，">
+<meta name="keywords" content="情感数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在大数据环境中执行情感分析">
+<meta property="og:url" content="https://dudefu.club/在大数据环境中执行情感分析.html">
+<meta property="og:site_name" content="浪漫加点盐">
+<meta property="og:description" content="情感分析情感分析是利用文本分析来挖掘各种观点的数据来源的过程。通常情况下，情感分析是在从互联网和各种社交媒体平台收集的数据上执行的。政治家和政府经常利用情感分析来了解人们如何看待他们和他们的政策。随着社交媒体的出现，人们可以从各种不同来源（比如移动设备和 Web 浏览器）捕获数据，并用不同的数据格式存储这些数据。由于社交媒体内容对于传统存储系统（比如 RDBMS、关系数据库管理系统）是非结构化的，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-15T09:22:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在大数据环境中执行情感分析">
+<meta name="twitter:description" content="情感分析情感分析是利用文本分析来挖掘各种观点的数据来源的过程。通常情况下，情感分析是在从互联网和各种社交媒体平台收集的数据上执行的。政治家和政府经常利用情感分析来了解人们如何看待他们和他们的政策。随着社交媒体的出现，人们可以从各种不同来源（比如移动设备和 Web 浏览器）捕获数据，并用不同的数据格式存储这些数据。由于社交媒体内容对于传统存储系统（比如 RDBMS、关系数据库管理系统）是非结构化的，">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://dudefu.club/在大数据环境中执行情感分析">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>在大数据环境中执行情感分析 | 浪漫加点盐</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">浪漫加点盐</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Stay hungry,stay foolish.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">78</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">12</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">39</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-something">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/something" rel="section"><i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>干货</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dudefu.club/在大数据环境中执行情感分析.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浪漫加点盐">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">在大数据环境中执行情感分析
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-30 21:27:03" itemprop="dateCreated datePublished" datetime="2018-05-30T21:27:03+08:00">2018-05-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/大数据/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/在大数据环境中执行情感分析.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/在大数据环境中执行情感分析.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/在大数据环境中执行情感分析.html" class="leancloud_visitors" data-flag-title="在大数据环境中执行情感分析">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="情感分析"><a href="#情感分析" class="headerlink" title="情感分析"></a>情感分析</h2><p>情感分析是利用文本分析来挖掘各种观点的数据来源的过程。通常情况下，情感分析是在从互联网和各种社交媒体平台收集的数据上执行的。政治家和政府经常利用情感分析来了解人们如何看待他们和他们的政策。<br>随着社交媒体的出现，人们可以从各种不同来源（比如移动设备和 Web 浏览器）捕获数据，并用不同的数据格式存储这些数据。由于社交媒体内容对于传统存储系统（比如 RDBMS、关系数据库管理系统）是非结构化的，所以我们需要一些可以处理和分析各种不同数据的工具。不过，大数据技术旨在处理不同来源、不同格式的结构化和非结构化数据。在本文中，我将介绍如何利用大数据工具来捕获数据，以便存储和处理用于情感分析的数据。<br><a id="more"></a></p>
+<h2 id="处理大数据"><a href="#处理大数据" class="headerlink" title="处理大数据"></a>处理大数据</h2><p>无论何时从采用多种格式（结构化、半结构化或非结构化的）的多个来源收集数据，都需要考虑建立一个 Hadoop 集群和一个 Hadoop 分布式文件系统（HDFS）来存储数据。HDFS 提供了一种管理大数据的灵活方式：</p>
+<ul>
+<li>可以将您的一些分析数据移动到现有的关系数据库管理系统（RDBMS）中，比如 Oracle 或 MySQL，这样您就可以利用现有的 BI 和报告工具。</li>
+<li>可以将数据存储在 HDFS 中，供将来分析使用，例如，通过执行像 ANOVA.T 这样的测试来比较旧数据与新数据。</li>
+<li>如果只需要分析数据的影响，那么可以删除这些数据。<br>要了解如何设置 Hadoop 集群，请将数据导入 HDFS，然后在您的 Hadoop 环境中分析这些数据，请参阅我的其他 developerWorks 文章， “<span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9kYXRhL2xpYnJhcnkvYmEvYmEtaGFkb29wLXJkYm1zLw==" title="https://www.ibm.com/developerworks/cn/data/library/ba/ba-hadoop-rdbms/">将 Hadoop 与现有的 RDBMS 相集成<i class="fa fa-external-link"></i></span>“。<h2 id="检索数据并将数据存储在-HDFS-中"><a href="#检索数据并将数据存储在-HDFS-中" class="headerlink" title="检索数据并将数据存储在 HDFS 中"></a>检索数据并将数据存储在 HDFS 中</h2>最好的情感分析包括来自多个来源的数据。在本文中，我将介绍如何从这些来源中检索数据：</li>
+<li>Twitter 提要</li>
+<li>RSS 提要</li>
+<li>移动应用程序<br>我还将解释如何将来自不同来源的数据存储在 HDFS 中（存储在您的 Hadoop 集群中）。<h2 id="从-Twitter-提要中检索数据"><a href="#从-Twitter-提要中检索数据" class="headerlink" title="从 Twitter 提要中检索数据"></a>从 Twitter 提要中检索数据</h2>Twitter（一种流行的微博网站）有一组 API，它们使得我们能够检索和操作 tweet。但是首先，我们需要实现 Twitter 的 OAuth 框架。简单地讲，有了这个框架，应用程序就可以代表您登录到 Twitter，无需您登录到 Twitter 网站。查看 <span class="exturl" data-url="aHR0cHM6Ly9kZXYudHdpdHRlci5jb20vb2F1dGgvb3ZlcnZpZXcvaW50cm9kdWN0aW9u" title="https://dev.twitter.com/oauth/overview/introduction">Twitter 开发人员站点的设置过程<i class="fa fa-external-link"></i></span>，其中解释了如何指派实现此操作的应用程序。在这个过程中，会为您分配一个密钥和一个密钥令牌，您的应用程序将使用它们来代表您执行身份验证。在您的应用程序完成身份验证后，您就可以使用 Twitter API 来获取 tweet。<br>您可以通过使用 R 或通过使用 Jaql 获取来自 Twitter 提要的数据。因为 Jaql 被设计用于处理 JSON 数据，所以它是适用于 tweet 的默认数据格式，使用 Jaql 可能更简单一些。有人可能会决定使用 R，这样做可能纯粹是因为他们自己的 R 技能。<h3 id="通过使用-Jaql-检索来自-Twitter-的数据"><a href="#通过使用-Jaql-检索来自-Twitter-的数据" class="headerlink" title="通过使用 Jaql 检索来自 Twitter 的数据"></a>通过使用 Jaql 检索来自 Twitter 的数据</h3>在您的应用程序完成身份验证后，我们就可以使用 Twitter API 来获取 tweet。<br>因为我们想要在流化模式下，所以我们的 Twitter URL 是：<br>url = “<span class="exturl" data-url="aHR0cHM6Ly9zdHJlYW0udHdpdHRlci5jb20vMS4xL3N0YXR1c2VzL2ZpbHRlci5qc29uP3RyYWNrPWdvdmVybm1lbnRUb3BpYw==" title="https://stream.twitter.com/1.1/statuses/filter.json?track=governmentTopic">https://stream.twitter.com/1.1/statuses/filter.json?track=governmentTopic<i class="fa fa-external-link"></i></span>“;<br>使用我们正在挖掘的政府主题的名称来替换 governmentTopic。通过使用与以下代码类似的代码，我们可以用一个变量来获取 tweet：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jsonResultTweets = read(http(url));</span><br><span class="line">jsonResultTweets;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在运行 Jaql 脚本时，它会提取与政府主题相关的 tweet。这些 tweet 是以 JSON 格式返回的。<br>如果我们想通过位置知道关于我们的政府主题的讨论范围，可以使用下面的代码片段来获取 tweet：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">governmentTopicDiscussionByLocation = jsonResultTweets -&gt; transform</span><br><span class="line">&#123;location: $.location,user_id: $.from_user_id_str,date_created:</span><br><span class="line">$.created_at,comment:$text&#125; -&gt; group by key = $.location</span><br></pre></td></tr></table></figure></p>
+<p>然后，我们可以使用下面的代码片段将此信息存储到您的 HDFS 中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">governmentTopicDiscussionByLocation Cnt -&gt;</span><br><span class="line">write(del(&quot;/user/governmentTopics/governmentTopic_1Tweets.del&quot;, schema =</span><br><span class="line">schema &#123; list_of_comma_seperated_json_fields&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中的 list_of_comma_seperated_json_fields 是一些逗号分隔的字段：location、from_user_id_str 和 created_at。<br>这样就可以通过 Oozie 工作流来运行整个 Jaql 脚本，代码可能类似于以下代码示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">url = &quot;https://stream.twitter.com/1.1/statuses/filter.json?track=governmentTopic&quot;; </span><br><span class="line"> jsonResultTweets = read(http(url));</span><br><span class="line">jsonResultTweets;</span><br><span class="line">governmentTopicDiscussionByLocation = jsonResultTweets -&gt; </span><br><span class="line">transform &#123;location: $.location,user_id: $.from_user_id_str,user_name:</span><br><span class="line">  $.user.name,user_location: $.user.location,date_created: $.created_at,comment: $.text&#125; -&gt; </span><br><span class="line">group by key = $.location </span><br><span class="line">governmentTopicDiscussionByLocation -&gt; </span><br><span class="line">write(del(&quot;/user/governmentTopics/governmentTopic_1Tweets.del&quot;, </span><br><span class="line">  schema = schema &#123;location,user_id,user_name,user_location,date_created,comment&#125;</span><br></pre></td></tr></table></figure></p>
+<p>transform 方法将会清除数据，而 write 方法会将数据保存到 HDFS。要处理流数据或动态数据，需要将此脚本与 Flume 整合，Flume 是 Apache Hadoop 生态系统中的另一个大数据工具。（您可以通过阅读了解有关此 developerWorks 文章中的 Flume 的更多信息，”使用 Flume 部署和管理可扩展的 Web 服务”。）<br>通过使用 R 从 Twitter 中检索数据<br>要使用 R 检索 tweet，需要在您的系统上安装某些软件包。虽然我们可以使用 RStudio，但下面这些步骤显示了如何设置和使用 R 控制台。<br>在 Ubuntu 电脑上，我完成了下面这些步骤来安装必要的 R 软件包：<br>安装这些软件包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">libcurl4-gnutls-dev </span><br><span class="line">libcurl4-nss-dev </span><br><span class="line">libcurl4-openssl-dev </span><br><span class="line">r-base r-base-dev</span><br><span class="line">r-cran-rjson</span><br></pre></td></tr></table></figure></p>
+<p>打开 R 控制台，并运行这些命令来安装这些包来访问 Twitter：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">install.packages(“twitteR”)</span><br><span class="line">install.packages(“ROAuth”)</span><br><span class="line">install.packages(“RCurl”)</span><br></pre></td></tr></table></figure></p>
+<p>将这些库加载到您的 R 工作区中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rm(list=ls())</span><br><span class="line">library(twitteR)</span><br><span class="line">library(ROAuth)</span><br><span class="line">library(RCurl)</span><br></pre></td></tr></table></figure></p>
+<p>现在，我们可以用下面的 R 脚本对 Twitter 进行身份验证：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">download.file(url=&quot;http://curl.haxx.se/ca/cacert.pem&quot;,destfile=&quot;cacert.pem&quot;)</span><br><span class="line">requestURL &lt;- &quot;https://api.twitter.com/oauth/request_token&quot;</span><br><span class="line">accessURL &lt;- &quot;https://api.twitter.com/oauth/access_token&quot;</span><br><span class="line">authURL &lt;- &quot;https://api.twitter.com/oauth/authorize&quot;</span><br><span class="line">consumerKey &lt;- myConsumerKeyFromTwitter</span><br><span class="line">consumerSecret &lt;- myConsumerSeccretFromTwitter</span><br><span class="line">myCred &lt;- OAuthFactory$new(consumerKey=consumerKey,</span><br><span class="line">                             consumerSecret=consumerSecret,</span><br><span class="line">                             requestURL=requestURL,</span><br><span class="line">                             accessURL=accessURL,</span><br><span class="line">                             authURL=authURL)</span><br><span class="line"> </span><br><span class="line">accessToken &lt;- myAccessTokenFromTwitter</span><br><span class="line">accessSecret &lt;- myAccessSecretFromTwitter</span><br><span class="line"> </span><br><span class="line">setup_twitter_oauth(consumerKey,consumerSecret,accessToken,accessSecret)</span><br></pre></td></tr></table></figure></p>
+<p>然后，我们可以使用下面的代码片段来获取 tweet：<br>govt_sentiment_data &lt;- searchTwitter(“#keyWord”,since={last_date_pulled}<br>keyWord 是您要分析的政府主题，last_date_pulled 是您最后一次获取 tweet 的日期。<br>如果您想要按固定时间间隔自动流化 Twitter 数据和拉取数据，可以使用以下代码片段替换前面的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">govt_sentiment_data &lt;- filterStream( file=&quot;tweets_rstats.json&quot;,</span><br><span class="line">track=&quot;#keyWord&quot;, timeout=3600, oauth=myCred)</span><br></pre></td></tr></table></figure></p>
+<p>我们可以用下面的 R 脚本来清理数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">govt_sentiment_data_txt = govt_sentiment_data$text</span><br><span class="line"># remove retweet entities</span><br><span class="line">govt_sentiment_data_txt = gsub(“(RT|via)((?:\\b\\W*@\\w+)+)”, “”, tweet_txt)</span><br><span class="line"># remove at people</span><br><span class="line">govt_sentiment_data_txt = gsub(“@\\w+”, “”, tweet_txt)</span><br><span class="line"># remove punctuation</span><br><span class="line">govt_sentiment_data_txt = gsub(“[[:punct:]]”, “”, tweet_txt)</span><br><span class="line"># remove numbers</span><br><span class="line">govt_sentiment_data_txt = gsub(“[[:digit:]]”, “”, tweet_txt)</span><br><span class="line"># remove html links</span><br><span class="line">govt_sentiment_data_txt = gsub(“http\\w+”, “”, tweet_txt)</span><br><span class="line"># remove unnecessary spaces</span><br><span class="line">govt_sentiment_data_txt = gsub(“[ \t]&#123;2,&#125;”, “”, tweet_txt)</span><br><span class="line">govt_sentiment_data_txt = gsub(“^\\s+|\\s+$”, “”, tweet_txt)</span><br><span class="line">govt_sentiment_data_txt=gsub(“[^0-9a-zA-Z ,./?&gt;&lt;:;’~`!@#&amp;*’]”,””, tweet_txt)</span><br></pre></td></tr></table></figure></p>
+<p>最后，要将已清理的数据保存到您的 HDFS，可以使用下面的代码片段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hdfsFile &lt;- hdfs.file(&quot;/tmp/govt_sentiment_data.txt&quot;, &quot;w&quot;)</span><br><span class="line">hdfs.write(govt_sentiment_data_txt, hdfsFile)</span><br><span class="line">hdfs.close(hdfsFile)</span><br><span class="line">write(govt_sentiment_data, &quot;govt_sentiment_data.txt&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>从 RSS 提要检索数据<br>除了 tweet 之外，我们还想从新闻文章中收集个人意见或观点。对于这种类型的数据，建议您组合使用 Java 和 Rome 工具从 RSS 提要中获取数据。Rome 是一个 Java 库，用于访问和操纵网络上的新闻提要。<br>在本示例中，我们获得了有关新闻文章的以下信息：标题、链接和描述。然后，我们从这些数据点提取我们所需的信息。<br>要确定将要使用的新闻提要，需要使用某种形式的网页排名 技术。该技术被用在搜索算法中，用于确定某一事项在其引用和普及方面的相关性。基本原理是，被外部实体点击或引用的几率越高，优先级就越高，因此就会出现在搜索结果的顶部。<br>下面的 Java 代码标识了一些新闻提要和使用网页排名，以确定它们与我们的数据相关：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">private static void getFeeds(String newsFeedUrlLink)&#123;</span><br><span class="line"> </span><br><span class="line">File f = new File(“newsFeeds.txt”);</span><br><span class="line">        boolean ok = false;</span><br><span class="line">            try &#123;</span><br><span class="line">                URL feedUrl = new URL(newsFeedUrlLink);</span><br><span class="line">                SyndFeedInput input = new SyndFeedInput();</span><br><span class="line">                InputSource source = new InputSource(feedUrl.openStream());</span><br><span class="line">                SyndFeed feed = input.build(source);</span><br><span class="line">                for (Iterator i = feed.getEntries().iterator(); i.hasNext();) &#123;</span><br><span class="line">                   SyndEntry entry = (SyndEntry) i.next();</span><br><span class="line">         writeToFile(f,entry);</span><br><span class="line">                       &#125;</span><br><span class="line">                ok = true;</span><br><span class="line"> </span><br><span class="line">            &#125;</span><br><span class="line">            catch (Exception ex) &#123;</span><br><span class="line">                ex.printStackTrace();</span><br><span class="line">                System.out.println(&quot;ERROR: &quot;+ex.getMessage());</span><br><span class="line"> </span><br><span class="line">            &#125;</span><br><span class="line">        if (!ok) &#123;</span><br><span class="line">            System.out.println();</span><br><span class="line">            System.out.println(&quot;FeedReader reads and prints any RSS/Atom feed type.&quot;);</span><br><span class="line">            System.out.println(&quot;The first parameter must be the URL of the feed to read.&quot;);</span><br><span class="line">            System.out.println();</span><br><span class="line"> </span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">private static void writeToFile(File f, SyndEntry entry) throws IOException &#123;</span><br><span class="line">        FileWriter fw = new FileWriter(f.getName(),true);</span><br><span class="line">           BufferedWriter bw = new BufferedWriter(fw);</span><br><span class="line">           bw.write(entry.getTitle()+”\n”);</span><br><span class="line">           bw.close();</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>接下来，我们可以使用下面的代码片段将数据存储在我们使用 Twitter 数据创建的 HDFS 文件中。要将此数据添加到我们使用 Twitter 数据创建的 HDFS 文件中，必须修改 hdfs-site.xml 文件中的 dfs.support.append 属性值，因为 HDFS 默认情况下不允许将数据添加到文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mydata &lt;- readLines(&quot;newsFeeds.txt&quot;)</span><br><span class="line">myfile &lt;-  hdfs.file(&quot;/tmp/govt_sentiment_data.txt&quot;, &quot;r&quot;)</span><br><span class="line">dfserialized &lt;- hdfs.read(myfile)</span><br><span class="line">df &lt;- unserialize(dfserialized)</span><br><span class="line">hdfs.close(myfile)</span><br><span class="line"> </span><br><span class="line">//write(mydata, file = &quot;/tmp/govt_sentiment_data.txt&quot;,append = TRUE)</span><br><span class="line">hdfs.write(mydata, file = &quot;/tmp/govt_sentiment_data.txt&quot;,append = TRUE)</span><br><span class="line">government_sentiment_data &lt;- read.hdfs(“/tmp/govt_sentiment_data.txt”)</span><br></pre></td></tr></table></figure></p>
+<p>从移动应用程序中检索数据<br>除了 Twitter 数据和 RSS 提要数据之外，我们还可以从包含个人意见和观点的移动应用程序中收集数据。在本示例中，我假设您创建了一个简单的移动应用程序，该应用程序已安装在允许用户提供关于政府主题或政策的意见的移动设备上。可以将 J2ME 应用程序上传到某个 WAP 服务器，移动设备（甚至是像诺基亚 3310 这样的老款设备）可以从该服务器下载和安装应用程序。用户提供的信息被发送回一个 RDBMS 并进行储存，以供将来分析使用。<br>您可以使用 Sqoop 将数据从 RDBMS 服务器移动到我们的 Hadoop 集群。在 Hadoop 集群上运行 sqoop 脚本的以下行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqoop import --options-file dbCredentials.txt --connect</span><br><span class="line">jdbc:mysql://217.8.156.117/govt_policy_app --table opinions –-target-dir /tmp \ --append</span><br></pre></td></tr></table></figure></p>
+<p>–append 标记告诉 Sqoop 将导入的数据添加到我们已经从以前的数据来源获得的数据集中，该数据集通过 –target-dir 标记来指示。<br>将已收集的数据合并成一个数据源<br>在收集了来自 Twitter 的数据（通过使用 Jaql 或 R）、来自 RSS 提要的数据（通过使用 Java）和来自移动应用程序的数据（通过使用 Sqoop）后，我们会将数据添加到单个 HDFS 文件中。可以通过实现了 Oozie 工作流引擎来自动化这些脚本，并设置命令来按照某个时间间隔运行脚本，或者作为触发事件发生的结果。有关如何设置 Sqoop 和 Oozie 的更多信息，请参阅我的其他 developerWorks 文章，”将 Hadoop 与现有的 RDBMS 相集成”。<br>您可以增强您的 Oozie 工作流程，以便实现减少重复数据的限制，重复数据是整合来自不同来源的数据所导致的。例如，您可能会限制每个话题一个 Twitter 句柄，在您的数据集中，每个观点一个移动号码。<br>在组合数据上执行情感分析<br>在组合数据之后，我们就可以在单个数据源上完成情感分析，这使我们可以获得分析的统一性、一致性和准确性。您可以使用 R、Jaql、Pig 或 Hive 来执行这些分析。Pig 和 Hive 是具有类似 SQL 的语法的语言，运行在 Hadoop 平台上。本例中，我决定用 R 来分析检索数据，因为 R 具有用于图形表示的丰富的内置模型函数和库，比如 ggplot2。<br>要完成情感分析，需要有一个词典或单词列表。字典包括一组描述某一范围内的积极词和消极词的标准单词。词典确定了社交媒体中常常使用的嘲讽词、影射词、俚语、新词汇、字符和表情。这些词汇列表可从互联网上获得，定期更新，并整合到我们的情感分析逻辑中。<br>以下代码利用了检索到的数据，并将它们与我们的单词列表相匹配，以获得积极词和消极词的数量。积极词和消极词的总数差距为我们提供了一个得分，该得分指示了我们的数据对于我们要分析的政府主题是积极的还是消极的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sentiment.pos=scan(&apos;/Users/charles/Downloads/r/positive-words.txt&apos;,what=&apos;character&apos;,comment.char=&apos;;&apos;)</span><br><span class="line">sentiment.neg=scan(&apos;/Users/charles/Downloads/r/negative-words.txt&apos;,what=&apos;character&apos;,comment.char=&apos;;&apos;)</span><br><span class="line">pos.words=c(sentiment.pos,&apos;good&apos;,&apos;reelect&apos;,&apos;accountable&apos;,&apos;stable&apos;)</span><br><span class="line">neg.words=c(sentiment.neg,&apos;bad&apos;,&apos;corrupt&apos;,&apos;greedy&apos;,&apos;unstable&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>此外，以下代码表示了情感评分算法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">require(plyr)</span><br><span class="line">require(stringr)</span><br><span class="line">score.sentiment = function(sentences, pos.words, neg.words, .progress=&apos;none&apos;)</span><br><span class="line">&#123;</span><br><span class="line">sentence = tolower(sentence)</span><br><span class="line">word.list = str_split(sentence, &apos;\\s+&apos;)</span><br><span class="line">words = unlist(word.list)</span><br><span class="line">pos.matches = match(words, pos.words)</span><br><span class="line">neg.matches = match(words, neg.words)</span><br><span class="line">pos.matches = !is.na(pos.matches)</span><br><span class="line">neg.matches = !is.na(neg.matches)</span><br><span class="line">score = sum(pos.matches) - sum(neg.matches)</span><br><span class="line">return(score)</span><br><span class="line">&#125;, pos.words, neg.words, .progress=.progress )</span><br><span class="line">scores.df = data.frame(score=scores, text=sentences)</span><br><span class="line">return(scores.df)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后，我们可以通过使用下面的代码片段，调用情感得分算法函数来计算数据的得分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">require(plyr)</span><br><span class="line">opinion.score &lt;- score.sentiment(opinion.txt,pos.words,neg.words,progress=&apos;text&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>最后，我们可以通过使用 R 的内置图表和图形功能，对得分数据执行进一步分析，并通过使用下面的代码片段，绘制一幅图表来显示分数条：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">library(&quot;ggplot2&quot;)</span><br><span class="line">hist(opinion.scores$score)</span><br><span class="line">qplot(opinion.scores$score)</span><br></pre></td></tr></table></figure></p>
+<p>您可以通过使用 BigSheets 进一步地分析数据，BigSheets 由 IBM InfoSphere BigInsights 提供。该工具使得非技术用户可以进行各种分析，并用图表查看数据。有关如何使用 BigSheets 工具的更多信息，请阅读 developerWorks 文章 “适用于普通人的 BigSheets”。<br>结束语<br>大数据工具可以根据来自任何来源或空间的数据，提供不带偏见的洞察，从而制定正确的、准确的决策，并实施这些决策。通过采用大数据工具，比如本文中所描述的那些工具，您可以轻松地实现自己的投资回报。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/情感数据分析/" rel="tag"><i class="fa fa-tag"></i> 情感数据分析</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+              <div>
+                
+
+<script src="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.css">
+
+
+  
+
+
+<div class="likely likely-light">
+	
+ 	 	<div class="twitter">Tweet</div>
+	
+ 	 	<div class="facebook">Share</div>
+	
+ 	 	<div class="linkedin">Link</div>
+	
+ 	 	<div class="gplus">Plus</div>
+	
+ 	 	<div class="vkontakte">Share</div>
+	
+ 	 	<div class="odnoklassniki">Class</div>
+	
+ 	 	<div class="telegram">Send</div>
+	
+ 	 	<div class="whatsapp">Send</div>
+	
+ 	 	<div class="pinterest">Pin</div>
+	
+</div>
+
+              </div>
+            
+            
+            
+              <div>
+                
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/金融行业大数据用户画像实践.html" rel="next" title="金融行业大数据用户画像实践">
+                <i class="fa fa-chevron-left"></i> 金融行业大数据用户画像实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Hadoop2-7-5HA集群搭建.html" rel="prev" title="Hadoop2.7.5HA集群搭建">
+                Hadoop2.7.5HA集群搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTk3My82NTM4"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg" alt="Daniel">
+            
+              <p class="site-author-name" itemprop="name">Daniel</p>
+              <div class="site-description motion-element" itemprop="description">專注于大数据技術，分享干货</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="GitHub &rarr; https://github.com/dudefu"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmR1ZGVmdUBmb3htYWlsLmNvbT9zdWJqZWN0PUhlbGxvJTIwYWdhaW4=" title="E-mail &rarr; mailto:dudefu@foxmail.com?subject=Hello%20again"><i class="fa fa-fw fa-envelope"></i>E-mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHVkZWZ1" title="Weibo &rarr; https://weibo.com/dudefu"><i class="fa fa-fw fa-weibo"></i>Weibo</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93cGEucXEuY29tL21zZ3JkP3Y9MyZ1aW49MTU3NzU3MTk1OSZzaXRlPWR1ZGVmdS5pbmZvJm1lbnU9eWVz" title="QQ &rarr; https://wpa.qq.com/msgrd?v=3&uin=1577571959&site=dudefu.info&menu=yes"><i class="fa fa-fw fa-qq"></i>QQ</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#情感分析"><span class="nav-number">1.</span> <span class="nav-text">情感分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理大数据"><span class="nav-number">2.</span> <span class="nav-text">处理大数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检索数据并将数据存储在-HDFS-中"><span class="nav-number">3.</span> <span class="nav-text">检索数据并将数据存储在 HDFS 中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从-Twitter-提要中检索数据"><span class="nav-number">4.</span> <span class="nav-text">从 Twitter 提要中检索数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过使用-Jaql-检索来自-Twitter-的数据"><span class="nav-number">4.1.</span> <span class="nav-text">通过使用 Jaql 检索来自 Twitter 的数据</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备18110871号 </span>&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-spinner"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dudefu</span>
+
+  
+
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Pisces</span> v7.1.2</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="26,26,26" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+  <script id="ribbon" size="300" alpha="0.6" zindex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/js.cookie.js?v=7.1.2"></script>
+  <script src="/js/scroll-cookie.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/exturl.js?v=7.1.2"></script>
+
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: true,
+    notify: true,
+    appId: '1N5rpk874DGudJw2wCL9J011-gzGzoHsz',
+    appKey: '9Y83e6suJgx567wtxhKy45IN',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zk-cn' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+    <script>
+  window.livereOptions = {
+    refer: '在大数据环境中执行情感分析.html'
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.1/bluebird.core.min.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/docs/variables.html
+      var isPost = '在大数据环境中执行情感分析'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '在大数据环境中执行情感分析'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+      if (selected) {
+        selection.removeAllRanges();
+        selection.addRange(selected);
+      }
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
