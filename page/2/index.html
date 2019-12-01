@@ -287,7 +287,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">77</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">79</span></a>
 
   </li>
         
@@ -325,7 +325,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">39</span></a>
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">40</span></a>
 
   </li>
         
@@ -435,6 +435,388 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/FastJson反序列化为什么用TypeReference.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/FastJson反序列化为什么用TypeReference.html" class="post-title-link" itemprop="url">FastJson反序列化为什么用TypeReference</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-09 10:41:01 / 修改时间：11:12:34" itemprop="dateCreated datePublished" datetime="2019-05-09T10:41:01+08:00">2019-05-09</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/FastJson反序列化为什么用TypeReference.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/FastJson反序列化为什么用TypeReference.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/FastJson反序列化为什么用TypeReference.html" class="leancloud_visitors" data-flag-title="FastJson反序列化为什么用TypeReference">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>泛型序列化非TypeReference code：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Map&lt;String, Person&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line">    map.put(<span class="string">"one"</span>, <span class="keyword">new</span> Person(<span class="string">"zhangsan"</span>));</span><br><span class="line">    map.put(<span class="string">"two"</span>, <span class="keyword">new</span> Person(<span class="string">"lisi"</span>));</span><br><span class="line">    String jsonStr = JSON.toJSONString(map);</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = jsonStr.getBytes();</span><br><span class="line">    String json = <span class="keyword">new</span> String(bytes);</span><br><span class="line">    Map&lt;String, Person&gt; res = JSON.parseObject(json, Map.class);</span><br><span class="line">    System.out.println(res.get(<span class="string">"one"</span>));</span><br><span class="line">    System.out.println(res.get(<span class="string">"one"</span>).getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/FastJson反序列化为什么用TypeReference.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/driver.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/driver.html" class="post-title-link" itemprop="url">spark项目在IDEA运行正常，spark-submit提示没有合适驱动</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-09 10:30:14 / 修改时间：20:15:39" itemprop="dateCreated datePublished" datetime="2019-05-09T10:30:14+08:00">2019-05-09</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/大数据/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/driver.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/driver.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/driver.html" class="leancloud_visitors" data-flag-title="spark项目在IDEA运行正常，spark-submit提示没有合适驱动">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="java-sql-SQLException-No-suitable-driver-解决方案"><a href="#java-sql-SQLException-No-suitable-driver-解决方案" class="headerlink" title="java.sql.SQLException: No suitable driver 解决方案"></a>java.sql.SQLException: No suitable driver 解决方案</h2><p>报错代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.sql.SQLException: No suitable driver	at java.sql.DriverManager.getDriver(DriverManager.java:<span class="number">315</span>)	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions$$anonfun$<span class="number">7</span>.apply(JDBCOptions.scala:<span class="number">85</span>)	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions$$anonfun$<span class="number">7</span>.apply(JDBCOptions.scala:<span class="number">85</span>)	at scala.Option.getOrElse(Option.scala:<span class="number">121</span>)	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.&lt;init&gt;(JDBCOptions.scala:<span class="number">84</span>)	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.&lt;init&gt;(JDBCOptions.scala:<span class="number">35</span>)	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:<span class="number">60</span>)	at org.apache.spark.sql.execution.datasources.SaveIntoDataSourceCommand.run(SaveIntoDataSourceCommand.scala:<span class="number">45</span>)	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult$lzycompute(commands.scala:<span class="number">70</span>)	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult(commands.scala:<span class="number">68</span>)	at org.apache.spark.sql.execution.command.ExecutedCommandExec.doExecute(commands.scala:<span class="number">86</span>)	at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$<span class="number">1</span>.apply(SparkPlan.scala:<span class="number">131</span>)	at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$<span class="number">1</span>.apply(SparkPlan.scala:<span class="number">127</span>)	at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$<span class="number">1</span>.apply(SparkPlan.scala:<span class="number">155</span>)	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:<span class="number">151</span>)	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:<span class="number">152</span>)	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:<span class="number">127</span>)	at org.apache.spark.sql.execution.QueryExecution.toRdd$lzycompute(QueryExecution.scala:<span class="number">80</span>)	at org.apache.spark.sql.execution.QueryExecution.toRdd(QueryExecution.scala:<span class="number">80</span>)	at org.apache.spark.sql.DataFrameWriter$$anonfun$runCommand$<span class="number">1</span>.apply(DataFrameWriter.scala:<span class="number">656</span>)	at org.apache.spark.sql.DataFrameWriter$$anonfun$runCommand$<span class="number">1</span>.apply(DataFrameWriter.scala:<span class="number">656</span>)	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:<span class="number">77</span>)	at org.apache.spark.sql.DataFrameWriter.runCommand(DataFrameWriter.scala:<span class="number">656</span>)	at org.apache.spark.sql.DataFrameWriter.saveToV1Source(DataFrameWriter.scala:<span class="number">273</span>)	at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:<span class="number">267</span>)	at org.apache.spark.sql.DataFrameWriter.jdbc(DataFrameWriter.scala:<span class="number">501</span>)	at com.xinyi.multiCollision.service.JobService$.dealWithMoreData(JobService.scala:<span class="number">406</span>)	at com.xinyi.multiCollision.sparkJob.MultiCollisionApp$.main(MultiCollisionApp.scala:<span class="number">70</span>)	at com.xinyi.multiCollision.sparkJob.MultiCollisionApp.main(MultiCollisionApp.scala)	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">62</span>)	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)	at java.lang.reflect.Method.invoke(Method.java:<span class="number">498</span>)	at org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:<span class="number">52</span>)	at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:<span class="number">904</span>)	at org.apache.spark.deploy.SparkSubmit$.doRunMain$<span class="number">1</span>(SparkSubmit.scala:<span class="number">198</span>)	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:<span class="number">228</span>)	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:<span class="number">137</span>)	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/driver.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -2058,417 +2440,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/经验之谈.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Daniel">
-      <meta itemprop="description" content="專注于大数据技術，分享干货">
-      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="The Future">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/经验之谈.html" class="post-title-link" itemprop="url">经验之谈</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-30 20:01:04" itemprop="dateCreated datePublished" datetime="2018-04-30T20:01:04+08:00">2018-04-30</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/干货/" itemprop="url" rel="index"><span itemprop="name">干货</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/经验之谈.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/经验之谈.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/经验之谈.html" class="leancloud_visitors" data-flag-title="经验之谈">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>1、重构是程序员的主力技能。<br>2、工作日志能提升脑容量。<br>3、先用profiler调查，才有脸谈优化。<br>4、注释贵精不贵多。杜绝大姨妈般的“例注”。漫山遍野的碎碎念注释，实际就是背景噪音。<br>5、普通程序员+google=超级程序员。<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/经验之谈.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/JVM常见面试题.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Daniel">
-      <meta itemprop="description" content="專注于大数据技術，分享干货">
-      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="The Future">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/JVM常见面试题.html" class="post-title-link" itemprop="url">JVM常见面试题</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-28 08:28:03" itemprop="dateCreated datePublished" datetime="2018-04-28T08:28:03+08:00">2018-04-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/JVM常见面试题.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/JVM常见面试题.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/JVM常见面试题.html" class="leancloud_visitors" data-flag-title="JVM常见面试题">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="简单说说JVM的架构"><a href="#简单说说JVM的架构" class="headerlink" title="简单说说JVM的架构"></a>简单说说JVM的架构</h2><h3 id="运行时区"><a href="#运行时区" class="headerlink" title="运行时区"></a>运行时区</h3><ul>
-<li>堆</li>
-<li>栈</li>
-<li>方法区</li>
-<li>程序计数器</li>
-<li>本地方法
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/JVM常见面试题.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </li></ul></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2517,7 +2488,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">77</span>
+                    <span class="site-state-item-count">79</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2653,7 +2624,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">39</span>
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3339,7 +3312,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("spark2.4.2编译（mac系统下）");titles.push("Hadoop分布式文件系统：架构和设计");titles.push("Hadoop2.7.5HA集群搭建");titles.push("在大数据环境中执行情感分析");titles.push("金融行业大数据用户画像实践");titles.push("RDD转DataFrame的一道面试题");titles.push("RDD转DataFrame的两种方法");titles.push("Java单例模式");titles.push("经验之谈");titles.push("JVM常见面试题");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("FastJson反序列化为什么用TypeReference");titles.push("spark项目在IDEA运行正常，spark-submit提示没有合适驱动");titles.push("spark2.4.2编译（mac系统下）");titles.push("Hadoop分布式文件系统：架构和设计");titles.push("Hadoop2.7.5HA集群搭建");titles.push("在大数据环境中执行情感分析");titles.push("金融行业大数据用户画像实践");titles.push("RDD转DataFrame的一道面试题");titles.push("RDD转DataFrame的两种方法");titles.push("Java单例模式");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
