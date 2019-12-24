@@ -1,3 +1,5 @@
+https://www.dudefu.club/hashcode详解.html
+https://www.dudefu.club/configs/sorts.html
 https://www.dudefu.club/greenplum安装与部署（详细）.html
 https://www.dudefu.club/git配置多个SSH-Key.html
 https://www.dudefu.club/Permission.html
