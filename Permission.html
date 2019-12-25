@@ -146,7 +146,7 @@
 <meta property="og:site_name" content="The Future">
 <meta property="og:description" content="背景：windows下添加公钥后，无法克隆github 上的文件，报错Permission denied (publickey). fatal: Could not read from remote repository.　　博主在github上下载tiny face的的源代码的时候，遇到git clone命令为：git clone –recursive git@github.com:peiyun">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-16T08:15:09.000Z">
+<meta property="og:updated_time" content="2019-12-25T06:53:38.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows添加公钥后，无法克隆的问题解决">
 <meta name="twitter:description" content="背景：windows下添加公钥后，无法克隆github 上的文件，报错Permission denied (publickey). fatal: Could not read from remote repository.　　博主在github上下载tiny face的的源代码的时候，遇到git clone命令为：git clone –recursive git@github.com:peiyun">
@@ -288,7 +288,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">81</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">80</span></a>
 
   </li>
         
@@ -457,7 +457,7 @@
     <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/Permission.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Daniel">
+      <meta itemprop="name" content="Daniel X">
       <meta itemprop="description" content="專注于大数据技術，分享干货">
       <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
     </span>
@@ -497,12 +497,24 @@
                 
               
 
-              <time title="创建时间：2019-08-16 15:51:09 / 修改时间：16:15:09" itemprop="dateCreated datePublished" datetime="2019-08-16T15:51:09+08:00">2019-08-16</time>
+              <time title="创建时间：2019-08-16 15:51:09" itemprop="dateCreated datePublished" datetime="2019-08-16T15:51:09+08:00">2019-08-16</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-12-25 14:53:38" itemprop="dateModified" datetime="2019-12-25T14:53:38+08:00">2019-12-25</time>
               
             
           </span>
@@ -578,7 +590,9 @@
       
 
       
-        <p>背景：windows下添加公钥后，无法克隆github 上的文件，报错Permission denied (publickey). fatal: Could not read from remote repository.<br>　　博主在github上下载tiny face的的源代码的时候，遇到git clone命令为：git clone –recursive git@github.com:peiyunh/tiny.git<br>　　而当我在ternimal下执行这条语句的时候，出现错误：<br>　　Permissiondenied (publickey).<br>　　fatal:Could not read from remote repository.<br>　　Pleasemake sure you have the correct access rights<br>　　and the repository exists.<br><a id="more"></a><br>　　但是其实执行命令：git clone git@github.com:peiyunh/tiny.git 是没有问题的（不加–recursive参数），于是百度了一番，我理解的是原因是由于你在本地（或者服务器上）没有生成ssh key，你可以在ternimal下执行：<br>　　cd ~/.ssh ls来查看是否有文件id_rsa以及文件id_rsa.pub，如下图所示：（我的已经生成了，所以我ls后会显示。）<br>　　下面记录下解决办法：<br>　　1.首先，如果你没有ssh key的话，在ternimal下输入命令：ssh-keygen -t rsa -C “youremail@example.com”， youremail@example.com改为自己的邮箱即可，途中会让你输入密码啥的，不需要管，一路回车即可，会生成你的ssh key。（如果重新生成的话会覆盖之前的ssh key。）<br>　　2.然后再ternimal下执行命令：<br>　　ssh -v git@github.com<br>　　最后两句会出现：<br>　　No more authentication methods to try.<br>　　Permission denied (publickey).<br>　　3.这时候再在ternimal下输入：<br>　　ssh-agent -s<br>　　然后会提示类似的信息：<br>　　SSH_AUTH_SOCK=/tmp/ssh-GTpABX1a05qH/agent.404; export SSH_AUTH_SOCK;<br>　　SSH_AGENT_PID=13144; export SSH_AGENT_PID;<br>　　echo Agent pid 13144;<br>　　4.接着再输入：<br>　　ssh-add ~/.ssh/id_rsa<br>　　这时候应该会提示：<br>　　Identity added: …（这里是一些ssh key文件路径的信息）<br>　　（注意）如果出现错误提示：<br>　　Could not open a connection to your authentication agent.<br>　　请执行命令：eval <code>ssh-agent -s</code>后继续执行命令 ssh-add ~/.ssh/id_rsa，这时候一般没问题啦。<br>　　5.打开你刚刚生成的id_rsa.pub，将里面的内容复制，进入你的github账号，在settings下，SSH and GPG keys下new SSH key，title随便取一个名字，然后将id_rsa.pub里的内容复制到Key中，完成后Add SSH Key。<br>　　6.最后一步，验证Key<br>　　在ternimal下输入命令：<br>　　ssh -T git@github.com<br>　　提示：Hi xxx! You’ve successfully authenticated, but GitHub does not provide shell  access.<br>　　这时候你的问题就解决啦，可以使用命令 git clone –recursive git@github.com:peiyunh/tiny.git 去下载你的代码啦。</p>
+        <p>背景：windows下添加公钥后，无法克隆github 上的文件，报错Permission denied (publickey). fatal: Could not read from remote repository.<br>　　博主在github上下载tiny face的的源代码的时候，遇到git clone命令为：git clone –recursive git@github.com:peiyunh/tiny.git<br>　　而当我在ternimal下执行这条语句的时候，出现错误：<br>　　Permissiondenied (publickey).<br>　　fatal:Could not read from remote repository.<br>　　Pleasemake sure you have the correct access rights<br>　　and the repository exists.</p>
+<a id="more"></a>
+<p>　　但是其实执行命令：git clone git@github.com:peiyunh/tiny.git 是没有问题的（不加–recursive参数），于是百度了一番，我理解的是原因是由于你在本地（或者服务器上）没有生成ssh key，你可以在ternimal下执行：<br>　　cd ~/.ssh ls来查看是否有文件id_rsa以及文件id_rsa.pub，如下图所示：（我的已经生成了，所以我ls后会显示。）<br>　　下面记录下解决办法：<br>　　1.首先，如果你没有ssh key的话，在ternimal下输入命令：ssh-keygen -t rsa -C “youremail@example.com”， youremail@example.com改为自己的邮箱即可，途中会让你输入密码啥的，不需要管，一路回车即可，会生成你的ssh key。（如果重新生成的话会覆盖之前的ssh key。）<br>　　2.然后再ternimal下执行命令：<br>　　ssh -v git@github.com<br>　　最后两句会出现：<br>　　No more authentication methods to try.<br>　　Permission denied (publickey).<br>　　3.这时候再在ternimal下输入：<br>　　ssh-agent -s<br>　　然后会提示类似的信息：<br>　　SSH_AUTH_SOCK=/tmp/ssh-GTpABX1a05qH/agent.404; export SSH_AUTH_SOCK;<br>　　SSH_AGENT_PID=13144; export SSH_AGENT_PID;<br>　　echo Agent pid 13144;<br>　　4.接着再输入：<br>　　ssh-add ~/.ssh/id_rsa<br>　　这时候应该会提示：<br>　　Identity added: …（这里是一些ssh key文件路径的信息）<br>　　（注意）如果出现错误提示：<br>　　Could not open a connection to your authentication agent.<br>　　请执行命令：eval <code>ssh-agent -s</code>后继续执行命令 ssh-add ~/.ssh/id_rsa，这时候一般没问题啦。<br>　　5.打开你刚刚生成的id_rsa.pub，将里面的内容复制，进入你的github账号，在settings下，SSH and GPG keys下new SSH key，title随便取一个名字，然后将id_rsa.pub里的内容复制到Key中，完成后Add SSH Key。<br>　　6.最后一步，验证Key<br>　　在ternimal下输入命令：<br>　　ssh -T git@github.com<br>　　提示：Hi xxx! You’ve successfully authenticated, but GitHub does not provide shell  access.<br>　　这时候你的问题就解决啦，可以使用命令 git clone –recursive git@github.com:peiyunh/tiny.git 去下载你的代码啦。</p>
 <p>　　</p>
 
       
@@ -777,9 +791,9 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg" alt="Daniel">
+              <img class="site-author-image" itemprop="image" src="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg" alt="Daniel X">
             
-              <p class="site-author-name" itemprop="name">Daniel</p>
+              <p class="site-author-name" itemprop="name">Daniel X</p>
               <div class="site-description motion-element" itemprop="description">專注于大数据技術，分享干货</div>
           </div>
 
@@ -790,7 +804,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">81</span>
+                    <span class="site-state-item-count">80</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
