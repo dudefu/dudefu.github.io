@@ -138,18 +138,18 @@
 
 
 
-  <meta name="description" content="问题起因：1JSONObject jsonObject = JSON.parseObject(jsonString); 上述方法得到的jsonObject属性是无序的，并不是按照json字符串原来的属性顺序。解决方案：通过设置Feature.OrderedField参数即可解决无序问题。注意，Feature.OrderedField参数只能在fastjson 1.2.3或以上版本才能使用。1JSO">
+  <meta name="description" content="问题起因：1JSONObject jsonObject = JSON.parseObject(jsonString); 上述方法得到的jsonObject属性是无序的，并不是按照json字符串原来的属性顺序。解决方案：通过设置Feature.OrderedField参数即可解决无序问题。注意，Feature.OrderedField参数只能在fastjson 1.2.3或以上版本才能使用。">
 <meta name="keywords" content="fastjson">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于fastjson解析后的属性排序问题解决方案">
 <meta property="og:url" content="https://www.dudefu.club/关于fastjson解析后的属性排序问题解决方案.html">
 <meta property="og:site_name" content="The Future">
-<meta property="og:description" content="问题起因：1JSONObject jsonObject = JSON.parseObject(jsonString); 上述方法得到的jsonObject属性是无序的，并不是按照json字符串原来的属性顺序。解决方案：通过设置Feature.OrderedField参数即可解决无序问题。注意，Feature.OrderedField参数只能在fastjson 1.2.3或以上版本才能使用。1JSO">
+<meta property="og:description" content="问题起因：1JSONObject jsonObject = JSON.parseObject(jsonString); 上述方法得到的jsonObject属性是无序的，并不是按照json字符串原来的属性顺序。解决方案：通过设置Feature.OrderedField参数即可解决无序问题。注意，Feature.OrderedField参数只能在fastjson 1.2.3或以上版本才能使用。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-25T07:04:20.972Z">
+<meta property="og:updated_time" content="2019-12-25T07:06:47.971Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于fastjson解析后的属性排序问题解决方案">
-<meta name="twitter:description" content="问题起因：1JSONObject jsonObject = JSON.parseObject(jsonString); 上述方法得到的jsonObject属性是无序的，并不是按照json字符串原来的属性顺序。解决方案：通过设置Feature.OrderedField参数即可解决无序问题。注意，Feature.OrderedField参数只能在fastjson 1.2.3或以上版本才能使用。1JSO">
+<meta name="twitter:description" content="问题起因：1JSONObject jsonObject = JSON.parseObject(jsonString); 上述方法得到的jsonObject属性是无序的，并不是按照json字符串原来的属性顺序。解决方案：通过设置Feature.OrderedField参数即可解决无序问题。注意，Feature.OrderedField参数只能在fastjson 1.2.3或以上版本才能使用。">
 
 
 
@@ -288,7 +288,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">81</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">80</span></a>
 
   </li>
         
@@ -497,7 +497,7 @@
                 
               
 
-              <time title="创建时间：2019-12-25 14:27:46 / 修改时间：15:04:20" itemprop="dateCreated datePublished" datetime="2019-12-25T14:27:46+08:00">2019-12-25</time>
+              <time title="创建时间：2019-12-25 14:27:46 / 修改时间：15:06:47" itemprop="dateCreated datePublished" datetime="2019-12-25T14:27:46+08:00">2019-12-25</time>
             
 
             
@@ -579,7 +579,7 @@
 
       
         <h2 id="问题起因："><a href="#问题起因：" class="headerlink" title="问题起因："></a>问题起因：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JSONObject jsonObject = JSON.parseObject(jsonString);</span><br></pre></td></tr></table></figure>
-<p>上述方法得到的jsonObject属性是无序的，并不是按照json字符串原来的属性顺序。<br>解决方案：<br>通过设置Feature.OrderedField参数即可解决无序问题。注意，Feature.OrderedField参数只能在fastjson 1.2.3或以上版本才能使用。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JSONObject jsonObject = JSON.parseObject(resultString,Feature.OrderedField);</span><br></pre></td></tr></table></figure></p>
+<p>上述方法得到的jsonObject属性是无序的，并不是按照json字符串原来的属性顺序。<br>解决方案：<br>通过设置Feature.OrderedField参数即可解决无序问题。注意，Feature.OrderedField参数只能在fastjson 1.2.3或以上版本才能使用。<br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JSONObject jsonObject = JSON.parseObject(resultString,Feature.OrderedField);</span><br></pre></td></tr></table></figure></p>
 <h2 id="扩展："><a href="#扩展：" class="headerlink" title="扩展："></a>扩展：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 属性不排序</span></span><br><span class="line">JSON.toJSONString(obj, SerializerFeature.WRITE_MAP_NULL_FEATURES)</span><br><span class="line"><span class="comment">// 属性排序</span></span><br><span class="line">JSON.toJSONString(obj, SerializerFeature.SortField)</span><br><span class="line"><span class="comment">//其他解决方案</span></span><br><span class="line">用较高的fastjson版本，指定<span class="keyword">new</span> JSONObject(<span class="keyword">true</span>)即可</span><br><span class="line">如果是用于验签类的操作，可JSON.parseObject(text, Feature.OrderedField); <span class="comment">//注：Feature.OrderedField仅在1.2.3及上版本可用</span></span><br></pre></td></tr></table></figure>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cub3NjaGluYS5uZXQvcXVlc3Rpb24vMjMzNjU2MF8yMjk0Nzg/c29ydD10aW1l" title="https://www.oschina.net/question/2336560_229478?sort=time">参考文章<i class="fa fa-external-link"></i></span></p>
 
@@ -723,10 +723,6 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/configs/sorts.html" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
-              </a>
-            
           </div>
         </div>
       
@@ -801,7 +797,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">81</span>
+                    <span class="site-state-item-count">80</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
