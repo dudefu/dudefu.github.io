@@ -286,7 +286,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">80</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">81</span></a>
 
   </li>
         
@@ -324,7 +324,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">40</span></a>
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">41</span></a>
 
   </li>
         
@@ -469,6 +469,32 @@
         <h2>Java<small>分类</small>
         </h2>
       </div>
+
+      
+        
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h3 class="post-title">
+        
+          <a class="post-title-link" href="/使用Java倒序输出12345.html" itemprop="url">
+            
+              <span itemprop="name">使用Java倒序输出12345</span>
+            
+          </a>
+        
+      </h3>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2017-12-01T08:33:43+08:00" content="2017-12-01">
+          12-01
+        </time>
+      </div>
+
+    </header>
+  </article>
+
 
       
         
@@ -705,32 +731,6 @@
 
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/JavaEE软件开发体系架构.html" itemprop="url">
-            
-              <span itemprop="name">JavaEE软件开发体系架构</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-08-17T10:33:54+08:00" content="2017-08-17">
-          08-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
     </div>
 
   </div>
@@ -785,7 +785,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">80</span>
+                    <span class="site-state-item-count">81</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -923,7 +923,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">40</span>
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1609,7 +1611,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("并发和并行的区别");titles.push("Java实现九九乘法表");titles.push("java中内存分配策略及堆和栈的比较");titles.push("Java内存机制和内存地址");titles.push("Java语言基础");titles.push("变量和常量");titles.push("Java入门");titles.push("计算机的基础");titles.push("简析String、StringBuffer与StringBuilder");titles.push("JavaEE软件开发体系架构");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("使用Java倒序输出12345");titles.push("并发和并行的区别");titles.push("Java实现九九乘法表");titles.push("java中内存分配策略及堆和栈的比较");titles.push("Java内存机制和内存地址");titles.push("Java语言基础");titles.push("变量和常量");titles.push("Java入门");titles.push("计算机的基础");titles.push("简析String、StringBuffer与StringBuilder");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
