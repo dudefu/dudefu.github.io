@@ -138,18 +138,22 @@
 
 
 
-  <meta name="description" content="问题一：String str1 = “abc”;String str2 = “abc”;System.out.println(str1==str2); //true  问题二：String str1 =new String (“abc”);String str2 =new String (“abc”);System.out.println(str1==str2); // false  问题三：St">
-<meta name="keywords" content="JavaSE">
+  <meta name="description" content="这是一个十分严重的问题自从最近的某年某月某天起，线上服务开始变得不那么稳定。在高峰期，时常有几台机器的内存持续飙升，并且无法回收，导致服务不可用。 例如GC时间采样曲线：  和内存使用曲线：  图中所示，18:50-19:00的阶段，已经处于服务不可用的状态了。上游服务的超时异常会增加，该台机器会触发熔断。熔断触发后，改台机器的流量会打到其他机器，其他机器发生类似的情况的可能性会提高，极端情况会引">
+<meta name="keywords" content="线程池">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java内存机制和内存地址">
-<meta property="og:url" content="https://www.dudefu.club/Java内存机制和内存地址.html">
+<meta property="og:title" content="一次Java线程池误用引发的血案和总结">
+<meta property="og:url" content="https://www.dudefu.club/一次Java线程池误用引发的血案和总结.html">
 <meta property="og:site_name" content="The Future">
-<meta property="og:description" content="问题一：String str1 = “abc”;String str2 = “abc”;System.out.println(str1==str2); //true  问题二：String str1 =new String (“abc”);String str2 =new String (“abc”);System.out.println(str1==str2); // false  问题三：St">
+<meta property="og:description" content="这是一个十分严重的问题自从最近的某年某月某天起，线上服务开始变得不那么稳定。在高峰期，时常有几台机器的内存持续飙升，并且无法回收，导致服务不可用。 例如GC时间采样曲线：  和内存使用曲线：  图中所示，18:50-19:00的阶段，已经处于服务不可用的状态了。上游服务的超时异常会增加，该台机器会触发熔断。熔断触发后，改台机器的流量会打到其他机器，其他机器发生类似的情况的可能性会提高，极端情况会引">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-15T09:22:48.000Z">
+<meta property="og:image" content="https://img-blog.csdn.net/20180204155221776">
+<meta property="og:image" content="https://img-blog.csdn.net/20180204155254374">
+<meta property="og:image" content="https://img-blog.csdn.net/20180204155347335">
+<meta property="og:updated_time" content="2020-03-13T02:32:35.080Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java内存机制和内存地址">
-<meta name="twitter:description" content="问题一：String str1 = “abc”;String str2 = “abc”;System.out.println(str1==str2); //true  问题二：String str1 =new String (“abc”);String str2 =new String (“abc”);System.out.println(str1==str2); // false  问题三：St">
+<meta name="twitter:title" content="一次Java线程池误用引发的血案和总结">
+<meta name="twitter:description" content="这是一个十分严重的问题自从最近的某年某月某天起，线上服务开始变得不那么稳定。在高峰期，时常有几台机器的内存持续飙升，并且无法回收，导致服务不可用。 例如GC时间采样曲线：  和内存使用曲线：  图中所示，18:50-19:00的阶段，已经处于服务不可用的状态了。上游服务的超时异常会增加，该台机器会触发熔断。熔断触发后，改台机器的流量会打到其他机器，其他机器发生类似的情况的可能性会提高，极端情况会引">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180204155221776">
 
 
 
@@ -157,7 +161,7 @@
 
   
   
-  <link rel="canonical" href="https://www.dudefu.club/Java内存机制和内存地址">
+  <link rel="canonical" href="https://www.dudefu.club/一次Java线程池误用引发的血案和总结">
 
 
 
@@ -167,7 +171,7 @@
   };
 </script>
 
-  <title>Java内存机制和内存地址 | The Future</title>
+  <title>一次Java线程池误用引发的血案和总结 | The Future</title>
   
 
 
@@ -454,7 +458,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/Java内存机制和内存地址.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/一次Java线程池误用引发的血案和总结.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -471,7 +475,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Java内存机制和内存地址
+          <h2 class="post-title" itemprop="name headline">一次Java线程池误用引发的血案和总结
 
               
             
@@ -497,24 +501,12 @@
                 
               
 
-              <time title="创建时间：2017-11-28 20:23:43" itemprop="dateCreated datePublished" datetime="2017-11-28T20:23:43+08:00">2017-11-28</time>
+              <time title="创建时间：2020-03-13 10:30:45 / 修改时间：10:32:35" itemprop="dateCreated datePublished" datetime="2020-03-13T10:30:45+08:00">2020-03-13</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
               
             
           </span>
@@ -550,8 +542,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/Java内存机制和内存地址.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Java内存机制和内存地址.html" itemprop="commentCount"></span>
+                <a href="/一次Java线程池误用引发的血案和总结.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/一次Java线程池误用引发的血案和总结.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -559,7 +551,7 @@
 
           
           
-            <span id="/Java内存机制和内存地址.html" class="leancloud_visitors" data-flag-title="Java内存机制和内存地址">
+            <span id="/一次Java线程池误用引发的血案和总结.html" class="leancloud_visitors" data-flag-title="一次Java线程池误用引发的血案和总结">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -590,13 +582,70 @@
       
 
       
-        <h2 id="问题一："><a href="#问题一：" class="headerlink" title="问题一："></a>问题一：</h2><p>String str1 = “abc”;<br>String str2 = “abc”;<br>System.out.println(str1==str2); //true </p>
-<h2 id="问题二："><a href="#问题二：" class="headerlink" title="问题二："></a>问题二：</h2><p>String str1 =new String (“abc”);<br>String str2 =new String (“abc”);<br>System.out.println(str1==str2); // false </p>
-<h2 id="问题三："><a href="#问题三：" class="headerlink" title="问题三："></a>问题三：</h2><p>String s1 = “ja”;<br>String s2 = “va”;<br>String s3 = “java”;<br>String s4 = s1 + s2;<br>System.out.println(s3 == s4);//false<br>System.out.println(s3.equals(s4));//true<br>由于以上问题让我含糊不清，于是特地搜集了一些有关java内存分配的资料,以下是网摘：<br><a id="more"></a></p>
-<h2 id="Java-中的堆和栈"><a href="#Java-中的堆和栈" class="headerlink" title="Java 中的堆和栈"></a>Java 中的堆和栈</h2><p>Java把内存划分成两种：一种是栈内存，一种是堆内存。<br>在函数中定义的一些基本类型的变量和对象的引用变量都在函数的栈内存中分配。<br>当在一段代码块定义一个变量时，Java就在栈中为这个变量分配内存空间，当超过变量的作用域后，Java会自动释放掉为该变量所分配的内存空间，该内存空间可以立即被另作他用。<br>堆内存用来存放由new创建的对象和数组。<br>在堆中分配的内存，由Java虚拟机的自动垃圾回收器来管理。<br>在堆中产生了一个数组或对象后，还可以在栈中定义一个特殊的变量，让栈中这个变量的取值等于数组或对象在堆内存中的首地址，栈中的这个变量就成了数组或对象的引用变量。<br>引用变量就相当于是为数组或对象起的一个名称，以后就可以在程序中使用栈中的引用变量来访问堆中的数组或对象。 </p>
-<h2 id="具体的说："><a href="#具体的说：" class="headerlink" title="具体的说："></a>具体的说：</h2><p>栈与堆都是Java用来在Ram中存放数据的地方。与C++不同，Java自动管理栈和堆，程序员不能直接地设置栈或堆。<br>Java的堆是一个运行时数据区,类的(对象从中分配空间。这些对象通过new、newarray、anewarray和multianewarray等指令建立，它们不需要程序代码来显式的释放。堆是由垃圾回收来负责的，堆的优势是可以动态地分配内存大小，生存期也不必事先告诉编译器，因为它是在运行时动态分配内存的，Java的垃圾收集器会自动收走这些不再使用的数据。但缺点是，由于要在运行时动态分配内存，存取速度较慢。<br>栈的优势是，存取速度比堆要快，仅次于寄存器，栈数据可以共享。但缺点是，存在栈中的数据大小与生存期必须是确定的，缺乏灵活性。栈中主要存放一些基本类型的变量（,int, short, long, byte, float, double, boolean, char）和对象句柄。<br>栈有一个很重要的特殊性，就是存在栈中的数据可以共享。假设我们同时定义：<br>int a = 3;<br>int b = 3；<br>编译器先处理int a = 3；首先它会在栈中创建一个变量为a的引用，然后查找栈中是否有3这个值，如果没找到，就将3存放进来，然后将a指向3。接着处理int b = 3；在创建完b的引用变量后，因为在栈中已经有3这个值，便将b直接指向3。这样，就出现了a与b同时均指向3的情况。这时，如果再令a=4；那么编译器会重新搜索栈中是否有4值，如果没有，则将4存放进来，并令a指向4；如果已经有了，则直接将a指向这个地址。因此a值的改变不会影响到b的值。要注意这种数据的共享与两个对象的引用同时指向一个对象的这种共享是不同的，因为这种情况a的修改并不会影响到b, 它是由编译器完成的，它有利于节省空间。而一个对象引用变量修改了这个对象的内部状态，会影响到另一个对象引用变量。<br>String是一个特殊的包装类数据。可以用：<br>String str = new String(“abc”);<br>String str = “abc”;<br>两种的形式来创建，第一种是用new()来新建对象的，它会在存放于堆中。每调用一次就会创建一个新的对象。<br>而第二种是先在栈中创建一个对String类的对象引用变量str，然后查找栈中有没有存放”abc”，如果没有，则将”abc”存放进栈，并令str指向”abc”，如果已经有”abc” 则直接令str指向“abc”。<br>          比较类里面的数值是否相等时，用equals()方法；当测试两个包装类的引用是否指向同一个对象时，用==，下面用例子说明上面的理论。 </p>
-<h2 id="方式一："><a href="#方式一：" class="headerlink" title="方式一："></a>方式一：</h2><p>String str1 = “abc”;<br>String str2 = “abc”;<br>System.out.println(str1==str2); //true<br>可以看出str1和str2是指向同一个对象的。 </p>
-<h2 id="方式二："><a href="#方式二：" class="headerlink" title="方式二："></a>方式二：</h2><p>String str1 =new String (“abc”);<br>String str2 =new String (“abc”);<br>System.out.println(str1==str2); // false<br>用new的方式是生成不同的对象。每一次生成一个。<br>因此用第一种方式创建多个”abc”字符串,在内存中其实只存在一个对象而已. 这种写法有利与节省内存空间. 同时它可以在一定程度上提高程序的运行速度，因为JVM会自动根据栈中数据的实际情况来决定是否有必要创建新对象。而对于String str = new String(“abc”)；的代码，则一概在堆中创建新对象，而不管其字符串值是否相等，是否有必要创建新对象，从而加重了程序的负担。<br>另一方面, 要注意: 我们在使用诸如String str = “abc”；的格式定义类时，总是想当然地认为，创建了String类的对象str。担心陷阱！对象可能并没有被创建！而可能只是指向一个先前已经创建的对象。只有通过new()方法才能保证每次都创建一个新的对象。由于String类的immutable性质，当String变量需要经常变换其值时，应该考虑使用StringBuffer类，以提高程序效率。</p>
+        <h2 id="这是一个十分严重的问题"><a href="#这是一个十分严重的问题" class="headerlink" title="这是一个十分严重的问题"></a>这是一个十分严重的问题</h2><p>自从最近的某年某月某天起，线上服务开始变得不那么稳定。在高峰期，时常有几台机器的内存持续飙升，并且无法回收，导致服务不可用。</p>
+<p>例如GC时间采样曲线：</p>
+<p><img src="https://img-blog.csdn.net/20180204155221776" alt="img"></p>
+<p>和内存使用曲线：</p>
+<p><img src="https://img-blog.csdn.net/20180204155254374" alt="img"></p>
+<p>图中所示，18:50-19:00的阶段，已经处于服务不可用的状态了。上游服务的超时异常会增加，该台机器会触发熔断。熔断触发后，改台机器的流量会打到其他机器，其他机器发生类似的情况的可能性会提高，极端情况会引起所有服务宕机，曲线掉底。</p>
+<p>因为线上内存过大，如果采用 jmap dump的方式，这个任务可能需要很久才可以执行完，同时把这么大的文件存放起来导入工具也是一件很难的事情。再看JVM启动参数，也很久没有变更过 Xms, Xmx, -XX:NewRatio, -XX:SurvivorRatio, 虽然没有仔细分析程序使用内存情况，但看起来也无大碍。</p>
+<p>于是开始找代码，某年某天某月～ 嗯，注意到一段这样的代码提交：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> ExecutorService executor = Executors.newFixedThreadPool(<span class="number">15</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">push2Kafka</span><span class="params">(Object msg)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    executor.execute(<span class="keyword">new</span> WriteTask(msg,  <span class="keyword">false</span>));    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相关代码的完整功能是，每次线上调用，都会把计算结果的日志打到 Kafka，Kafka消费方再继续后续的逻辑。内存被耗尽可能有一个原因是，因为使用了 newFixedThreadPool 线程池，而它的工作机制是，固定了N个线程，而提交给线程池的任务队列是不限制大小的，如果Kafka发消息被阻塞或者变慢，那么显然队列里面的内容会越来越多，也就会导致这样的问题。</p>
+<p>为了验证这个想法，做了个小实验，把 newFixedThreadPool 线程池的线程个数调小一点，例如 1。果然压测了一下，很快就复现了内存耗尽，服务不可用的悲剧。</p>
+<p>最后的修复策略是使用了自定义的线程池参数，而非 Executors 默认实现解决了问题。下面就把线程池相关的原理和参数总结一下，避免未来踩坑。</p>
+<h2 id="1-Java线程池"><a href="#1-Java线程池" class="headerlink" title="1. Java线程池"></a>1. Java线程池</h2><p>虽然Java线程池理论，以及构造线程池的各种参数，以及 Executors 提供的默认实现之前研读过，不过线上还没有发生过线程池误用引发的事故，所以有必要把这些参数再仔细琢磨一遍。</p>
+<p>优先补充一些线程池的工作理论，有助于展开下面的内容。线程池顾名思义，就是由很多线程构成的池子，来一个任务，就从池子中取一个线程，处理这个任务。这个理解是我在第一次接触到这个概念时候的理解，虽然整体基本切入到核心，但是实际上会比这个复杂。例如线程池肯定不会无限扩大的，否则资源会耗尽；当线程数到达一个阶段，提交的任务会被暂时存储在一个队列中，如果队列内容可以不断扩大，极端下也会耗尽资源，那选择什么类型的队列，当队列满如何处理任务，都有涉及很多内容。线程池总体的工作过程如下图：</p>
+<p><img src="https://img-blog.csdn.net/20180204155347335" alt="img"></p>
+<p>线程池内的线程数的大小相关的概念有两个，一个是核心池大小，还有最大池大小。如果当前的线程个数比核心池个数小，当任务到来，会优先创建一个新的线程并执行任务。当已经到达核心池大小，则把任务放入队列，为了资源不被耗尽，队列的最大容量可能也是有上限的，如果达到队列上限则考虑继续创建新线程执行任务，如果此刻线程的个数已经到达最大池上限，则考虑把任务丢弃。</p>
+<p>在 java.util.concurrent 包中，提供了 ThreadPoolExecutor 的实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">                              <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">                              <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">                              TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">                              BlockingQueue&lt;Runnable&gt; workQueue,</span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">                              ThreadFactory threadFactory,</span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">                              RejectedExecutionHandler handler)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>既然有了刚刚对线程池工作原理对概述，这些参数就很容易理解了：</p>
+<p>corePoolSize- 核心池大小，既然如前原理部分所述。需要注意的是在初创建线程池时线程不会立即启动，直到有任务提交才开始启动线程并逐渐时线程数目达到corePoolSize。若想一开始就创建所有核心线程需调用prestartAllCoreThreads方法。</p>
+<p>maximumPoolSize-池中允许的最大线程数。需要注意的是当核心线程满且阻塞队列也满时才会判断当前线程数是否小于最大线程数，并决定是否创建新线程。</p>
+<p>keepAliveTime - 当线程数大于核心时，多于的空闲线程最多存活时间</p>
+<p>unit - keepAliveTime 参数的时间单位。</p>
+<p>workQueue - 当线程数目超过核心线程数时用于保存任务的队列。主要有3种类型的BlockingQueue可供选择：无界队列，有界队列和同步移交。将在下文中详细阐述。从参数中可以看到，此队列仅保存实现Runnable接口的任务。 别看这个参数位置很靠后，但是真的很重要，因为楼主的坑就因这个参数而起，这些细节有必要仔细了解清楚。</p>
+<p>threadFactory - 执行程序创建新线程时使用的工厂。</p>
+<p>handler - 阻塞队列已满且线程数达到最大值时所采取的饱和策略。java默认提供了4种饱和策略的实现方式：中止、抛弃、抛弃最旧的、调用者运行。将在下文中详细阐述。</p>
+<h2 id="2-可选择的阻塞队列BlockingQueue详解"><a href="#2-可选择的阻塞队列BlockingQueue详解" class="headerlink" title="2. 可选择的阻塞队列BlockingQueue详解"></a>2. 可选择的阻塞队列BlockingQueue详解</h2><p>在重复一下新任务进入时线程池的执行策略：<br>如果运行的线程少于corePoolSize，则 Executor始终首选添加新的线程，而不进行排队。（如果当前运行的线程小于corePoolSize，则任务根本不会存入queue中，而是直接运行）<br>如果运行的线程大于等于 corePoolSize，则 Executor始终首选将请求加入队列，而不添加新的线程。<br>如果无法将请求加入队列，则创建新的线程，除非创建此线程超出 maximumPoolSize，在这种情况下，任务将被拒绝。<br>主要有3种类型的BlockingQueue：</p>
+<p>无界队列</p>
+<p>队列大小无限制，常用的为无界的LinkedBlockingQueue，使用该队列做为阻塞队列时要尤其当心，当任务耗时较长时可能会导致大量新任务在队列中堆积最终导致OOM。阅读代码发现，Executors.newFixedThreadPool 采用就是 LinkedBlockingQueue，而楼主踩到的就是这个坑，当QPS很高，发送数据很大，大量的任务被添加到这个无界LinkedBlockingQueue 中，导致cpu和内存飙升服务器挂掉。</p>
+<p>有界队列</p>
+<p>常用的有两类，一类是遵循FIFO原则的队列如ArrayBlockingQueue与有界的LinkedBlockingQueue，另一类是优先级队列如PriorityBlockingQueue。PriorityBlockingQueue中的优先级由任务的Comparator决定。<br>使用有界队列时队列大小需和线程池大小互相配合，线程池较小有界队列较大时可减少内存消耗，降低cpu使用率和上下文切换，但是可能会限制系统吞吐量。</p>
+<p>在我们的修复方案中，选择的就是这个类型的队列，虽然会有部分任务被丢失，但是我们线上是排序日志搜集任务，所以对部分对丢失是可以容忍的。</p>
+<p>同步移交队列</p>
+<p>如果不希望任务在队列中等待而是希望将任务直接移交给工作线程，可使用SynchronousQueue作为等待队列。SynchronousQueue不是一个真正的队列，而是一种线程之间移交的机制。要将一个元素放入SynchronousQueue中，必须有另一个线程正在等待接收这个元素。只有在使用无界线程池或者有饱和策略时才建议使用该队列。</p>
+<h2 id="3-可选择的饱和策略RejectedExecutionHandler详解"><a href="#3-可选择的饱和策略RejectedExecutionHandler详解" class="headerlink" title="3. 可选择的饱和策略RejectedExecutionHandler详解"></a>3. 可选择的饱和策略RejectedExecutionHandler详解</h2><p>JDK主要提供了4种饱和策略供选择。4种策略都做为静态内部类在ThreadPoolExcutor中进行实现。</p>
+<h2 id="3-1-AbortPolicy中止策略"><a href="#3-1-AbortPolicy中止策略" class="headerlink" title="3.1 AbortPolicy中止策略"></a>3.1 AbortPolicy中止策略</h2><p>该策略是默认饱和策略。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public void rejectedExecution(Runnable r, ThreadPoolExecutor e) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            throw new RejectedExecutionException(&quot;Task &quot; + r.toString() +</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                                                 &quot; rejected from &quot; +</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                                                 e.toString());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>使用该策略时在饱和时会抛出RejectedExecutionException（继承自RuntimeException），调用者可捕获该异常自行处理。</p>
+<h2 id="3-2-DiscardPolicy抛弃策略"><a href="#3-2-DiscardPolicy抛弃策略" class="headerlink" title="3.2 DiscardPolicy抛弃策略"></a>3.2 DiscardPolicy抛弃策略</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public void rejectedExecution(Runnable r, ThreadPoolExecutor e) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如代码所示，不做任何处理直接抛弃任务</p>
+<h2 id="3-3-DiscardOldestPolicy抛弃旧任务策略"><a href="#3-3-DiscardOldestPolicy抛弃旧任务策略" class="headerlink" title="3.3 DiscardOldestPolicy抛弃旧任务策略"></a>3.3 DiscardOldestPolicy抛弃旧任务策略</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public void rejectedExecution(Runnable r, ThreadPoolExecutor e) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            if (!e.isShutdown()) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                e.getQueue().poll();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                e.execute(r);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如代码，先将阻塞队列中的头元素出队抛弃，再尝试提交任务。如果此时阻塞队列使用PriorityBlockingQueue优先级队列，将会导致优先级最高的任务被抛弃，因此不建议将该种策略配合优先级队列使用。</p>
+<h2 id="3-4-CallerRunsPolicy调用者运行"><a href="#3-4-CallerRunsPolicy调用者运行" class="headerlink" title="3.4 CallerRunsPolicy调用者运行"></a>3.4 CallerRunsPolicy调用者运行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public void rejectedExecution(Runnable r, ThreadPoolExecutor e) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            if (!e.isShutdown()) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                r.run();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>既不抛弃任务也不抛出异常，直接运行任务的run方法，换言之将任务回退给调用者来直接运行。使用该策略时线程池饱和后将由调用线程池的主线程自己来执行任务，因此在执行任务的这段时间里主线程无法再提交新任务，从而使线程池中工作线程有时间将正在处理的任务处理完成。</p>
+<h2 id="4-Java提供的四种常用线程池解析"><a href="#4-Java提供的四种常用线程池解析" class="headerlink" title="4. Java提供的四种常用线程池解析"></a>4. Java提供的四种常用线程池解析</h2><p>既然楼主踩坑就是使用了 JDK 的默认实现，那么再来看看这些默认实现到底干了什么，封装了哪些参数。简而言之 Executors 工厂方法Executors.newCachedThreadPool() 提供了无界线程池，可以进行自动线程回收；Executors.newFixedThreadPool(int) 提供了固定大小线程池，内部使用无界队列；Executors.newSingleThreadExecutor() 提供了单个后台线程。</p>
+<p>详细介绍一下上述四种线程池。</p>
+<h2 id="4-1-newCachedThreadPool"><a href="#4-1-newCachedThreadPool" class="headerlink" title="4.1 newCachedThreadPool"></a>4.1 newCachedThreadPool</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public static ExecutorService newCachedThreadPool() &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        return new ThreadPoolExecutor(0, Integer.MAX_VALUE,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                                      60L, TimeUnit.SECONDS,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                                      new SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在newCachedThreadPool中如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。<br>初看该构造函数时我有这样的疑惑：核心线程池为0，那按照前面所讲的线程池策略新任务来临时无法进入核心线程池，只能进入 SynchronousQueue中进行等待，而SynchronousQueue的大小为1，那岂不是第一个任务到达时只能等待在队列中，直到第二个任务到达发现无法进入队列才能创建第一个线程？<br>这个问题的答案在上面讲SynchronousQueue时其实已经给出了，要将一个元素放入SynchronousQueue中，必须有另一个线程正在等待接收这个元素。因此即便SynchronousQueue一开始为空且大小为1，第一个任务也无法放入其中，因为没有线程在等待从SynchronousQueue中取走元素。因此第一个任务到达时便会创建一个新线程执行该任务。</p>
+<h2 id="4-2-newFixedThreadPool"><a href="#4-2-newFixedThreadPool" class="headerlink" title="4.2 newFixedThreadPool"></a>4.2 newFixedThreadPool</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public static ExecutorService newFixedThreadPool(int nThreads) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       return new ThreadPoolExecutor(nThreads, nThreads,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                                     0L, TimeUnit.MILLISECONDS,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                                     new LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看代码一目了然了，线程数量固定，使用无限大的队列。再次强调，楼主就是踩的这个无限大队列的坑。</p>
+<h2 id="4-3-newScheduledThreadPool"><a href="#4-3-newScheduledThreadPool" class="headerlink" title="4.3 newScheduledThreadPool"></a>4.3 newScheduledThreadPool</h2><p>创建一个定长线程池，支持定时及周期性任务执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        return new ScheduledThreadPoolExecutor(corePoolSize);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在来看看ScheduledThreadPoolExecutor（）的构造函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public ScheduledThreadPoolExecutor(int corePoolSize) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       super(corePoolSize, Integer.MAX_VALUE, 0, NANOSECONDS,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">             new DelayedWorkQueue());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>ScheduledThreadPoolExecutor的父类即ThreadPoolExecutor，因此这里各参数含义和上面一样。值得关心的是DelayedWorkQueue这个阻塞对列，在上面没有介绍，它作为静态内部类就在ScheduledThreadPoolExecutor中进行了实现。简单的说，DelayedWorkQueue是一个无界队列，它能按一定的顺序对工作队列中的元素进行排列。</p>
+<h2 id="4-4-newSingleThreadExecutor"><a href="#4-4-newSingleThreadExecutor" class="headerlink" title="4.4 newSingleThreadExecutor"></a>4.4 newSingleThreadExecutor</h2><p>创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public static ScheduledExecutorService newSingleThreadScheduledExecutor() &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        return new DelegatedScheduledExecutorService</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            (new ScheduledThreadPoolExecutor(1));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>首先new了一个线程数目为 1 的ScheduledThreadPoolExecutor，再把该对象传入DelegatedScheduledExecutorService中，看看DelegatedScheduledExecutorService的实现代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">DelegatedScheduledExecutorService(ScheduledExecutorService executor) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            super(executor);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            e = executor;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在看看它的父类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DelegatedExecutorService(ExecutorService executor) &#123; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">           e = executor; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实就是使用装饰模式增强了ScheduledExecutorService（1）的功能，不仅确保只有一个线程顺序执行任务，也保证线程意外终止后会重新创建一个线程继续执行任务。</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>虽然之前学习了不少相关知识，但是只有在实践中踩坑才能印象深刻吧</p>
+<p>原文地址：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zMjg2NzE4MT91dG1fc291cmNlPXdlY2hhdF9zZXNzaW9uJmFtcDt1dG1fbWVkaXVtPXNvY2lhbA==" title="https://zhuanlan.zhihu.com/p/32867181?utm_source=wechat_session&amp;utm_medium=social">https://zhuanlan.zhihu.com/p/32867181?utm_source=wechat_session&amp;utm_medium=social<i class="fa fa-external-link"></i></span></p>
 
       
     </div>
@@ -623,7 +672,7 @@
         
         <div class="post-tags">
           
-            <a href="/tags/JavaSE/" rel="tag"><i class="fa fa-tag"></i> JavaSE</a>
+            <a href="/tags/线程池/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
           
         </div>
       
@@ -728,8 +777,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/Java语言基础.html" rel="next" title="Java语言基础">
-                <i class="fa fa-chevron-left"></i> Java语言基础
+              <a href="/并发编程和线程池.html" rel="next" title="并发编程和线程池">
+                <i class="fa fa-chevron-left"></i> 并发编程和线程池
               </a>
             
           </div>
@@ -737,10 +786,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/java中内存分配策略及堆和栈的比较.html" rel="prev" title="java中内存分配策略及堆和栈的比较">
-                java中内存分配策略及堆和栈的比较 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1046,7 +1091,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一："><span class="nav-number">1.</span> <span class="nav-text">问题一：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二："><span class="nav-number">2.</span> <span class="nav-text">问题二：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三："><span class="nav-number">3.</span> <span class="nav-text">问题三：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-中的堆和栈"><span class="nav-number">4.</span> <span class="nav-text">Java 中的堆和栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体的说："><span class="nav-number">5.</span> <span class="nav-text">具体的说：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方式一："><span class="nav-number">6.</span> <span class="nav-text">方式一：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方式二："><span class="nav-number">7.</span> <span class="nav-text">方式二：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#这是一个十分严重的问题"><span class="nav-number">1.</span> <span class="nav-text">这是一个十分严重的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Java线程池"><span class="nav-number">2.</span> <span class="nav-text">1. Java线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-可选择的阻塞队列BlockingQueue详解"><span class="nav-number">3.</span> <span class="nav-text">2. 可选择的阻塞队列BlockingQueue详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-可选择的饱和策略RejectedExecutionHandler详解"><span class="nav-number">4.</span> <span class="nav-text">3. 可选择的饱和策略RejectedExecutionHandler详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-AbortPolicy中止策略"><span class="nav-number">5.</span> <span class="nav-text">3.1 AbortPolicy中止策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-DiscardPolicy抛弃策略"><span class="nav-number">6.</span> <span class="nav-text">3.2 DiscardPolicy抛弃策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-DiscardOldestPolicy抛弃旧任务策略"><span class="nav-number">7.</span> <span class="nav-text">3.3 DiscardOldestPolicy抛弃旧任务策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-CallerRunsPolicy调用者运行"><span class="nav-number">8.</span> <span class="nav-text">3.4 CallerRunsPolicy调用者运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Java提供的四种常用线程池解析"><span class="nav-number">9.</span> <span class="nav-text">4. Java提供的四种常用线程池解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-newCachedThreadPool"><span class="nav-number">10.</span> <span class="nav-text">4.1 newCachedThreadPool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-newFixedThreadPool"><span class="nav-number">11.</span> <span class="nav-text">4.2 newFixedThreadPool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-newScheduledThreadPool"><span class="nav-number">12.</span> <span class="nav-text">4.3 newScheduledThreadPool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-newSingleThreadExecutor"><span class="nav-number">13.</span> <span class="nav-text">4.4 newSingleThreadExecutor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束语"><span class="nav-number">14.</span> <span class="nav-text">结束语</span></a></li></ol></div>
             
 
           </div>
@@ -1261,7 +1306,7 @@
   
     <script>
   window.livereOptions = {
-    refer: 'Java内存机制和内存地址.html'
+    refer: '一次Java线程池误用引发的血案和总结.html'
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];
@@ -1670,13 +1715,13 @@
       var articles = db.collection('articles')
 
       //https://hexo.io/docs/variables.html
-      var isPost = 'Java内存机制和内存地址'.length > 0
+      var isPost = '一次Java线程池误用引发的血案和总结'.length > 0
       var isArchive = '' === 'true'
       var isCategory = ''.length > 0
       var isTag = ''.length > 0
 
       if (isPost) { //is article page
-        var title = 'Java内存机制和内存地址'
+        var title = '一次Java线程池误用引发的血案和总结'
         var doc = articles.doc(title)
 
         getCount(doc, true).then(appendCountTo($('.post-meta')))

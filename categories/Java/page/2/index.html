@@ -324,7 +324,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">42</span></a>
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">43</span></a>
 
   </li>
         
@@ -469,6 +469,32 @@
         <h2>Java<small>分类</small>
         </h2>
       </div>
+
+      
+        
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h3 class="post-title">
+        
+          <a class="post-title-link" href="/Java集合体系结构以及集合和数组的区别.html" itemprop="url">
+            
+              <span itemprop="name">Java集合体系结构以及集合和数组的区别</span>
+            
+          </a>
+        
+      </h3>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2017-12-31T20:01:38+08:00" content="2017-12-31">
+          12-31
+        </time>
+      </div>
+
+    </header>
+  </article>
+
 
       
         
@@ -705,32 +731,6 @@
 
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/给出一组年龄，求最大年龄，最小年龄.html" itemprop="url">
-            
-              <span itemprop="name">给出一组年龄，用冒泡排序求最大年龄，最小年龄</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-12-01T19:25:51+08:00" content="2017-12-01">
-          12-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
     </div>
 
   </div>
@@ -927,7 +927,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">42</span>
+                      
+                    
+                    <span class="site-state-item-count">43</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1613,7 +1615,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("Java基本数据类型取值范围");titles.push("Java基础编程题");titles.push("自动装箱的陷阱");titles.push("Intellij导出JavaDoc编码异常");titles.push("Java内存区域与内存溢出异常");titles.push("面试题：百度前200页都在这里了");titles.push("Java逃逸分析");titles.push("数据区、代码区、栈区、堆区");titles.push("Java常用类和方法重点总结");titles.push("给出一组年龄，用冒泡排序求最大年龄，最小年龄");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("Java集合体系结构以及集合和数组的区别");titles.push("Java基本数据类型取值范围");titles.push("Java基础编程题");titles.push("自动装箱的陷阱");titles.push("Intellij导出JavaDoc编码异常");titles.push("Java内存区域与内存溢出异常");titles.push("面试题：百度前200页都在这里了");titles.push("Java逃逸分析");titles.push("数据区、代码区、栈区、堆区");titles.push("Java常用类和方法重点总结");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
