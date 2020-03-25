@@ -287,7 +287,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">82</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">83</span></a>
 
   </li>
         
@@ -325,7 +325,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">43</span></a>
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">44</span></a>
 
   </li>
         
@@ -435,6 +435,297 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/CDH5-16-1集群企业真正离线部署.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/CDH5-16-1集群企业真正离线部署.html" class="post-title-link" itemprop="url">CDH5.16.1集群企业真正离线部署</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-25 16:58:47 / 修改时间：17:02:21" itemprop="dateCreated datePublished" datetime="2020-03-25T16:58:47+08:00">2020-03-25</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/大数据/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/CDH5-16-1集群企业真正离线部署.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/CDH5-16-1集群企业真正离线部署.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/CDH5-16-1集群企业真正离线部署.html" class="leancloud_visitors" data-flag-title="CDH5.16.1集群企业真正离线部署">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>视频:<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL2F2NTIxNjcyMTk=" title="https://www.bilibili.com/video/av52167219">https://www.bilibili.com/video/av52167219<i class="fa fa-external-link"></i></span><br>PS:建议先看课程视频1-2篇，再根据视频或文档部署，<br>如有问题，及时与@若泽数据J哥联系。</p>
+<hr>
+<h2 id="一-准备工作"><a href="#一-准备工作" class="headerlink" title="一.准备工作"></a>一.准备工作</h2><h4 id="1-离线部署主要分为三块"><a href="#1-离线部署主要分为三块" class="headerlink" title="1.离线部署主要分为三块:"></a>1.离线部署主要分为三块:</h4><p>a.MySQL离线部署<br>b.CM离线部署<br>c.Parcel文件离线源部署</p>
+<h4 id="2-规划"><a href="#2-规划" class="headerlink" title="2.规划:"></a>2.规划:</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">节点</th>
+<th style="text-align:left">MySQL部署组件</th>
+<th style="text-align:left">Parcel文件离线源</th>
+<th style="text-align:left">CM服务进程</th>
+<th style="text-align:left">大数据组件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">hadoop001</td>
+<td style="text-align:left">MySQL</td>
+<td style="text-align:left">Parcel</td>
+<td style="text-align:left">Activity Monitor</td>
+<td style="text-align:left">NN RM DN NM</td>
+</tr>
+<tr>
+<td style="text-align:left">hadoop002</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left">Alert Publisher Event Server</td>
+<td style="text-align:left">DN NM</td>
+</tr>
+<tr>
+<td style="text-align:left">hadoop003</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left">Host Monitor Service Monitor</td>
+<td style="text-align:left">DN NM</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-下载源"><a href="#3-下载源" class="headerlink" title="3.下载源:"></a>3.下载源:</h3><ul>
+<li>CM<br>cloudera-manager-centos7-cm5.16.1_x86_64.tar.gz</li>
+<li>Parcel<br>CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel<br>CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel.sha1<br>manifest.json</li>
+<li>JDK<br><span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS90ZWNobmV0d29yay9qYXZhL2phdmFzZS9kb3dubG9hZHMvamF2YS1hcmNoaXZlLWphdmFzZTgtMjE3NzY0OC5odG1s" title="https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html<i class="fa fa-external-link"></i></span><br>下载jdk-8u202-linux-x64.tar.gz</li>
+<li>MySQL<br><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2Rvd25sb2Fkcy9teXNxbC81LjcuaHRtbCNkb3dubG9hZHM=" title="https://dev.mysql.com/downloads/mysql/5.7.html#downloads">https://dev.mysql.com/downloads/mysql/5.7.html#downloads<i class="fa fa-external-link"></i></span><br>下载mysql-5.7.26-el7-x86_64.tar.gz</li>
+<li>MySQL jdbc jar<br>mysql-connector-java-5.1.47.jar<br>下载完成后要重命名去掉版本号，<br>mv mysql-connector-java-5.1.47.jar mysql-connector-java.jar</li>
+</ul>
+<hr>
+<h3 id="准备好百度云-下载安装包"><a href="#准备好百度云-下载安装包" class="headerlink" title="准备好百度云,下载安装包:"></a>准备好百度云,下载安装包:</h3><p>链接:<span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMTBzLU5hRkxmenRLdVdJbVpUaUJNakE=" title="https://pan.baidu.com/s/10s-NaFLfztKuWImZTiBMjA">https://pan.baidu.com/s/10s-NaFLfztKuWImZTiBMjA<i class="fa fa-external-link"></i></span>  密码:viqp</p>
+<h2 id="二-集群节点初始化"><a href="#二-集群节点初始化" class="headerlink" title="二.集群节点初始化"></a>二.集群节点初始化</h2><h3 id="1-阿里云上海区购买3台，按量付费虚拟机"><a href="#1-阿里云上海区购买3台，按量付费虚拟机" class="headerlink" title="1.阿里云上海区购买3台，按量付费虚拟机"></a>1.阿里云上海区购买3台，按量付费虚拟机</h3><p>CentOS7.2操作系统，2核8G最低配置</p>
+<h3 id="2-当前笔记本或台式机配置hosts文件"><a href="#2-当前笔记本或台式机配置hosts文件" class="headerlink" title="2.当前笔记本或台式机配置hosts文件"></a>2.当前笔记本或台式机配置hosts文件</h3><ul>
+<li>MAC: /etc/hosts</li>
+<li>Window: C:\windows\system32\drivers\etc\hosts</li>
+</ul>
+<p>公网地址:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1106.15.234.222 hadoop001  </span><br><span class="line">2106.15.235.200 hadoop002  </span><br><span class="line">3106.15.234.239 hadoop003</span><br></pre></td></tr></table></figure>
+<h3 id="3-设置所有节点的hosts文件"><a href="#3-设置所有节点的hosts文件" class="headerlink" title="3.设置所有节点的hosts文件"></a>3.设置所有节点的hosts文件</h3><p>私有地址、内网地址:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1echo &quot;172.19.7.96 hadoop001&quot;&gt;&gt; /etc/hosts</span><br><span class="line">2echo &quot;172.19.7.98 hadoop002&quot;&gt;&gt; /etc/hosts</span><br><span class="line">3echo &quot;172.19.7.97 hadoop003&quot;&gt;&gt; /etc/hosts</span><br></pre></td></tr></table></figure>
+<h3 id="4-关闭所有节点的防火墙及清空规则"><a href="#4-关闭所有节点的防火墙及清空规则" class="headerlink" title="4.关闭所有节点的防火墙及清空规则"></a>4.关闭所有节点的防火墙及清空规则</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1systemctl stop firewalld </span><br><span class="line">2systemctl disable firewalld</span><br><span class="line">3iptables -F</span><br></pre></td></tr></table></figure>
+<h3 id="5-关闭所有节点的selinux"><a href="#5-关闭所有节点的selinux" class="headerlink" title="5.关闭所有节点的selinux"></a>5.关闭所有节点的selinux</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1vi /etc/selinux/config</span><br><span class="line">2将SELINUX=enforcing改为SELINUX=disabled </span><br><span class="line">3设置后需要重启才能生效</span><br></pre></td></tr></table></figure>
+<h3 id="6-设置所有节点的时区一致及时钟同步"><a href="#6-设置所有节点的时区一致及时钟同步" class="headerlink" title="6.设置所有节点的时区一致及时钟同步"></a>6.设置所有节点的时区一致及时钟同步</h3><p>6.1.时区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> 1[root@hadoop001 ~]# date</span><br><span class="line"> 2Sat May 11 10:07:53 CST 2019</span><br><span class="line"> 3[root@hadoop001 ~]# timedatectl</span><br><span class="line"> 4      Local time: Sat 2019-05-11 10:10:31 CST</span><br><span class="line"> 5  Universal time: Sat 2019-05-11 02:10:31 UTC</span><br><span class="line"> 6        RTC time: Sat 2019-05-11 10:10:29</span><br><span class="line"> 7       Time zone: Asia/Shanghai (CST, +0800)</span><br><span class="line"> 8     NTP enabled: yes</span><br><span class="line"> 9NTP synchronized: yes</span><br><span class="line">10 RTC in local TZ: yes</span><br><span class="line">11      DST active: n/a</span><br></pre></td></tr></table></figure>
+<h5 id="查看命令帮助，学习至关重要，无需百度，太👎"><a href="#查看命令帮助，学习至关重要，无需百度，太👎" class="headerlink" title="查看命令帮助，学习至关重要，无需百度，太👎"></a>查看命令帮助，学习至关重要，无需百度，太👎</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> 1[root@hadoop001 ~]# timedatectl --help</span><br><span class="line"> 2timedatectl [OPTIONS...] COMMAND ...</span><br><span class="line"> 3Query or change system time and date settings.</span><br><span class="line"> 4  -h --help                Show this help message</span><br><span class="line"> 5     --version             Show package version</span><br><span class="line"> 6     --no-pager            Do not pipe output into a pager</span><br><span class="line"> 7     --no-ask-password     Do not prompt for password</span><br><span class="line"> 8  -H --host=[USER@]HOST    Operate on remote host</span><br><span class="line"> 9  -M --machine=CONTAINER   Operate on local container</span><br><span class="line">10     --adjust-system-clock Adjust system clock when changing local RTC mode</span><br><span class="line">11Commands:</span><br><span class="line">12  status                   Show current time settings</span><br><span class="line">13  set-time TIME            Set system time</span><br><span class="line">14  set-timezone ZONE        Set system time zone</span><br><span class="line">15  list-timezones           Show known time zones</span><br><span class="line">16  set-local-rtc BOOL       Control whether RTC is in local time</span><br><span class="line">17  set-ntp BOOL             Control whether NTP is enabled</span><br></pre></td></tr></table></figure>
+<h5 id="查看哪些时区"><a href="#查看哪些时区" class="headerlink" title="查看哪些时区"></a>查看哪些时区</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1[root@hadoop001 ~]# timedatectl list-timezones</span><br><span class="line">2Africa/Abidjan</span><br><span class="line">3Africa/Accra</span><br><span class="line">4Africa/Addis_Ababa</span><br><span class="line">5Africa/Algiers</span><br><span class="line">6Africa/Asmara</span><br><span class="line">7Africa/Bamako</span><br></pre></td></tr></table></figure>
+<h5 id="所有节点设置亚洲上海时区"><a href="#所有节点设置亚洲上海时区" class="headerlink" title="所有节点设置亚洲上海时区"></a>所有节点设置亚洲上海时区</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1[root@hadoop001 ~]# timedatectl set-timezone Asia/Shanghai</span><br><span class="line">2[root@hadoop002 ~]# timedatectl set-timezone Asia/Shanghai</span><br><span class="line">3[root@hadoop003 ~]# timedatectl set-timezone Asia/Shanghai</span><br></pre></td></tr></table></figure>
+<p>6.2.时间</p>
+<h5 id="所有节点安装ntp"><a href="#所有节点安装ntp" class="headerlink" title="所有节点安装ntp"></a>所有节点安装ntp</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1[root@hadoop001 ~]# yum install -y ntp</span><br></pre></td></tr></table></figure>
+<h5 id="选取hadoop001为ntp的主节点"><a href="#选取hadoop001为ntp的主节点" class="headerlink" title="选取hadoop001为ntp的主节点"></a>选取hadoop001为ntp的主节点</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1[root@hadoop001 ~]# vi /etc/ntp.conf</span><br></pre></td></tr></table></figure>
+<h5 id="time"><a href="#time" class="headerlink" title="time"></a>time</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1server 0.asia.pool.ntp.org</span><br><span class="line">2server 1.asia.pool.ntp.org</span><br><span class="line">3server 2.asia.pool.ntp.org</span><br><span class="line">4server 3.asia.pool.ntp.org</span><br></pre></td></tr></table></figure>
+<h5 id="当外部时间不可用时，可使用本地硬件时间"><a href="#当外部时间不可用时，可使用本地硬件时间" class="headerlink" title="当外部时间不可用时，可使用本地硬件时间"></a>当外部时间不可用时，可使用本地硬件时间</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1server 127.127.1.0 iburst local clock</span><br></pre></td></tr></table></figure>
+<h5 id="允许哪些网段的机器来同步时间"><a href="#允许哪些网段的机器来同步时间" class="headerlink" title="允许哪些网段的机器来同步时间"></a>允许哪些网段的机器来同步时间</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1restrict 172.19.7.0 mask 255.255.255.0 nomodify notrap</span><br></pre></td></tr></table></figure>
+<h5 id="开启ntpd及查看状态"><a href="#开启ntpd及查看状态" class="headerlink" title="开启ntpd及查看状态"></a>开启ntpd及查看状态</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> 1[root@hadoop001 ~]# systemctl start ntpd</span><br><span class="line"> 2[root@hadoop001 ~]# systemctl status ntpd</span><br><span class="line"> 3● ntpd.service - Network Time Service</span><br><span class="line"> 4   Loaded: loaded (/usr/lib/systemd/system/ntpd.service; enabled; vendor preset: disabled)</span><br><span class="line"> 5   Active: active (running) since Sat 2019-05-11 10:15:00 CST; 11min ago</span><br><span class="line"> 6 Main PID: 18518 (ntpd)</span><br><span class="line"> 7   CGroup: /system.slice/ntpd.service</span><br><span class="line"> 8           └─18518 /usr/sbin/ntpd -u ntp:ntp -g</span><br><span class="line"> 9May 11 10:15:00 hadoop001 systemd[1]: Starting Network Time Service...</span><br><span class="line">10May 11 10:15:00 hadoop001 ntpd[18518]: proto: precision = 0.088 usec</span><br><span class="line">11May 11 10:15:00 hadoop001 ntpd[18518]: 0.0.0.0 c01d 0d kern kernel time sync enabled</span><br><span class="line">12May 11 10:15:00 hadoop001 systemd[1]: Started Network Time Service.</span><br></pre></td></tr></table></figure>
+<h5 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1[root@hadoop001 ~]# ntpq -p</span><br><span class="line">2     remote           refid      st t when poll reach   delay   offset  jitter</span><br><span class="line">3==============================================================================</span><br><span class="line">4 LOCAL(0)        .LOCL.          10 l  726   64    0    0.000    0.000   0.000</span><br></pre></td></tr></table></figure>
+<h5 id="其他从节点停止禁用ntpd服务"><a href="#其他从节点停止禁用ntpd服务" class="headerlink" title="其他从节点停止禁用ntpd服务"></a>其他从节点停止禁用ntpd服务</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1[root@hadoop002 ~]# systemctl stop ntpd</span><br><span class="line">2[root@hadoop002 ~]# systemctl disable ntpd</span><br><span class="line">3Removed symlink /etc/systemd/system/multi-user.target.wants/ntpd.service.</span><br><span class="line">4[root@hadoop002 ~]# /usr/sbin/ntpdate hadoop001</span><br><span class="line">511 May 10:29:22 ntpdate[9370]: adjust time server 172.19.7.96 offset 0.000867 sec</span><br></pre></td></tr></table></figure>
+<h5 id="每天凌晨同步hadoop001节点时间"><a href="#每天凌晨同步hadoop001节点时间" class="headerlink" title="每天凌晨同步hadoop001节点时间"></a>每天凌晨同步hadoop001节点时间</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> 1[root@hadoop002 ~]# crontab -e</span><br><span class="line"> 200 00 * * * /usr/sbin/ntpdate hadoop001  </span><br><span class="line"> 3[root@hadoop003 ~]# systemctl stop ntpd</span><br><span class="line"> 4[root@hadoop004 ~]# systemctl disable ntpd</span><br><span class="line"> 5Removed symlink /etc/systemd/system/multi-user.target.wants/ntpd.service.</span><br><span class="line"> 6[root@hadoop005 ~]# /usr/sbin/ntpdate hadoop001</span><br><span class="line"> 711 May 10:29:22 ntpdate[9370]: adjust time server 172.19.7.96 offset 0.000867 sec</span><br><span class="line"> 8#每天凌晨同步hadoop001节点时间</span><br><span class="line"> 9[root@hadoop003 ~]# crontab -e</span><br><span class="line">1000 00 * * * /usr/sbin/ntpdate hadoop001</span><br></pre></td></tr></table></figure>
+<h3 id="7-部署集群的JDK"><a href="#7-部署集群的JDK" class="headerlink" title="7.部署集群的JDK"></a>7.部署集群的JDK</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1mkdir /usr/java</span><br><span class="line">2tar -xzvf jdk-8u45-linux-x64.tar.gz -C /usr/java/</span><br><span class="line">3#切记必须修正所属用户及用户组</span><br><span class="line">4chown -R root:root /usr/java/jdk1.8.0_45</span><br><span class="line">5echo &quot;export JAVA_HOME=/usr/java/jdk1.8.0_45&quot; &gt;&gt; /etc/profile</span><br><span class="line">6echo &quot;export PATH=$&#123;JAVA_HOME&#125;/bin:$&#123;PATH&#125;&quot; &gt;&gt; /etc/profile</span><br><span class="line">7source /etc/profile</span><br><span class="line">8which java</span><br></pre></td></tr></table></figure>
+<h3 id="8-hadoop001节点离线部署MySQL5-7-假如觉得困难哟，就自行百度RPM部署，因为该部署文档是我司生产文档"><a href="#8-hadoop001节点离线部署MySQL5-7-假如觉得困难哟，就自行百度RPM部署，因为该部署文档是我司生产文档" class="headerlink" title="8.hadoop001节点离线部署MySQL5.7(假如觉得困难哟，就自行百度RPM部署，因为该部署文档是我司生产文档)"></a>8.hadoop001节点离线部署MySQL5.7(假如觉得困难哟，就自行百度RPM部署，因为该部署文档是我司生产文档)</h3><ul>
+<li>文档链接:<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0hhY2tlcnVuY2xlL015U1FM" title="https://github.com/Hackeruncle/MySQL">https://github.com/Hackeruncle/MySQL<i class="fa fa-external-link"></i></span></li>
+<li>视频链接:<span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMWpkTThXZUlnOHN5VTBldkwxLXRET1E=" title="https://pan.baidu.com/s/1jdM8WeIg8syU0evL1-tDOQ">https://pan.baidu.com/s/1jdM8WeIg8syU0evL1-tDOQ<i class="fa fa-external-link"></i></span>  密码:whic</li>
+</ul>
+<h3 id="9-创建CDH的元数据库和用户、amon服务的数据库及用户"><a href="#9-创建CDH的元数据库和用户、amon服务的数据库及用户" class="headerlink" title="9.创建CDH的元数据库和用户、amon服务的数据库及用户"></a>9.创建CDH的元数据库和用户、amon服务的数据库及用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1create database cmf DEFAULT CHARACTER SET utf8;</span><br><span class="line">2create database amon DEFAULT CHARACTER SET utf8;</span><br><span class="line">3grant all on cmf.* TO &apos;cmf&apos;@&apos;%&apos; IDENTIFIED BY &apos;Ruozedata123456!&apos;;</span><br><span class="line">4grant all on amon.* TO &apos;amon&apos;@&apos;%&apos; IDENTIFIED BY &apos;Ruozedata123456!&apos;;</span><br><span class="line">5flush privileges;</span><br></pre></td></tr></table></figure>
+<h3 id="10-hadoop001节点部署mysql-jdbc-jar"><a href="#10-hadoop001节点部署mysql-jdbc-jar" class="headerlink" title="10.hadoop001节点部署mysql jdbc jar"></a>10.hadoop001节点部署mysql jdbc jar</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1mkdir -p /usr/share/java/</span><br><span class="line">2cp mysql-connector-java.jar /usr/share/java/</span><br></pre></td></tr></table></figure>
+<h2 id="三-CDH部署"><a href="#三-CDH部署" class="headerlink" title="三.CDH部署"></a>三.CDH部署</h2><h3 id="1-离线部署cm-server及agent"><a href="#1-离线部署cm-server及agent" class="headerlink" title="1.离线部署cm server及agent"></a>1.离线部署cm server及agent</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> 11.1.所有节点创建目录及解压</span><br><span class="line"> 2mkdir /opt/cloudera-manager</span><br><span class="line"> 3tar -zxvf cloudera-manager-centos7-cm5.16.1_x86_64.tar.gz -C /opt/cloudera-manager/</span><br><span class="line"> 41.2.所有节点修改agent的配置，指向server的节点hadoop001</span><br><span class="line"> 5sed -i &quot;s/server_host=localhost/server_host=hadoop001/g&quot; /opt/cloudera-manager/cm-5.16.1/etc/cloudera-scm-agent/config.ini</span><br><span class="line"> 61.3.主节点修改server的配置:</span><br><span class="line"> 7vi /opt/cloudera-manager/cm-5.16.1/etc/cloudera-scm-server/db.properties </span><br><span class="line"> 8com.cloudera.cmf.db.type=mysql</span><br><span class="line"> 9com.cloudera.cmf.db.host=hadoop001</span><br><span class="line">10com.cloudera.cmf.db.name=cmf</span><br><span class="line">11com.cloudera.cmf.db.user=cmf</span><br><span class="line">12com.cloudera.cmf.db.password=Ruozedata123456!</span><br><span class="line">13com.cloudera.cmf.db.setupType=EXTERNAL</span><br><span class="line">141.4.所有节点创建用户</span><br><span class="line">15useradd --system --home=/opt/cloudera-manager/cm-5.16.1/run/cloudera-scm-server/ --no-create-home --shell=/bin/false --comment &quot;Cloudera SCM User&quot; cloudera-scm</span><br><span class="line">161.5.目录修改用户及用户组</span><br><span class="line">17chown -R cloudera-scm:cloudera-scm /opt/cloudera-manager</span><br></pre></td></tr></table></figure>
+<h3 id="2-hadoop001节点部署离线parcel源"><a href="#2-hadoop001节点部署离线parcel源" class="headerlink" title="2.hadoop001节点部署离线parcel源"></a>2.hadoop001节点部署离线parcel源</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> 12.1.部署离线parcel源</span><br><span class="line"> 2$ mkdir -p /opt/cloudera/parcel-repo</span><br><span class="line"> 3$ ll</span><br><span class="line"> 4total 3081664</span><br><span class="line"> 5-rw-r--r-- 1 root root 2127506677 May  9 18:04 CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel</span><br><span class="line"> 6-rw-r--r-- 1 root root         41 May  9 18:03 CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel.sha1</span><br><span class="line"> 7-rw-r--r-- 1 root root  841524318 May  9 18:03 cloudera-manager-centos7-cm5.16.1_x86_64.tar.gz</span><br><span class="line"> 8-rw-r--r-- 1 root root  185515842 Aug 10  2017 jdk-8u144-linux-x64.tar.gz</span><br><span class="line"> 9-rw-r--r-- 1 root root      66538 May  9 18:03 manifest.json</span><br><span class="line">10-rw-r--r-- 1 root root     989495 May 25  2017 mysql-connector-java.jar</span><br><span class="line">11$ cp CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel /opt/cloudera/parcel-repo/</span><br><span class="line">12#切记cp时，重命名去掉1，不然在部署过程CM认为如上文件下载未完整，会持续下载</span><br><span class="line">13$ cp CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel.sha1 /opt/cloudera/parcel-repo/CDH-5.16.1-1.cdh5.16.1.p0.3-el7.parcel.sha</span><br><span class="line">14$ cp manifest.json /opt/cloudera/parcel-repo/</span><br><span class="line">152.2.目录修改用户及用户组</span><br><span class="line">16$ chown -R cloudera-scm:cloudera-scm /opt/cloudera/</span><br></pre></td></tr></table></figure>
+<h3 id="3-所有节点创建软件安装目录、用户及用户组权限"><a href="#3-所有节点创建软件安装目录、用户及用户组权限" class="headerlink" title="3.所有节点创建软件安装目录、用户及用户组权限"></a>3.所有节点创建软件安装目录、用户及用户组权限</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1mkdir -p /opt/cloudera/parcels</span><br><span class="line">2chown -R cloudera-scm:cloudera-scm /opt/cloudera/</span><br></pre></td></tr></table></figure>
+<h3 id="4-hadoop001节点启动Server"><a href="#4-hadoop001节点启动Server" class="headerlink" title="4.hadoop001节点启动Server"></a>4.hadoop001节点启动Server</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">14.1.启动server</span><br><span class="line">2/opt/cloudera-manager/cm-5.16.1/etc/init.d/cloudera-scm-server start</span><br><span class="line">34.2.阿里云web界面，设置该hadoop001节点防火墙放开7180端口</span><br><span class="line">44.3.等待1min，打开 http://hadoop001:7180 账号密码:admin/admin</span><br><span class="line">54.4.假如打不开，去看server的log，根据错误仔细排查错误</span><br></pre></td></tr></table></figure>
+<h3 id="5-所有节点启动Agent"><a href="#5-所有节点启动Agent" class="headerlink" title="5.所有节点启动Agent"></a>5.所有节点启动Agent</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1/opt/cloudera-manager/cm-5.16.1/etc/init.d/cloudera-scm-agent start</span><br></pre></td></tr></table></figure>
+<h3 id="6-接下来，全部Web界面操作"><a href="#6-接下来，全部Web界面操作" class="headerlink" title="6.接下来，全部Web界面操作"></a>6.接下来，全部Web界面操作</h3><p><span class="exturl" data-url="aHR0cDovL2hhZG9vcDAwMTo3MTgwLw==" title="http://hadoop001:7180/">http://hadoop001:7180/<i class="fa fa-external-link"></i></span><br>账号密码:admin/admin</p>
+<h3 id="7-欢迎使用Cloudera-Manager–最终用户许可条款与条件。勾选"><a href="#7-欢迎使用Cloudera-Manager–最终用户许可条款与条件。勾选" class="headerlink" title="7.欢迎使用Cloudera Manager–最终用户许可条款与条件。勾选"></a>7.欢迎使用Cloudera Manager–最终用户许可条款与条件。勾选</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOTMntgWCB2RNGM6yIaUia6hAywAgazVIRPibSZlCJgp4pTTQhWM0fjRVaQ/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="8-欢迎使用Cloudera-Manager–您想要部署哪个版本？选择Cloudera-Express免费版本"><a href="#8-欢迎使用Cloudera-Manager–您想要部署哪个版本？选择Cloudera-Express免费版本" class="headerlink" title="8.欢迎使用Cloudera Manager–您想要部署哪个版本？选择Cloudera Express免费版本"></a>8.欢迎使用Cloudera Manager–您想要部署哪个版本？选择Cloudera Express免费版本</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOTNe2xHBYR8ibmF1sFhyLJngtqibTJylSZkCmcmBD3HtJu2Pw9G8o5WVQg/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="9-感谢您选择Cloudera-Manager和CDH"><a href="#9-感谢您选择Cloudera-Manager和CDH" class="headerlink" title="9.感谢您选择Cloudera Manager和CDH"></a>9.感谢您选择Cloudera Manager和CDH</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOTjcibnIMwV6TJwVHVQZOLHnNsMA45g4hMa43LEgZv0AwdASia0CNibEhug/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="10-为CDH集群安装指导主机。选择-当前管理的主机-，全部勾选"><a href="#10-为CDH集群安装指导主机。选择-当前管理的主机-，全部勾选" class="headerlink" title="10.为CDH集群安装指导主机。选择[当前管理的主机]，全部勾选"></a>10.为CDH集群安装指导主机。选择[当前管理的主机]，全部勾选</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOTq1NNOhRffwbBvXOezndFvm0kSdWhWH2hBHYLOzVv8fw4rdU2ibFvJcw/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="11-选择存储库"><a href="#11-选择存储库" class="headerlink" title="11.选择存储库"></a>11.选择存储库</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOTjiceg4wvCaDzZySicaia4ZCwKjcyIBN1tW6L3nmtVkeMdt4TIiawiceia1DQ/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="12-集群安装–正在安装选定Parcel假如"><a href="#12-集群安装–正在安装选定Parcel假如" class="headerlink" title="12.集群安装–正在安装选定Parcel假如"></a>12.集群安装–正在安装选定Parcel假如</h3><p>本地parcel离线源配置正确，则”下载”阶段瞬间完成，其余阶段视节点数与内部网络情况决定。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOT3kX26zl0BFWoNvOqbF1FR6BvYjVoyC9eibOmZd7NE3ufZMVyfyLjBhg/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="13-检查主机正确性"><a href="#13-检查主机正确性" class="headerlink" title="13.检查主机正确性"></a>13.检查主机正确性</h3><p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> 113.1.建议将/proc/sys/vm/swappiness设置为最大值10。</span><br><span class="line"> 2swappiness值控制操作系统尝试交换内存的积极；</span><br><span class="line"> 3swappiness=0：表示最大限度使用物理内存，之后才是swap空间；</span><br><span class="line"> 4swappiness=100：表示积极使用swap分区，并且把内存上的数据及时搬迁到swap空间；</span><br><span class="line"> 5如果是混合服务器，不建议完全禁用swap，可以尝试降低swappiness。</span><br><span class="line"> 6临时调整：</span><br><span class="line"> 7sysctl vm.swappiness=10</span><br><span class="line"> 8永久调整：</span><br><span class="line"> 9cat &lt;&lt; EOF &gt;&gt; /etc/sysctl.conf</span><br><span class="line">10# Adjust swappiness value</span><br><span class="line">11vm.swappiness=10</span><br><span class="line">12EOF</span><br><span class="line">1313.2.已启用透明大页面压缩，可能会导致重大性能问题，建议禁用此设置。</span><br><span class="line">14临时调整：</span><br><span class="line">15echo never &gt; /sys/kernel/mm/transparent_hugepage/defrag</span><br><span class="line">16echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled</span><br><span class="line">17永久调整：</span><br><span class="line">18cat &lt;&lt; EOF &gt;&gt; /etc/rc.d/rc.local</span><br><span class="line">19# Disable transparent_hugepage</span><br><span class="line">20echo never &gt; /sys/kernel/mm/transparent_hugepage/defrag</span><br><span class="line">21echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled</span><br><span class="line">22EOF</span><br><span class="line">23# centos7.x系统，需要为&quot;/etc/rc.d/rc.local&quot;文件赋予执行权限</span><br><span class="line">24chmod +x /etc/rc.d/rc.local</span><br></pre></td></tr></table></figure>
+<h3 id="14-自定义服务，选择部署Zookeeper、HDFS、Yarn服务"><a href="#14-自定义服务，选择部署Zookeeper、HDFS、Yarn服务" class="headerlink" title="14.自定义服务，选择部署Zookeeper、HDFS、Yarn服务"></a>14.自定义服务，选择部署Zookeeper、HDFS、Yarn服务</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOTDQOX5gC9KRxIUIY1eL561QticAaz23IX1ogYVRiajwXlbibddeax1a33w/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="15-自定义角色分配"><a href="#15-自定义角色分配" class="headerlink" title="15.自定义角色分配"></a>15.自定义角色分配</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOTkp6Dw0RMWkoFTd4sbzBnrWiblxVkWLoPZSMziaRgY2DSE03fQRmBgJ4w/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="16-数据库设置"><a href="#16-数据库设置" class="headerlink" title="16.数据库设置"></a>16.数据库设置</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOT0CQtn7eQbrjkPmTgQA6ye22UNfdZ618RexePfdrupRPtTrZlHLQRPw/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="17-审改设置，默认即可"><a href="#17-审改设置，默认即可" class="headerlink" title="17.审改设置，默认即可"></a>17.审改设置，默认即可</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOT4qoAXY69p0jSUgGFmlzq5MAQ4xoRyu1B2ftqt3BKwJ8fZ8f7ogWyuw/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="18-首次运行"><a href="#18-首次运行" class="headerlink" title="18.首次运行"></a>18.首次运行</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOTtF5tKDhqYhmlp4AasDK71tJ6BtAWk10FBibeJziaEPbWcbwFXxiaWtxfQ/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="19-恭喜您"><a href="#19-恭喜您" class="headerlink" title="19.恭喜您!"></a>19.恭喜您!</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOTkvbFkWcLiawvHnOtSv5VORKXSKS8DurU6DQHnuzNp0JLmstVhNXRnvA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h3 id="20-主页"><a href="#20-主页" class="headerlink" title="20.主页"></a>20.主页</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/m7Lx6FicJmUmSZI8m74xFUKB6wzFsFMOTMJE0wE0Apia0rSYXKVJzoRWIuia2ccrONV9PiaePpv4phgftKiax9PAfPQ/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<hr>
+<h3 id="CDH全套课程目录，如有buy，加微信-ruoze-star"><a href="#CDH全套课程目录，如有buy，加微信-ruoze-star" class="headerlink" title="CDH全套课程目录，如有buy，加微信(ruoze_star)"></a>CDH全套课程目录，如有buy，加微信(ruoze_star)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"> 1    0.青云环境介绍和使用 </span><br><span class="line"> 2    1.Preparation        </span><br><span class="line"> 3        谈谈怎样入门大数据 </span><br><span class="line"> 4        谈谈怎样做好一个大数据平台的运营工作 </span><br><span class="line"> 5        Linux机器,各软件版本介绍及安装(录播) </span><br><span class="line"> 6    2.Introduction      </span><br><span class="line"> 7        Cloudera、CM及CDH介绍 </span><br><span class="line"> 8        CDH版本选择 </span><br><span class="line"> 9        CDH安装几种方式解读 </span><br><span class="line">10    3.Install&amp;UnInstall  </span><br><span class="line">11        集群节点规划,环境准备(NTP,Jdk and etc) </span><br><span class="line">12        MySQL编译安装及常用命令 </span><br><span class="line">13        推荐:CDH离线安装(踩坑心得,全面剖析) </span><br><span class="line">14        解读暴力卸载脚本 </span><br><span class="line">15    4.CDH Management      </span><br><span class="line">16        CDH体系架构剖析 </span><br><span class="line">17        CDH配置文件深度解析 </span><br><span class="line">18        CM的常用命令 </span><br><span class="line">19        CDH集群正确启动和停止顺序 </span><br><span class="line">20        CDH Tsquery Language </span><br><span class="line">21        CDH常规管理(监控/预警/配置/资源/日志/安全) </span><br><span class="line">22    5.Maintenance Experiment  </span><br><span class="line">23        HDFS HA 配置 及hadoop/hdfs常规命令 </span><br><span class="line">24        Yarn HA 配置 及yarn常规命令 </span><br><span class="line">25        Other CDH Components HA 配置 </span><br><span class="line">26        CDH动态添加删除服务(hive/spark/hbase) </span><br><span class="line">27        CDH动态添加删除机器 </span><br><span class="line">28        CDH动态添加删除及迁移DataNode进程等 </span><br><span class="line">29        CDH升级(5.10.0--&gt;5.12.0) </span><br><span class="line">30    6.Resource Management    </span><br><span class="line">31        Linux Cgroups </span><br><span class="line">32        静态资源池 </span><br><span class="line">33        动态资源池 </span><br><span class="line">34        多租户案例 </span><br><span class="line">35    7.Performance Tunning    </span><br><span class="line">36        Memory/CPU/Network/Disk及集群规划 </span><br><span class="line">37        Linux参数 </span><br><span class="line">38        HDFS参数 </span><br><span class="line">39        MapReduce及Yarn参数 </span><br><span class="line">40        其他服务参数 </span><br><span class="line">41    8.Cases Share        </span><br><span class="line">42        CDH4&amp;5之Alternatives命令 的研究 </span><br><span class="line">43        CDH5.8.2安装之Hash verification failed </span><br><span class="line">44        记录一次CDH4.8.6 配置HDFS HA 坑 </span><br><span class="line">45        CDH5.0集群IP更改 </span><br><span class="line">46        CDH的active namenode exit(GC)和彩蛋分享 </span><br><span class="line">47    9. Kerberos     </span><br><span class="line">48        Kerberos简介</span><br><span class="line">49        Kerberos体系结构</span><br><span class="line">50        Kerberos工作机制</span><br><span class="line">51        Kerberos安装部署</span><br><span class="line">52        CDH启用kerberos</span><br><span class="line">53        Kerberos开发使用(真实代码)</span><br><span class="line">54    10.Summary         </span><br><span class="line">55        总结</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Join-us-if-you-have-a-dream"><a href="#Join-us-if-you-have-a-dream" class="headerlink" title="Join us if you have a dream."></a>Join us if you have a dream.</h4><h5 id="若泽数据官网-http-ruozedata-com"><a href="#若泽数据官网-http-ruozedata-com" class="headerlink" title="若泽数据官网: http://ruozedata.com"></a>若泽数据官网: <span class="exturl" data-url="aHR0cDovL3J1b3plZGF0YS5jb20=" title="http://ruozedata.com">http://ruozedata.com<i class="fa fa-external-link"></i></span></h5><h5 id="腾讯课堂，搜若泽数据-http-ruoze-ke-qq-com"><a href="#腾讯课堂，搜若泽数据-http-ruoze-ke-qq-com" class="headerlink" title="腾讯课堂，搜若泽数据: http://ruoze.ke.qq.com"></a>腾讯课堂，搜若泽数据: <span class="exturl" data-url="aHR0cDovL3J1b3plLmtlLnFxLmNvbQ==" title="http://ruoze.ke.qq.com">http://ruoze.ke.qq.com<i class="fa fa-external-link"></i></span></h5><h5 id="Bilibili网站-搜若泽数据-https-space-bilibili-com-356836323"><a href="#Bilibili网站-搜若泽数据-https-space-bilibili-com-356836323" class="headerlink" title="Bilibili网站,搜若泽数据: https://space.bilibili.com/356836323"></a>Bilibili网站,搜若泽数据: <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMzU2ODM2MzIz" title="https://space.bilibili.com/356836323">https://space.bilibili.com/356836323<i class="fa fa-external-link"></i></span></h5><p>##### </p>
+<p>##### </p>
+<p>##### </p>
+<h5 id="若泽大数据–官方博客-https-ruozedata-github-io"><a href="#若泽大数据–官方博客-https-ruozedata-github-io" class="headerlink" title="若泽大数据–官方博客(https://ruozedata.github.io)"></a>若泽大数据–官方博客(<span class="exturl" data-url="aHR0cHM6Ly9ydW96ZWRhdGEuZ2l0aHViLmlv" title="https://ruozedata.github.io">https://ruozedata.github.io<i class="fa fa-external-link"></i></span>)</h5><h5 id="若泽大数据–博客一览-https-github-com-ruozedata-BigData-blob-master-blog-BigDataBlogOverview-md"><a href="#若泽大数据–博客一览-https-github-com-ruozedata-BigData-blob-master-blog-BigDataBlogOverview-md" class="headerlink" title="若泽大数据–博客一览(https://github.com/ruozedata/BigData/blob/master/blog/BigDataBlogOverview.md)"></a>若泽大数据–博客一览(<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3J1b3plZGF0YS9CaWdEYXRhL2Jsb2IvbWFzdGVyL2Jsb2cvQmlnRGF0YUJsb2dPdmVydmlldy5tZA==" title="https://github.com/ruozedata/BigData/blob/master/blog/BigDataBlogOverview.md">https://github.com/ruozedata/BigData/blob/master/blog/BigDataBlogOverview.md<i class="fa fa-external-link"></i></span>)</h5><h5 id="若泽大数据–内部学员面试题-https-github-com-ruozedata-BigData-blob-master-interview-E5-B8-B8-E8-A7-81-E9-9D-A2-E8-AF-95-E9-A2-98-md"><a href="#若泽大数据–内部学员面试题-https-github-com-ruozedata-BigData-blob-master-interview-E5-B8-B8-E8-A7-81-E9-9D-A2-E8-AF-95-E9-A2-98-md" class="headerlink" title="若泽大数据–内部学员面试题(https://github.com/ruozedata/BigData/blob/master/interview/%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98.md)"></a>若泽大数据–内部学员面试题(<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3J1b3plZGF0YS9CaWdEYXRhL2Jsb2IvbWFzdGVyL2ludGVydmlldy8lRTUlQjglQjglRTglQTclODElRTklOUQlQTIlRTglQUYlOTUlRTklQTIlOTgubWQ=" title="https://github.com/ruozedata/BigData/blob/master/interview/%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98.md">https://github.com/ruozedata/BigData/blob/master/interview/%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98.md<i class="fa fa-external-link"></i></span>)</h5>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -2227,192 +2518,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/修改kafka保留天数对数据入库的影响.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Daniel X">
-      <meta itemprop="description" content="專注于大数据技術，分享干货">
-      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="The Future">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/修改kafka保留天数对数据入库的影响.html" class="post-title-link" itemprop="url">修改kafka保留天数对数据入库的影响</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-26 09:56:00" itemprop="dateCreated datePublished" datetime="2019-07-26T09:56:00+08:00">2019-07-26</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-07-30 12:20:36" itemprop="dateModified" datetime="2019-07-30T12:20:36+08:00">2019-07-30</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/修改kafka保留天数对数据入库的影响.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/修改kafka保留天数对数据入库的影响.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/修改kafka保留天数对数据入库的影响.html" class="leancloud_visitors" data-flag-title="修改kafka保留天数对数据入库的影响">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="场景介绍："><a href="#场景介绍：" class="headerlink" title="场景介绍："></a>场景介绍：</h2><p>Kafka集群三个broker，同时有一个生产者和一个消费者，生产者producer 已生产2个多小时约10万条数据，同时消费者将数据插入hbase中。</p>
-<h2 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h2><p>1、打开ambari操作界面，在kafka配置页下修改保留天数的参数log.retention.hours 为1小时，同时修改文件大小segment为10000。（此处数值的设置，为了方便测试）<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/修改kafka保留天数对数据入库的影响.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2461,7 +2566,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-count">83</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2605,7 +2710,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">43</span>
+                      
+                    
+                    <span class="site-state-item-count">44</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3291,7 +3398,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("一次Java线程池误用引发的血案和总结");titles.push("并发编程和线程池");titles.push("关于fastjson解析后的属性排序问题解决方案");titles.push("hashcode详解");titles.push("greenplum安装与部署（详细）");titles.push("git配置多个SSH-Key");titles.push("windows添加公钥后，无法克隆的问题解决");titles.push("kafka基本操作");titles.push("kafka如何彻底删除topic及数据");titles.push("修改kafka保留天数对数据入库的影响");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("CDH5.16.1集群企业真正离线部署");titles.push("一次Java线程池误用引发的血案和总结");titles.push("并发编程和线程池");titles.push("关于fastjson解析后的属性排序问题解决方案");titles.push("hashcode详解");titles.push("greenplum安装与部署（详细）");titles.push("git配置多个SSH-Key");titles.push("windows添加公钥后，无法克隆的问题解决");titles.push("kafka基本操作");titles.push("kafka如何彻底删除topic及数据");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
