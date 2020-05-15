@@ -1,3 +1,4 @@
+https://www.dudefu.club/centos7-5-Ambari2-7-3部署安装.html
 https://www.dudefu.club/CDH5-16-1集群企业真正离线部署.html
 https://www.dudefu.club/一次Java线程池误用引发的血案和总结.html
 https://www.dudefu.club/并发编程和线程池.html

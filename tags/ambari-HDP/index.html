@@ -141,7 +141,7 @@
   <meta name="description" content="專注于大数据技術，分享干货">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Future">
-<meta property="og:url" content="https://www.dudefu.club/archives/2019/06/index.html">
+<meta property="og:url" content="https://www.dudefu.club/tags/ambari-HDP/index.html">
 <meta property="og:site_name" content="The Future">
 <meta property="og:description" content="專注于大数据技術，分享干货">
 <meta property="og:locale" content="zh-CN">
@@ -155,7 +155,7 @@
 
   
   
-  <link rel="canonical" href="https://www.dudefu.club/archives/2019/06/">
+  <link rel="canonical" href="https://www.dudefu.club/tags/ambari-HDP/">
 
 
 
@@ -165,7 +165,7 @@
   };
 </script>
 
-  <title>归档 | The Future</title>
+  <title>标签: ambari,HDP | The Future</title>
   
 
 
@@ -213,7 +213,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -274,7 +274,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -312,7 +312,7 @@
         
         
           
-          <li class="menu-item menu-item-tags">
+          <li class="menu-item menu-item-tags menu-item-active">
 
     
     
@@ -462,34 +462,15 @@
   
   
   
-  <div class="post-block archive">
+  <div class="post-block tag">
+
     <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+      <div class="collection-title">
+        <h2>ambari,HDP<small>标签</small>
+        </h2>
+      </div>
 
       
-      <span class="archive-page-counter">
-        
-        
-         
-          
-        很好! 目前共计 84 篇日志。 继续努力。
-      </span>
-      
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h2 class="archive-year" id="archive-year-2019">2019</h2>
-          </div>
-        
-        
-
         
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
@@ -497,17 +478,17 @@
 
       <h3 class="post-title">
         
-          <a class="post-title-link" href="/多节点时间同步.html" itemprop="url">
+          <a class="post-title-link" href="/centos7-5-Ambari2-7-3部署安装.html" itemprop="url">
             
-              <span itemprop="name">多节点时间同步</span>
+              <span itemprop="name">centos7.5+Ambari2.7.3部署安装</span>
             
           </a>
         
       </h3>
 
       <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-13T17:31:00+08:00" content="2019-06-13">
-          06-13
+        <time class="post-time" itemprop="dateCreated" datetime="2020-05-15T11:51:32+08:00" content="2020-05-15">
+          05-15
         </time>
       </div>
 
@@ -515,10 +496,9 @@
   </article>
 
 
-
       
-
     </div>
+
   </div>
   
   
@@ -1388,9 +1368,9 @@
 
       //https://hexo.io/docs/variables.html
       var isPost = ''.length > 0
-      var isArchive = 'true' === 'true'
+      var isArchive = '' === 'true'
       var isCategory = ''.length > 0
-      var isTag = ''.length > 0
+      var isTag = 'ambari,HDP'.length > 0
 
       if (isPost) { //is article page
         var title = ''
@@ -1401,7 +1381,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("多节点时间同步");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("centos7.5+Ambari2.7.3部署安装");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
