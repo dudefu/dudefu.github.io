@@ -76,8 +76,8 @@ https://www.dudefu.tk/MySQL优化（二）.html
 https://www.dudefu.tk/MySQL优化（一）.html
 https://www.dudefu.tk/如何阅读源代码.html
 https://www.dudefu.tk/简析String、StringBuffer与StringBuilder.html
-https://www.dudefu.tk/JavaWeb学习.html
 https://www.dudefu.tk/JavaEE软件开发体系架构.html
+https://www.dudefu.tk/JavaWeb学习.html
 https://www.dudefu.tk/Annotations.html
 https://www.dudefu.tk/IE8开发工具“无法附加进程”.html
 https://www.dudefu.tk/MyBatis上手入门实例.html
