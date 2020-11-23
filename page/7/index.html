@@ -141,7 +141,7 @@
   <meta name="description" content="專注于大数据技術，分享干货">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Future">
-<meta property="og:url" content="https://www.dudefu.club/page/7/index.html">
+<meta property="og:url" content="https://www.dudefu.tk/page/7/index.html">
 <meta property="og:site_name" content="The Future">
 <meta property="og:description" content="專注于大数据技術，分享干货">
 <meta property="og:locale" content="zh-CN">
@@ -155,7 +155,7 @@
 
   
   
-  <link rel="canonical" href="https://www.dudefu.club/page/7/">
+  <link rel="canonical" href="https://www.dudefu.tk/page/7/">
 
 
 
@@ -287,7 +287,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">84</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">85</span></a>
 
   </li>
         
@@ -325,7 +325,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">45</span></a>
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">46</span></a>
 
   </li>
         
@@ -451,7 +451,220 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/给出一组年龄，求最大年龄，最小年龄.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/Java常用类和方法重点总结.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/Java常用类和方法重点总结.html" class="post-title-link" itemprop="url">Java常用类和方法重点总结</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-12-04 18:51:29" itemprop="dateCreated datePublished" datetime="2017-12-04T18:51:29+08:00">2017-12-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/Java常用类和方法重点总结.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Java常用类和方法重点总结.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/Java常用类和方法重点总结.html" class="leancloud_visitors" data-flag-title="Java常用类和方法重点总结">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <ol>
+<li>简述Java中内存分配的问题<ul>
+<li style="list-style: none"><input type="checkbox" checked> 凡是new() 出来的东西，都是堆中进行分配的</li>
+<li>局部变量【数据类型+变量名】都是在栈中进行分配的</li>
+<li>静态变量【static】和字符串常量【”String”】都是在数据区进行分配的</li>
+<li>方法【代码】都是在代码区进行存放的</li>
+</ul>
+</li>
+<li>简述Java中Object类的地位<ul>
+<li>Java中所有的类【自己定义的类以及Sun公司提供的类】都默认自动继承了Obeject类</li>
+<li>Java中所有的类都从Object类中继承了toString()方法、hashCode()方法和equals等方法
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/Java常用类和方法重点总结.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </li></ul></li></ol></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/给出一组年龄，求最大年龄，最小年龄.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -654,7 +867,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/不使用第三个变量交换两变量的值.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/不使用第三个变量交换两变量的值.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -850,7 +1063,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/使用Java倒序输出12345.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/使用Java倒序输出12345.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -1047,7 +1260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/并发和并行的区别.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/并发和并行的区别.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -1252,7 +1465,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/Java实现九九乘法表.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/Java实现九九乘法表.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -1455,7 +1668,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/java中内存分配策略及堆和栈的比较.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/java中内存分配策略及堆和栈的比较.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -1658,7 +1871,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/Java内存机制和内存地址.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/Java内存机制和内存地址.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -1863,7 +2076,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/Java语言基础.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/Java语言基础.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -2068,7 +2281,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/变量和常量.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/变量和常量.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -2259,211 +2472,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.club/Java入门.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Daniel X">
-      <meta itemprop="description" content="專注于大数据技術，分享干货">
-      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="The Future">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/Java入门.html" class="post-title-link" itemprop="url">Java入门</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-11-28 19:24:42" itemprop="dateCreated datePublished" datetime="2017-11-28T19:24:42+08:00">2017-11-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/Java入门.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Java入门.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/Java入门.html" class="leancloud_visitors" data-flag-title="Java入门">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="1-Java-是SUN-Starfard-University-Network-公司在1995年开发了一门完全面向对象的，开源的高级编程语言。"><a href="#1-Java-是SUN-Starfard-University-Network-公司在1995年开发了一门完全面向对象的，开源的高级编程语言。" class="headerlink" title="1.    Java:是SUN(Starfard University Network)公司在1995年开发了一门完全面向对象的，开源的高级编程语言。"></a>1.    Java:是SUN(Starfard University Network)公司在1995年开发了一门完全面向对象的，开源的高级编程语言。</h2><h2 id="2-Java发展历史："><a href="#2-Java发展历史：" class="headerlink" title="2.    Java发展历史："></a>2.    Java发展历史：</h2><p>1995 java诞生<br>1996 jdk1.0发布<br>1998 jdk1.2 发布  J2SE(1.2,1.3,1.4)<br>2004 jdk1.5 发布  JAVASE5<br>2014 jdk1.8 发布  JAVASE8</p>
-<h2 id="3-Java的优势：跨平台"><a href="#3-Java的优势：跨平台" class="headerlink" title="3.    Java的优势：跨平台"></a>3.    Java的优势：跨平台</h2><p>一次编写 多次运行<br>Java是运行在JVM（Java virtual machine）之上的。为不同平台下开发不同的JVM。所有JVM对java语言本身的规范是一样的。</p>
-<h2 id="4-Java的版本："><a href="#4-Java的版本：" class="headerlink" title="4.    Java的版本："></a>4.    Java的版本：</h2><p>JavaSE：java standard edition java标准版 是Java的基础。<br>JavaME：java micro edition :移动端，小型设备，PDA等<br>JavaEE：java enterprise edition：java的企业级版本，java web等<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/Java入门.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2512,7 +2520,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">84</span>
+                    <span class="site-state-item-count">85</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2660,7 +2668,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3346,7 +3356,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("给出一组年龄，用冒泡排序求最大年龄，最小年龄");titles.push("不使用第三个变量交换两变量的值");titles.push("使用Java倒序输出12345");titles.push("并发和并行的区别");titles.push("Java实现九九乘法表");titles.push("java中内存分配策略及堆和栈的比较");titles.push("Java内存机制和内存地址");titles.push("Java语言基础");titles.push("变量和常量");titles.push("Java入门");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("Java常用类和方法重点总结");titles.push("给出一组年龄，用冒泡排序求最大年龄，最小年龄");titles.push("不使用第三个变量交换两变量的值");titles.push("使用Java倒序输出12345");titles.push("并发和并行的区别");titles.push("Java实现九九乘法表");titles.push("java中内存分配策略及堆和栈的比较");titles.push("Java内存机制和内存地址");titles.push("Java语言基础");titles.push("变量和常量");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
