@@ -286,7 +286,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">86</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">88</span></a>
 
   </li>
         
@@ -324,7 +324,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">47</span></a>
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">49</span></a>
 
   </li>
         
@@ -469,6 +469,32 @@
         <h2>数据库<small>分类</small>
         </h2>
       </div>
+
+      
+        
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h3 class="post-title">
+        
+          <a class="post-title-link" href="/事务特性-ACID.html" itemprop="url">
+            
+              <span itemprop="name">事务特性-ACID</span>
+            
+          </a>
+        
+      </h3>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2020-11-24T11:47:49+08:00" content="2020-11-24">
+          11-24
+        </time>
+      </div>
+
+    </header>
+  </article>
+
 
       
         
@@ -651,7 +677,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">86</span>
+                    <span class="site-state-item-count">88</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -803,7 +829,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">47</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">49</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1489,7 +1519,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("OLAP和OLTP的区别");titles.push("MySQL8.0修改密码问题");titles.push("MySQL备份");titles.push("MySQL优化（二）");titles.push("MySQL优化（一）");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("事务特性-ACID");titles.push("OLAP和OLTP的区别");titles.push("MySQL8.0修改密码问题");titles.push("MySQL备份");titles.push("MySQL优化（二）");titles.push("MySQL优化（一）");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {

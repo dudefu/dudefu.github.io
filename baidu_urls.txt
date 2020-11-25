@@ -1,3 +1,5 @@
+https://www.dudefu.tk/如何开启一个线程，开启大量线程会有什么问题，如何优化？.html
+https://www.dudefu.tk/事务特性-ACID.html
 https://www.dudefu.tk/OLAP和OLTP的区别.html
 https://www.dudefu.tk/MySQL8-0修改密码问题.html
 https://www.dudefu.tk/centos7-5-Ambari2-7-3部署安装.html
