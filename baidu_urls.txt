@@ -1,3 +1,6 @@
+https://www.dudefu.tk/大数据系统的Lambda架构.html
+https://www.dudefu.tk/kappa架构的层级及其特点.html
+https://www.dudefu.tk/Kappa架构与Lambda架构比较.html
 https://www.dudefu.tk/如何开启一个线程，开启大量线程会有什么问题，如何优化？.html
 https://www.dudefu.tk/事务特性-ACID.html
 https://www.dudefu.tk/OLAP和OLTP的区别.html
