@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="ES 是基于 Lucene 的全文检索引擎，它会对数据进行分词后保存索引，擅长管理大量的索引数据，相对于 MySQL 来说不擅长经常更新数据及关联查询。 说的不是很透彻，没有解析相关的原理;不过既然反复提到了索引，那我们就从索引的角度来对比下两者的差异。">
+<meta name="keywords" content="ES">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch查询速度为什么这么快？">
+<meta property="og:url" content="https://www.dudefu.tk/Elasticsearch查询速度为什么这么快？.html">
+<meta property="og:site_name" content="The Future">
+<meta property="og:description" content="ES 是基于 Lucene 的全文检索引擎，它会对数据进行分词后保存索引，擅长管理大量的索引数据，相对于 MySQL 来说不擅长经常更新数据及关联查询。 说的不是很透彻，没有解析相关的原理;不过既然反复提到了索引，那我们就从索引的角度来对比下两者的差异。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkri4j2a9j30fa09udfu.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkri9o3ktj30fa03ujr9.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkricx1nrj30fa07p74c.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrig6k32j30fa05jweh.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrik0eg4j30fa07mmxd.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrilyjp7j30fa07ymxe.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkripirinj30fa04igli.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrisud0nj30fa05ojrb.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkriuchigj30fa08l0st.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrix5th2j30fa034wed.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrj0duz8j30fa034a9w.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrj44yv8j30fa04hjrd.jpg">
+<meta property="og:updated_time" content="2021-01-12T03:44:06.567Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch查询速度为什么这么快？">
+<meta name="twitter:description" content="ES 是基于 Lucene 的全文检索引擎，它会对数据进行分词后保存索引，擅长管理大量的索引数据，相对于 MySQL 来说不擅长经常更新数据及关联查询。 说的不是很透彻，没有解析相关的原理;不过既然反复提到了索引，那我们就从索引的角度来对比下两者的差异。">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkri4j2a9j30fa09udfu.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.dudefu.tk/Elasticsearch查询速度为什么这么快？">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Elasticsearch查询速度为什么这么快？ | The Future</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">The Future</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Stay hungry,stay foolish.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">93</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">13</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">53</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-something">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/something" rel="section"><i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>干货</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/Elasticsearch查询速度为什么这么快？.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Elasticsearch查询速度为什么这么快？
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-01-12 11:41:10 / 修改时间：11:44:06" itemprop="dateCreated datePublished" datetime="2021-01-12T11:41:10+08:00">2021-01-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Elasticsearch/" itemprop="url" rel="index"><span itemprop="name">Elasticsearch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/Elasticsearch查询速度为什么这么快？.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Elasticsearch查询速度为什么这么快？.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/Elasticsearch查询速度为什么这么快？.html" class="leancloud_visitors" data-flag-title="Elasticsearch查询速度为什么这么快？">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>ES 是基于 Lucene 的全文检索引擎，它会对数据进行分词后保存索引，擅长管理大量的索引数据，相对于 MySQL 来说不擅长经常更新数据及关联查询。</p>
+<p>说的不是很透彻，没有解析相关的原理;不过既然反复提到了索引，那我们就从索引的角度来对比下两者的差异。</p>
+<a id="more"></a>
+<h4 id="MySQL-索引"><a href="#MySQL-索引" class="headerlink" title="MySQL 索引"></a>MySQL 索引</h4><p>先从 MySQL 说起，索引这个词想必大家也是烂熟于心，通常存在于一些查询的场景，是典型的空间换时间的案例。以下内容以 InnoDB 引擎为例。</p>
+<h4 id="常见的数据结构"><a href="#常见的数据结构" class="headerlink" title="常见的数据结构"></a>常见的数据结构</h4><p>假设由我们自己来设计 MySQL 的索引，大概会有哪些选择呢?</p>
+<h4 id="①散列表"><a href="#①散列表" class="headerlink" title="①散列表"></a>①散列表</h4><p>首先我们应当想到的是散列表，这是一个非常常见且高效的查询、写入的数据结构，对应到 Java 中就是 HashMap。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkri4j2a9j30fa09udfu.jpg" alt="img"></p>
+<p>这个数据结构应该不需要过多介绍了，它的写入效率很高 O(1)，比如我们要查询 id=3 的数据时，需要将 3 进行哈希运算，然后再这个数组中找到对应的位置即可。</p>
+<p>但如果我们想查询 1≤id≤6 这样的区间数据时，散列表就不能很好的满足了，由于它是无序的，所以得将所有数据遍历一遍才能知道哪些数据属于这个区间。</p>
+<h4 id="②有序数组"><a href="#②有序数组" class="headerlink" title="②有序数组"></a>②有序数组</h4><p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkri9o3ktj30fa03ujr9.jpg" alt="img"></p>
+<p>有序数组的查询效率也很高，当我们要查询 id=4 的数据时，只需要通过二分查找也能高效定位到数据 O(logn)。</p>
+<p>同时由于数据也是有序的，所以自然也能支持区间查询;这么看来有序数组适合用做索引咯?</p>
+<p>自然是不行，它有另一个重大问题;假设我们插入了 id=2.5 的数据，就得同时将后续的所有数据都移动一位，这个写入效率就会变得非常低。</p>
+<h4 id="③平衡二叉树"><a href="#③平衡二叉树" class="headerlink" title="③平衡二叉树"></a>③平衡二叉树</h4><p>既然有序数组的写入效率不高，那我们就来看看写入效率高的，很容易就能想到二叉树。</p>
+<p>这里我们以平衡二叉树为例：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkricx1nrj30fa07p74c.jpg" alt="img"></p>
+<p>由于平衡二叉树的特性：左节点小于父节点、右节点大于父节点。</p>
+<p>所以假设我们要查询 id=11 的数据，只需要查询 10→12→11 便能最终找到数据，时间复杂度为 O(logn)，同理写入数据时也为 O(logn)。</p>
+<p>但依然不能很好的支持区间范围查找，假设我们要查询 5≤id≤20 的数据时，需要先查询 10 节点的左子树再查询 10 节点的右子树最终才能查询到所有数据。导致这样的查询效率并不高。</p>
+<h4 id="④跳表"><a href="#④跳表" class="headerlink" title="④跳表"></a>④跳表</h4><p>跳表可能不像上边提到的散列表、有序数组、二叉树那样日常见的比较多，但其实 Redis 中的 sort set 就采用了跳表实现。这里我们简单介绍下跳表实现的数据结构有何优势。</p>
+<p>我们都知道即便是对一个有序链表进行查询效率也不高，由于它不能使用数组下标进行二分查找，所以时间复杂度是 o(n)。</p>
+<p>但我们也可以巧妙的优化链表来变相的实现二分查找，如下图：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrig6k32j30fa05jweh.jpg" alt="img"></p>
+<p>我们可以为最底层的数据提取出一级索引、二级索引，根据数据量的不同，我们可以提取出 N 级索引。当我们查询时便可以利用这里的索引变相的实现了二分查找。</p>
+<p>假设现在要查询 id=13 的数据，只需要遍历 1→7→10→13 四个节点便可以查询到数据，当数越多时，效率提升会更明显。</p>
+<p>同时区间查询也是支持，和刚才的查询单个节点类似，只需要查询到起始节点，然后依次往后遍历(链表有序)到目标节点便能将整个范围的数据查询出来。</p>
+<p>同时由于我们在索引上不会存储真正的数据，只是存放一个指针，相对于最底层存放数据的链表来说占用的空间便可以忽略不计了。</p>
+<h4 id="平衡二叉树的优化"><a href="#平衡二叉树的优化" class="headerlink" title="平衡二叉树的优化"></a>平衡二叉树的优化</h4><p>但其实 MySQL 中的 InnoDB 并没有采用跳表，而是使用的一个叫做 B+ 树的数据结构。</p>
+<p>这个数据结构不像是二叉树那样大学老师当做基础数据结构经常讲到，由于这类数据结构都是在实际工程中根据需求场景在基础数据结构中演化而来。</p>
+<p>比如这里的 B+ 树就可以认为是由平衡二叉树演化而来。刚才我们提到二叉树的区间查询效率不高，针对这一点便可进行优化：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrik0eg4j30fa07mmxd.jpg" alt="img"></p>
+<p>在原有二叉树的基础上优化后：所有的非叶子都不存放数据，只是作为叶子节点的索引，数据全部都存放在叶子节点。</p>
+<p>这样所有叶子节点的数据都是有序存放的，便能很好的支持区间查询。只需要先通过查询到起始节点的位置，然后在叶子节点中依次往后遍历即可。</p>
+<p>当数据量巨大时，很明显索引文件是不能存放于内存中，虽然速度很快但消耗的资源也不小;所以 MySQL 会将索引文件直接存放于磁盘中。</p>
+<p>这点和后文提到 Elasticsearch 的索引略有不同。由于索引存放于磁盘中，所以我们要尽可能的减少与磁盘的 IO(磁盘 IO 的效率与内存不在一个数量级)。</p>
+<p>通过上图可以看出，我们要查询一条数据至少得进行 4 次IO，很明显这个 IO 次数是与树的高度密切相关的，树的高度越低 IO 次数就会越少，同时性能也会越好。</p>
+<p>那怎样才能降低树的高度呢?</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrilyjp7j30fa07ymxe.jpg" alt="img"></p>
+<p>我们可以尝试把二叉树变为三叉树，这样树的高度就会下降很多，这样查询数据时的 IO 次数自然也会降低，同时查询效率也会提高许多。这其实就是 B+ 树的由来。</p>
+<h4 id="使用索引的一些建议"><a href="#使用索引的一些建议" class="headerlink" title="使用索引的一些建议"></a>使用索引的一些建议</h4><p>其实通过上图对 B+树的理解，也能优化日常工作的一些小细节;比如为什么需要最好是有序递增的?</p>
+<p>假设我们写入的主键数据是无序的，那么有可能后写入数据的 id 小于之前写入的，这样在维护 B+树索引时便有可能需要移动已经写好数据。</p>
+<p>如果是按照递增写入数据时则不会有这个考虑，每次只需要依次写入即可。所以我们才会要求数据库主键尽量是趋势递增的，不考虑分表的情况时最合理的就是自增主键。</p>
+<p>整体来看思路和跳表类似，只是针对使用场景做了相关的调整(比如数据全部存储于叶子节点)。</p>
+<h4 id="ES-索引"><a href="#ES-索引" class="headerlink" title="ES 索引"></a>ES 索引</h4><p>MySQL 聊完了，现在来看看 Elasticsearch 是如何来使用索引的。</p>
+<h4 id="正排索引"><a href="#正排索引" class="headerlink" title="正排索引"></a>正排索引</h4><p>在 ES 中采用的是一种名叫倒排索引的数据结构;在正式讲倒排索引之前先来聊聊和他相反的正排索引。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkripirinj30fa04igli.jpg" alt="img"></p>
+<p>以上图为例，我们可以通过 doc_id 查询到具体对象的方式称为使用正排索引，其实也能理解为一种散列表。</p>
+<p>本质是通过 key 来查找 value。比如通过 doc_id=4 便能很快查询到 name=jetty wang，age=20 这条数据。</p>
+<h4 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h4><p>那如果反过来我想查询 name 中包含了 li 的数据有哪些?这样如何高效查询呢?</p>
+<p>仅仅通过上文提到的正排索引显然起不到什么作用，只能依次将所有数据遍历后判断名称中是否包含 li ;这样效率十分低下。</p>
+<p>但如果我们重新构建一个索引结构：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrisud0nj30fa05ojrb.jpg" alt="img"></p>
+<p>当要查询 name 中包含 li 的数据时，只需要通过这个索引结构查询到 Posting List 中所包含的数据，再通过映射的方式查询到最终的数据。</p>
+<p>这个索引结构其实就是倒排索引。</p>
+<h4 id="Term-Dictionary"><a href="#Term-Dictionary" class="headerlink" title="Term Dictionary"></a>Term Dictionary</h4><p>但如何高效的在这个索引结构中查询到 li 呢，结合我们之前的经验，只要我们将 Term 有序排列，便可以使用二叉树搜索树的数据结构在 o(logn) 下查询到数据。</p>
+<p>将一个文本拆分成一个一个独立Term 的过程其实就是我们常说的分词。</p>
+<p>而将所有 Term 合并在一起就是一个 Term Dictionary，也可以叫做单词词典。</p>
+<p>英文的分词相对简单，只需要通过空格、标点符号将文本分隔便能拆词，中文则相对复杂，但也有许多开源工具做支持(由于不是本文重点，对分词感兴趣的可以自行搜索)。</p>
+<p>当我们的文本量巨大时，分词后的 Term 也会很多，这样一个倒排索引的数据结构如果存放于内存那肯定是不够存的，但如果像 MySQL 那样存放于磁盘，效率也没那么高。</p>
+<h4 id="Term-Index"><a href="#Term-Index" class="headerlink" title="Term Index"></a>Term Index</h4><p>所以我们可以选择一个折中的方法，既然无法将整个 Term Dictionary 放入内存中，那我们可以为 Term Dictionary 创建一个索引然后放入内存中。</p>
+<p>这样便可以高效的查询 Term Dictionary ，最后再通过 Term Dictionary 查询到 Posting List。</p>
+<p>相对于 MySQL 中的 B+树来说也会减少了几次磁盘 IO。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkriuchigj30fa08l0st.jpg" alt="img"></p>
+<p>这个 Term Index 我们可以使用这样的 Trie 树，也就是我们常说的字典树来存放。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrix5th2j30fa034wed.jpg" alt="img"></p>
+<p>如果我们是以 j 开头的 Term 进行搜索，首先第一步就是通过在内存中的 Term Index 查询出以 j 打头的 Term 在 Term Dictionary 字典文件中的哪个位置(这个位置可以是一个文件指针，可能是一个区间范围)。</p>
+<p>紧接着在将这个位置区间中的所有 Term 取出，由于已经排好序，便可通过二分查找快速定位到具体位置;这样便可查询出 Posting List。</p>
+<p>最终通过 Posting List 中的位置信息便可在原始文件中将目标数据检索出来。</p>
+<h4 id="更多优化"><a href="#更多优化" class="headerlink" title="更多优化"></a>更多优化</h4><p>当然 Elasticsearch 还做了许多针对性的优化，当我们对两个字段进行检索时，就可以利用 Bitmap 进行优化。</p>
+<p>比如现在需要查询 name=li and age=18 的数据，这时我们需要通过这两个字段将各自的结果 Posting List 取出。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrj0duz8j30fa034a9w.jpg" alt="img"></p>
+<p>最简单的方法是分别遍历两个集合，取出重复的数据，但这个明显效率低下。</p>
+<p>这时我们便可使用 Bitmap 的方式进行存储(还节省存储空间)，同时利用先天的位与计算便可得出结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[1, 3, 5] ⇒ 10101 </span><br><span class="line"> </span><br><span class="line">[1, 2, 4, 5] ⇒ 11011</span><br></pre></td></tr></table></figure>
+<p>这样两个二进制数组求与便可得出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10001 ⇒ [1, 5]</span><br></pre></td></tr></table></figure>
+<p>最终反解出 Posting List 为 [1, 5]，这样的效率自然是要高上许多。同样的查询需求在 MySQL 中并没有特殊优化，只是先将数据量小的数据筛选出来之后再筛选第二个字段，效率自然也就没有 ES 高。</p>
+<p>当然在最新版的 ES 中也会对 Posting List 进行压缩，具体压缩规则可以查看官方文档，这里就不具体介绍了。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>最后我们来总结一下：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmkrj44yv8j30fa04hjrd.jpg" alt="img"></p>
+<p>通过以上内容可以看出再复杂的产品最终都是基础数据结构组成，只是会对不同应用场景针对性的优化，所以打好数据结构与算法的基础后再看某个新的技术或中间件时才能快速上手，甚至自己就能知道优化方向。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/ES/" rel="tag"><i class="fa fa-tag"></i> ES</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+              <div>
+                
+
+<script src="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.css">
+
+
+  
+
+
+<div class="likely likely-light">
+	
+ 	 	<div class="twitter">Tweet</div>
+	
+ 	 	<div class="facebook">Share</div>
+	
+ 	 	<div class="linkedin">Link</div>
+	
+ 	 	<div class="gplus">Plus</div>
+	
+ 	 	<div class="vkontakte">Share</div>
+	
+ 	 	<div class="odnoklassniki">Class</div>
+	
+ 	 	<div class="telegram">Send</div>
+	
+ 	 	<div class="whatsapp">Send</div>
+	
+ 	 	<div class="pinterest">Pin</div>
+	
+</div>
+
+              </div>
+            
+            
+            
+              <div>
+                
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/大数据系统的Lambda架构.html" rel="next" title="大数据系统的Lambda架构">
+                <i class="fa fa-chevron-left"></i> 大数据系统的Lambda架构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Spark项目落地实战以及日常大数据开发注意事项.html" rel="prev" title="Spark项目落地实战以及日常大数据开发注意事项">
+                Spark项目落地实战以及日常大数据开发注意事项 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTk3My82NTM4"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg" alt="Daniel X">
+            
+              <p class="site-author-name" itemprop="name">Daniel X</p>
+              <div class="site-description motion-element" itemprop="description">專注于大数据技術，分享干货</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">93</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">53</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="GitHub &rarr; https://github.com/dudefu"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmR1ZGVmdUBmb3htYWlsLmNvbT9zdWJqZWN0PUhlbGxvJTIwYWdhaW4=" title="E-mail &rarr; mailto:dudefu@foxmail.com?subject=Hello%20again"><i class="fa fa-fw fa-envelope"></i>E-mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHVkZWZ1" title="Weibo &rarr; https://weibo.com/dudefu"><i class="fa fa-fw fa-weibo"></i>Weibo</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93cGEucXEuY29tL21zZ3JkP3Y9MyZ1aW49MTU3NzU3MTk1OSZzaXRlPWR1ZGVmdS5pbmZvJm1lbnU9eWVz" title="QQ &rarr; https://wpa.qq.com/msgrd?v=3&uin=1577571959&site=dudefu.info&menu=yes"><i class="fa fa-fw fa-qq"></i>QQ</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL-索引"><span class="nav-number">1.</span> <span class="nav-text">MySQL 索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见的数据结构"><span class="nav-number">2.</span> <span class="nav-text">常见的数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#①散列表"><span class="nav-number">3.</span> <span class="nav-text">①散列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#②有序数组"><span class="nav-number">4.</span> <span class="nav-text">②有序数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#③平衡二叉树"><span class="nav-number">5.</span> <span class="nav-text">③平衡二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#④跳表"><span class="nav-number">6.</span> <span class="nav-text">④跳表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#平衡二叉树的优化"><span class="nav-number">7.</span> <span class="nav-text">平衡二叉树的优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用索引的一些建议"><span class="nav-number">8.</span> <span class="nav-text">使用索引的一些建议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES-索引"><span class="nav-number">9.</span> <span class="nav-text">ES 索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正排索引"><span class="nav-number">10.</span> <span class="nav-text">正排索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#倒排索引"><span class="nav-number">11.</span> <span class="nav-text">倒排索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Term-Dictionary"><span class="nav-number">12.</span> <span class="nav-text">Term Dictionary</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Term-Index"><span class="nav-number">13.</span> <span class="nav-text">Term Index</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更多优化"><span class="nav-number">14.</span> <span class="nav-text">更多优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">15.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备18110871号 </span>&copy; 2017 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-spinner"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dudefu</span>
+
+  
+
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Pisces</span> v7.1.2</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="26,26,26" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+  <script id="ribbon" size="300" alpha="0.6" zindex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/js.cookie.js?v=7.1.2"></script>
+  <script src="/js/scroll-cookie.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/exturl.js?v=7.1.2"></script>
+
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: true,
+    notify: true,
+    appId: '1N5rpk874DGudJw2wCL9J011-gzGzoHsz',
+    appKey: '9Y83e6suJgx567wtxhKy45IN',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zk-cn' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+    <script>
+  window.livereOptions = {
+    refer: 'Elasticsearch查询速度为什么这么快？.html'
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.1/bluebird.core.min.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/docs/variables.html
+      var isPost = 'Elasticsearch查询速度为什么这么快？'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'Elasticsearch查询速度为什么这么快？'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+      if (selected) {
+        selection.removeAllRanges();
+        selection.addRange(selected);
+      }
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

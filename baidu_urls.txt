@@ -1,3 +1,5 @@
+https://www.dudefu.tk/Spark项目落地实战以及日常大数据开发注意事项.html
+https://www.dudefu.tk/Elasticsearch查询速度为什么这么快？.html
 https://www.dudefu.tk/大数据系统的Lambda架构.html
 https://www.dudefu.tk/kappa架构的层级及其特点.html
 https://www.dudefu.tk/Kappa架构与Lambda架构比较.html
