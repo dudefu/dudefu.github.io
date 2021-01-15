@@ -287,7 +287,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">93</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">100</span></a>
 
   </li>
         
@@ -325,7 +325,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">53</span></a>
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">55</span></a>
 
   </li>
         
@@ -435,6 +435,1427 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/MySQL优化（一）.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/MySQL优化（一）.html" class="post-title-link" itemprop="url">MySQL优化（一）</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-11-26 16:38:23" itemprop="dateCreated datePublished" datetime="2017-11-26T16:38:23+08:00">2017-11-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/MySQL优化（一）.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/MySQL优化（一）.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/MySQL优化（一）.html" class="leancloud_visitors" data-flag-title="MySQL优化（一）">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="MySQL数据库的优化技术"><a href="#MySQL数据库的优化技术" class="headerlink" title="MySQL数据库的优化技术"></a>MySQL数据库的优化技术</h2><h3 id="对MySQL优化时一个综合性的技术，主要包括"><a href="#对MySQL优化时一个综合性的技术，主要包括" class="headerlink" title="对MySQL优化时一个综合性的技术，主要包括"></a>对MySQL优化时一个综合性的技术，主要包括</h3><p>1、表的设计合理化（符合 3NF）<br>2、添加适当索引(index)：普通索引、主键索引、唯一索引(unique)、全文索引<br>3、分表技术（水平分割、垂直分割）<br>4、读写分离<br>5、存储过程（模块化编程，可以提供读写速度）<br>6、对MySQL配置优化（配置最大并发数my.ini，调整缓存大小）<br>7、升级MySQL服务器硬件<br>8、定时清楚不需要的数据，定时进行碎片处理（MyISAM）</p>
+<h2 id="什么样的表才是符合3NF"><a href="#什么样的表才是符合3NF" class="headerlink" title="什么样的表才是符合3NF"></a>什么样的表才是符合3NF</h2><p>表的范式，是首先符合1NF，才能满足2NF，进一步满足3NF<br>1NF：即表的列具有原子性，不可再分解，即列的信息，不能分解，只要数据库是关系型数据库（mysql/oracle/db2/infomix/sysbase/sql server），就自动满足1NF<br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/MySQL优化（一）.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/如何阅读源代码.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/如何阅读源代码.html" class="post-title-link" itemprop="url">如何阅读源代码</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-11-26 14:21:12" itemprop="dateCreated datePublished" datetime="2017-11-26T14:21:12+08:00">2017-11-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/转载/" itemprop="url" rel="index"><span itemprop="name">转载</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/如何阅读源代码.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/如何阅读源代码.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/如何阅读源代码.html" class="leancloud_visitors" data-flag-title="如何阅读源代码">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>阅读别人的代码作为开发人员是一件经常要做的事情。一个是学习新的编程语言的时候通过阅读别人的代码是一个最好的学习方法，另外是积累编程经验。如果你有机会阅读一些操作系统的代码会帮助你理解一些基本的原理。还有就是在你作为一个质量保证人员或一个小领导的时候如果你要做白盒测试的时候没有阅读代码的能力是不能完成相应的任务。最后一个就是如果你中途接手一个项目的时候或给一个项目做售后服务的时候是要有阅读代码的能力的。</p>
+<h2 id="收集所有可能收集的材料"><a href="#收集所有可能收集的材料" class="headerlink" title="收集所有可能收集的材料"></a>收集所有可能收集的材料</h2><p>　　阅读代码要做的第一件事情是收集所有和项目相关的资料。比如你要做一个项目的售后服务，那么你首先要搞明白项目做什么用的，那么调研文档、概要设计文档、详细设计文档、测试文档、使用手册都是你要最先搞到手的。如果你是为了学习那么尽量收集和你的学习有关的资料，比如你想学习Linux的文件系统的代码，那最好要找到linux的使用手册、以及文件系统设计的方法、数据结构的说明。(这些资料在书店里都可以找到)。<br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/如何阅读源代码.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/简析String、StringBuffer与StringBuilder.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/简析String、StringBuffer与StringBuilder.html" class="post-title-link" itemprop="url">简析String、StringBuffer与StringBuilder</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-22 13:41:13" itemprop="dateCreated datePublished" datetime="2017-08-22T13:41:13+08:00">2017-08-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/简析String、StringBuffer与StringBuilder.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/简析String、StringBuffer与StringBuilder.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/简析String、StringBuffer与StringBuilder.html" class="leancloud_visitors" data-flag-title="简析String、StringBuffer与StringBuilder">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="字符串类String"><a href="#字符串类String" class="headerlink" title="字符串类String"></a>字符串类String</h2><p>String是final类。Java程序中的所有字符串字面值(如”abc”)都作为此类的实例实现。字符串是常量，它们的值在创建之后不能更改，如果对已经存在的String对象进行修改，都是重新new一个对象，然后把修改后的值保存进去。字符串缓存区支持可变的字符串。因为String对象是不可变的，所以可以共享。<br>字符串的定义很简单，直接给一个字符串类型的变量赋值即可，例如:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String Str = <span class="string">"abc"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>等价于:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> data[] = &#123;<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>&#125;</span><br><span class="line">String str = <span class="keyword">new</span> String(data);</span><br></pre></td></tr></table></figure></p>
+<h2 id="线程安全的可变字符串类StringBuffer"><a href="#线程安全的可变字符串类StringBuffer" class="headerlink" title="线程安全的可变字符串类StringBuffer"></a>线程安全的可变字符串类StringBuffer</h2><p>StringBuffer 是一个线程安全的可变字符串类，通过构造方法创建对象。类似于String的字符串，不同的是它通过某些方法调用改变该序列的长度和内容。它可将字符串缓存区安全地用于多个线程，可以在必要时对这些方法进行同步。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">StringBuffer();                                <span class="comment">//构造一个空字符串的字符串缓存区</span></span><br><span class="line">StringBuffer(String str);                <span class="comment">//构造一个字符串缓存区，并将其内容初始化为指定的字符串内容</span></span><br></pre></td></tr></table></figure></p>
+<p>StringBuffer上的主要操作是append()和insert()方法。通过查看StringBuffer类的三段源码，我们会发现最后调用了System.arraycopy来进行来修改字符串。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> StringBuffer <span class="title">append</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>.append(str);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/简析String、StringBuffer与StringBuilder.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/JavaEE软件开发体系架构.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/JavaEE软件开发体系架构.html" class="post-title-link" itemprop="url">JavaEE软件开发体系架构</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-17 10:33:54" itemprop="dateCreated datePublished" datetime="2017-08-17T10:33:54+08:00">2017-08-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/JavaEE软件开发体系架构.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/JavaEE软件开发体系架构.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/JavaEE软件开发体系架构.html" class="leancloud_visitors" data-flag-title="JavaEE软件开发体系架构">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="两层架构"><a href="#两层架构" class="headerlink" title="两层架构"></a>两层架构</h2><p>传统的客户服务器系统仅只简单地基于两层体系来构建，即客户端（前台）和企业信息系统（后台），没有任何中间件，业务逻辑层与表示层或数据层混在一起。这种两层架构无论从开发、部署、扩展、维护来说，综其只有一个特点——成本高。</p>
+<h2 id="三层架构"><a href="#三层架构" class="headerlink" title="三层架构"></a>三层架构</h2><p>三层架构自上而下将系统分为表示层、逻辑层、持久层。<br>表示层由处理用户交互的客户端组件及其容器所组成；<br>业务逻辑层由解决业务问题的组件组成；<br>数据层由一个或多个数据库组成，并可包含存储过程。<br>这种三层架构，在处理客户端的请求时，使客户端不用进行复杂的数据库处理；透明地为客户端执行许多工作，如查询数据库、执行业务规则和连接现有的应用程序；并且能够帮助开发人员创建适用于企业的大型分布式应用程序。<br><img src="http://ou3xxg3hg.bkt.clouddn.com/三层.jpg" alt=""><br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/JavaEE软件开发体系架构.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/JavaWeb学习.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/JavaWeb学习.html" class="post-title-link" itemprop="url">JavaWeb开发</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-17 10:33:54" itemprop="dateCreated datePublished" datetime="2017-08-17T10:33:54+08:00">2017-08-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/JavaWeb学习.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/JavaWeb学习.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/JavaWeb学习.html" class="leancloud_visitors" data-flag-title="JavaWeb开发">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1 JSP3个编译指令 : page,include,taglib<br>2 JSP动作指令7个：<br>jsp:forward ： 执行页面转向，将请求的处理转发到下一个页面<br>jsp:aram : 用于传递参数，必须与其他支持参数的标签一起使用<br>jsp:include ： 用于动态引入一个JSP页面<br>jsp:plugin : 用于下载JavaBean 或 Applet到客户端执行<br>jsp:useBean : 创建一个JavaBean的实例<br>jsp:setProperty : 设置JavaBean 实例的属性值<br>jsp:getProperty : 输出JavaBean 实例的属性值<br>3 include指令<br>include指令是一个动态include指令，也用于包含某个页面，它不会导入被include页面的编译指令，仅仅将被导入页面的body内容插入本页面<br>forward动作指令和include指令的区别：执行forward时，被forward的页面将完全代替原有页面；而执行include时，被include的页面只是插入原有页面。简而言之：forward拿目标页面代替原有页面，而include则拿目标页面插入原有页面。<br><img src="http://ou3xxg3hg.bkt.clouddn.com/JSP9%E5%A4%A7%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/Annotations.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/Annotations.html" class="post-title-link" itemprop="url">Annotations</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-05 02:42:06" itemprop="dateCreated datePublished" datetime="2017-08-05T02:42:06+08:00">2017-08-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/译文/" itemprop="url" rel="index"><span itemprop="name">译文</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/Annotations.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Annotations.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/Annotations.html" class="leancloud_visitors" data-flag-title="Annotations">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="原文："><a href="#原文：" class="headerlink" title="原文："></a>原文：</h2><p>You\’ve probably encountered the need to annotate elements of your Java applications by associating metadata (data that describes other data) with them. java has always provided an ad hoc annotation mechanism via the transient reserved word, which lets you annotate fields that are to be excluded during serialization. But it didn\’t offer a standard way to annotate program elements until Java 5.<br>Java 5\’s general annotation mechanism consists of four components:<br>1.An @interface mechanism for declaring annotation types.<br>2.Meta-annotation types, which you can use to identify the application elements to which an annotation type applies; to identify the lifetime of an annotation (an instance of an annotation type); and more.<br>3.Support for annotation processing via an extension to the Java Reflection API, which you can use to discover a program\’s runtime annotations, and the introduction of a generalized tool for processing annotations.<br>4.Standard annotation types.<br>I\’ll explain how to use these components and point out some of the challenges of annotations in the examples that follow.<br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/Annotations.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/IE8开发工具“无法附加进程”.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/IE8开发工具“无法附加进程”.html" class="post-title-link" itemprop="url">IE8开发工具“无法附加进程”</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-05 02:39:01" itemprop="dateCreated datePublished" datetime="2017-08-05T02:39:01+08:00">2017-08-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-15 17:22:48" itemprop="dateModified" datetime="2018-08-15T17:22:48+08:00">2018-08-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/IE8开发工具“无法附加进程”.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/IE8开发工具“无法附加进程”.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/IE8开发工具“无法附加进程”.html" class="leancloud_visitors" data-flag-title="IE8开发工具“无法附加进程”">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>使用IE8开发工具调试时，遇到“无法附加进程，进程可能附加了另一个调试程序”的解决方案<br>本人在遇到此问题时，百度网上的解决方案一般都是重置IE8设置（工具-&gt;Internet选项-&gt;高级-&gt;重置），卸载重装IE8，或者选择别的浏览器进行调试，但是本人的情况是，项目在其他浏览器均可以正常显示，只有IE8以下版本不可以，后面发现是js兼容性问题。我的想法是，通过IE8自带调试工具调试，看看哪里不兼容。后面折腾了好久发现，360浏览器由于用的是IE内核，其开发工具调用的也是IE的开发工具。如果你的系统安装IE9以上版本，可以选择调用IE9以上版本进行开发调试。
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/IE8开发工具“无法附加进程”.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -1098,7 +2519,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">93</span>
+                    <span class="site-state-item-count">100</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1264,7 +2685,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">53</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1950,7 +3375,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("MyBatis上手入门实例");titles.push("阿里云Maven仓库地址");titles.push("deepin下搭建基于github和hexo的个人博客");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("MySQL优化（一）");titles.push("如何阅读源代码");titles.push("简析String、StringBuffer与StringBuilder");titles.push("JavaEE软件开发体系架构");titles.push("JavaWeb开发");titles.push("Annotations");titles.push("IE8开发工具“无法附加进程”");titles.push("MyBatis上手入门实例");titles.push("阿里云Maven仓库地址");titles.push("deepin下搭建基于github和hexo的个人博客");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
@@ -1974,6 +3399,20 @@
 
   
   
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
     
       
     

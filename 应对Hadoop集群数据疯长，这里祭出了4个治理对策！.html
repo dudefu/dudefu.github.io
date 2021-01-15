@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="一、背景 在目前规模比较大的互联网公司中，总数据量能达到10PB甚至几十PB数据量的公司，我认为中国已经有超过了20家了。而在这些公司中，也有很多家公司的日数据增长达到100TB+了。">
+<meta name="keywords" content="hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="应对Hadoop集群数据疯长，这里祭出了4个治理对策！">
+<meta property="og:url" content="https://www.dudefu.tk/应对Hadoop集群数据疯长，这里祭出了4个治理对策！.html">
+<meta property="og:site_name" content="The Future">
+<meta property="og:description" content="一、背景 在目前规模比较大的互联网公司中，总数据量能达到10PB甚至几十PB数据量的公司，我认为中国已经有超过了20家了。而在这些公司中，也有很多家公司的日数据增长达到100TB+了。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7lft0hrj30u00fejs1.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7ph20x5j30u009a0t4.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7q4efjbj30u00dqdgf.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7qnnl70j30u00kcjsx.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7qzaqu7j30u00d6gmq.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7r6rqf4j30u00mfq57.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7ws6w7xj30u0064dgl.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7x660v4j30u0067dfy.jpg">
+<meta property="og:image" content="http://dbaplus.cn/uploadfile/2018/0308/20180308115958294.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7xtlvlij30u00nxac4.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7y31iadj30u00nr76g.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7ybusovj30u00ortbj.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7yn6gfaj30u00qi0vd.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7zaia6lj30u009jmyb.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7zm7us3j30ty09aq3x.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7zt3ytgj30u00g5abx.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7zyvbv1j30ty0xaju3.jpg">
+<meta property="og:updated_time" content="2021-01-15T03:30:46.253Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="应对Hadoop集群数据疯长，这里祭出了4个治理对策！">
+<meta name="twitter:description" content="一、背景 在目前规模比较大的互联网公司中，总数据量能达到10PB甚至几十PB数据量的公司，我认为中国已经有超过了20家了。而在这些公司中，也有很多家公司的日数据增长达到100TB+了。">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7lft0hrj30u00fejs1.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.dudefu.tk/应对Hadoop集群数据疯长，这里祭出了4个治理对策！">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>应对Hadoop集群数据疯长，这里祭出了4个治理对策！ | The Future</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">The Future</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Stay hungry,stay foolish.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">100</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">13</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">55</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-something">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/something" rel="section"><i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>干货</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/应对Hadoop集群数据疯长，这里祭出了4个治理对策！.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">应对Hadoop集群数据疯长，这里祭出了4个治理对策！
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-01-15 11:12:55 / 修改时间：11:30:46" itemprop="dateCreated datePublished" datetime="2021-01-15T11:12:55+08:00">2021-01-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/大数据/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/应对Hadoop集群数据疯长，这里祭出了4个治理对策！.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/应对Hadoop集群数据疯长，这里祭出了4个治理对策！.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/应对Hadoop集群数据疯长，这里祭出了4个治理对策！.html" class="leancloud_visitors" data-flag-title="应对Hadoop集群数据疯长，这里祭出了4个治理对策！">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>一、背景</strong></p>
+<p>在目前规模比较大的互联网公司中，总数据量能达到10PB甚至几十PB数据量的公司，我认为中国已经有超过了20家了。而在这些公司中，也有很多家公司的日数据增长达到100TB+了。 </p>
+<a id="more"></a>
+<p>所以我们每天都要观察集群的数据增长，观察是否有哪一天、哪个路径增长过猛了，是否增长了很多垃圾数据；继续深挖下去，看看是不是可以删掉无用的数据。</p>
+<p>此外我们还要做“容量预估“，把未来的数据增长规划出来，主要是依靠数据增长斜率计算出未来一个季度后的数据量，再把机器采购需求汇报出去。</p>
+<p>在上一篇《基于FsImage的HDFS数据深度分析》（<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zMjIwMzk1Me+8ieS4re+8jOaIkeS7rOWIm+W7uuS6huWfuuS6jkZzaW1hZ2XnmoRIREZT5pWw5o2u5YiG5p6Q5LuT5bqT77yM5bm25Yib5bu65LqG5LiA5Lqb5YiG5p6Q5Zu+6KGo77yM5q+U5aaC4oCcSERGU+WinumVv+i2i+WKv+WbvuKAne+8jOWFheWIhuWcsOino+WGs+S6huWPkeeOsOKAnOaVsOaNruWinumVv+W8guW4uOKAneeahOmXrumimOOAgg==" title="https://zhuanlan.zhihu.com/p/32203951）中，我们创建了基于Fsimage的HDFS数据分析仓库，并创建了一些分析图表，比如“HDFS增长趋势图”，充分地解决了发现“数据增长异常”的问题。">https://zhuanlan.zhihu.com/p/32203951）中，我们创建了基于Fsimage的HDFS数据分析仓库，并创建了一些分析图表，比如“HDFS增长趋势图”，充分地解决了发现“数据增长异常”的问题。<i class="fa fa-external-link"></i></span></p>
+<p><strong>今天，我们会探讨以下4个问题：</strong></p>
+<ol>
+<li>怎样观察“数据增长”</li>
+<li>怎样治理“数据过快增长”</li>
+<li>怎样清理“无用的冷数据”</li>
+<li>怎样管理“数据存活时间”</li>
+</ol>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7lft0hrj30u00fejs1.jpg" alt="img"></p>
+<p>HDFS增长趋势图</p>
+<p>先来算一笔账：当下，一台不错的Datanode机器配置，能挂12-16块盘，每块盘挂上比较大的3TB的硬盘。单台机器的存储量大致在50TB。若按每天增长100TB算，就需要2台机器；按每天增长500TB，则是10台机器。这个数字实在是Terrible ！ </p>
+<p><strong>数据疯狂增长带来的问题</strong></p>
+<p><strong>1、加机器对公司的财务预算要求很高</strong></p>
+<p>服务器再便宜，也是钱。以一周买几十台服务器这种速度来看，即便是财务运转再好的IT公司也不愿意看到数据增长失控。</p>
+<p><strong>2、对集群负载的压力</strong></p>
+<p>Hadoop是一个可以水平扩展的技术栈，且大多数分布式系统也都是把“水平Scalable”作为主要的功能点设计， 但在工程中，是否真的能做到“无限水平扩展”呢？</p>
+<p>首先Hadoop中有一些“Master节点”，这些 Master 节点要实时地和所有“ Slave节点 ”保持心跳通信。在集群规模较小时，由于“心跳”只做简单的网络通信，且所有的 Datanode 都互相错峰汇报“心跳”， 所以网络元数据交换并不是 Hadoop 系统水平扩张的瓶颈。</p>
+<p>但在Hadoop集群的规模达到了大几千甚至上万台后，网络就是Namenode的瓶颈。这些心跳的RPC请求会和“用户Client”的RPC请求一起抢占Namenode有限的CPU资源。</p>
+<p><strong>3、对运维团队的运维压力</strong></p>
+<p>运维团队每周／月都要安装新机器到Hadoop集群里。做这些事情是重复又无聊的，即使自动化做得再好，也需要人来处理某些环节。脏活累活对追求“高技术密集度”的精英工程师团队，是有危害的。</p>
+<p>那为什么我们会有这么多数据增长问题？直接删掉无用的数据不就行了吗？这个事情在公司内部很难做吗？</p>
+<p><strong>为什么这个问题在公司难做？</strong></p>
+<p>对于数据的增长，Hadoop Admin应该要对此负责的，但很多公司并没有做好这件事情，原因如下：</p>
+<p><strong>1、一些公司在自己的数据量级并不是很大的时候，不愿意重视这个问题。</strong>对他们而言，与其请2个人去做这个事情，花掉半年时间， 不如先把钱拿来买机器，这样的情形大多发生在 B轮／C轮的公司里。</p>
+<p>业务增长是主要矛盾。数据每天增长5T，两个程序员半年的成本确实大于买一些机器先解燃眉之急。 等到公司业务越来越大，问题暴露得越来越严重时，公司才开始意识到严重性，这往往已经晚了，毕竟建立整套的HDFS分析系统和报表系统也不是一时半会就能搞定的。</p>
+<p><strong>2、受限于管理上的问题。</strong>在公司里，“业务事业部“和 “基础架构部”是平级的，那作为“基础架构部”的普通员工，哪怕是“基础架构部”的领导，都很难推动其它“业务部门”去Clean他们的数据存储。比如：</p>
+<ul>
+<li>清一下没用的冷数据</li>
+<li>给用户行为日志加一些 Data Retention策略</li>
+</ul>
+<p>“业务部门”总认为自己的核心任务就是业务开发，能为公司产生更大的利益，因此在做数据清理的任务时，总把排期靠后或是设定为低优先级，总有“干不完”的开发任务，所以清理数据在公司内部很难推动。</p>
+<p><strong>3、Hadoop Admin 能拿出足够的证据，让“业务部门”删除冷数据吗？实际上，“业务部门”通常会这样搪塞：</strong></p>
+<ul>
+<li>/path/a 到底最后访问的时间是什么时候，凭什么说没人用了？</li>
+<li>/path/b 有100TB，可我都是有用的数据，别人也这么大，为什么不删别人的？</li>
+<li>你总让“我们部门”删数据，我们到底用了多少存储空间？别的组如果比我们更多呢？ </li>
+</ul>
+<p>带着上面这三个问题，继续往下看。 </p>
+<ol>
+<li>第一个问题似乎是一个很难避免的问题，需要CTO有掌舵的能力，那笔者则希望有志于利用起Hadoop技术栈的中小公司CTO在看了这篇文章后，都能增加这个意识。</li>
+<li>第二个问题是管理上的问题。一般牵扯到制度上的变革，最好是要有Involve更高层领导参与的。多和高层提“成本”和“省钱”，少提“技术”，我认为高层会意识到这个问题的价值。</li>
+<li>第三个问题是本文的重点，即如何摆事实、拿证据证明我们可以针对Path做数据优化呢？ 哪些Path可以删掉？哪些Path应该加Data Retention 策略？</li>
+</ol>
+<p><strong>二、行为（Action）</strong></p>
+<p>我们需要定期进行一些行为，来保持集群的数据可控。</p>
+<p><strong>每日行为</strong> </p>
+<p>每天来到公司，做这样几件事：</p>
+<ul>
+<li>集群增长常规日分析</li>
+<li>当集群“日增长有异样”时，分析具体哪个Path增长占主导</li>
+<li>发现“异常路径“属于哪个User或Team</li>
+<li>发送邮件给对应User／Team，给出Solution</li>
+</ul>
+<p><strong>季度行为</strong></p>
+<p>每个季度结束时 ：</p>
+<ul>
+<li>哪个Team增长最猛，统计Team日增长平均量</li>
+<li>找到“环比”增长最猛的Team，找到本季度“新增数据最猛”的新路径，一般为一些新Hive表</li>
+<li>发邮件给对应Team，给出Solution</li>
+</ul>
+<p>要做到上述行为，我们要对每个Team，每个Path的“数据增长”都有详尽的数据支持。试想一下，在理想情况下，我们需要有哪些数据才能搞定？</p>
+<p>针对“每日行为””，我们需要确定：</p>
+<ul>
+<li>每天增长最大的文件是哪些？</li>
+<li>针对确定的“异常日增长路径”，能查到这个路径的历史数据增长，因为要清楚“平均增长值”，才能看出“某日增长量为异常”，然后再查到其下哪个子路径贡献了最大的增长，进一步深入查找问题。</li>
+</ul>
+<p>针对“季度行为”，我们需要：</p>
+<p>1、所有“数据团队”对集群存储的使用情况，按HDFS的使用量做KPI考核；不仅了解每一个“数据团队”都有哪些“重要路径”，还需要知道这些路径的“增长状况怎么样”。 </p>
+<ul>
+<li>TeamA 一共使用的存储空间，占公司总量有多少？</li>
+<li>TeamA 过去一个季度的环比增长速度如何？</li>
+<li>TeamA 过去一个季度的绝对增长量如何？</li>
+<li>TeamA 下的路径里，是否新建了很多新数据，比如新Hive表？是否有 Data Retention策略？</li>
+</ul>
+<p>2、针对一个Team新增的“异常增长路径”，我们要能查到这个路径的历史数据增长，要知道“平均增长值”，才能看出“某日增长量为异常”，然后查到其下哪个子路径贡献了最大的增长，进一步深入查找问题。</p>
+<p>3、针对“某些”很大的、Size很久没有变化过的Folder，我们要知道这个Folder最后的访问时间是什么时候、它超过半年没访问过的文件占比有多少、超过1年没访问过的文件有多少，然后我们才能和所属的Team联系，优先决定是否能删除它。</p>
+<p>在前文《基于FsImage的HDFS数据深度分析》（<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zMjIwMzk1Me+8ieS4rQ==" title="https://zhuanlan.zhihu.com/p/32203951）中">https://zhuanlan.zhihu.com/p/32203951）中<i class="fa fa-external-link"></i></span> ，我们建立了HDFS数据仓库，这相当于我们存下了HDFS每一天的快照，所以每一条Path的元数据历史问题解决了。 </p>
+<p>再来说说Team Level，每一个Team的数据，都是由一些文件夹下的数据组成的。比如“推荐系统团队”，在/hive/warehouse/reco.db下，所有的推荐相关的表数据都存在于这个下面。另外/user/reco下也存放了很多这个组的数据，这几个路径，都属于“推荐数据组”的“顶级路径”。 所有“顶级路径”的“增长聚合”，就是整个组的“数据增长”。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7ph20x5j30u009a0t4.jpg" alt="img"></p>
+<p>数据组的顶级路径</p>
+<p>每个Folder聚合其下每一个文件的Last_access_time，作为最终这个Folder的Last_access_time. </p>
+<p>这个功能对Hive表非常好用。 有些Hive表很久都没有人访问过，后面我也会详细叙述如何清理Hive表。</p>
+<p><strong>三、例子</strong></p>
+<p>接下来我将用我司的自动化运维系统中的一些报表来做解决问题的展示。</p>
+<p>这些报表都是我们根据解决问题的方法论创建出来的，我们希望贯彻“让一切人的决策基于数据”这一宗旨。让我们判断问题、找到问题，甚至说服“数据团队”，都用Data Driven。</p>
+<p> <strong>每日行为例子</strong> </p>
+<p>1、查看集群每日增长，发现没什么大问题。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7q4efjbj30u00dqdgf.jpg" alt="img"></p>
+<p>2、查看增长贡献，发现几个/User下的用户增长过猛。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7qnnl70j30u00kcjsx.jpg" alt="img"></p>
+<p>3、查看这个路径，与本路径历史增长做比较，发现昨日确实是在不正常地增长。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7qzaqu7j30u00d6gmq.jpg" alt="img"></p>
+<p>4、分析具体是什么子文件导致了这个目录的异常增长。 </p>
+<p>原来是这个用户删除了一些其它路径的大文件，划归到User目录自己的~/.Trash下了。那这就不用太担心，因为HDFS第二天会自动清理掉~/.Trash下的垃圾文件。 </p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7r6rqf4j30u00mfq57.jpg" alt="img"></p>
+<p><strong>季度行为例子</strong></p>
+<p><strong>1、分析“数据团队”季度增长量</strong></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7ws6w7xj30u0064dgl.jpg" alt="img"></p>
+<p> 可以看到：</p>
+<ul>
+<li>TeamA的数据总量很大，环比增长也很大，是首要的分析目标。</li>
+<li>TeamB 和 TeamC 相比，虽然TeamB绝对值增量比TeamC大了很多，但还是一个数量级，但TeamC环比增速太高，很可能业务上发生了很大的变化，所以 TeamC是第二目标。</li>
+</ul>
+<p>在运维人员有限的工作时间内，一定要把“精力”花在刀刃上。对一个Team的数据进行深度分析，往往要用去个把小时，一定要在单位时间上产出最大化。</p>
+<p><strong>2、深度分析Team数据</strong> </p>
+<p>深度分析也是遵循“单位时间产出最大化，抓最主要矛盾”这一思想。接下来还是拿我司的“推荐“团队做例子：</p>
+<p>这些所有的顶级路径，都代表了某种业务的“细分”顶级路径。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7x660v4j30u0067dfy.jpg" alt="img"></p>
+<p>在每个细分“顶级路径”下，我们要观察：</p>
+<ul>
+<li>哪些路径的“绝对数据量”很大，一头大象体重增长10%比一只老鼠多生一窝产生的体重多得多；</li>
+<li>所有“第二档次数据贡献量”的路径，分别调查其“日增长量”和“环比增速”，即“增速”的相对值和绝对值。</li>
+</ul>
+<p>还是拿Recoteam数据来举例子：</p>
+<p>根据数据统计，我们分出第一轮目标和第二轮目标。 </p>
+<p><img src="http://dbaplus.cn/uploadfile/2018/0308/20180308115958294.jpg" alt="img"></p>
+<p><strong>第一个路径：</strong></p>
+<p><strong>hdfs://beaconstore/user/hadoop/reco/report</strong></p>
+<p>它的特点是每日增速固定， 但最近访问时间“很新”，且“平均文件大小”偏小。</p>
+<p>所以策略可能是 ：</p>
+<ul>
+<li>“每日数据量优化”；</li>
+<li>“减少天分区数”；</li>
+<li>未来对“文件平均大小”做优化。因为文件数量很多，可以节省出很多内存。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7xtlvlij30u00nxac4.jpg" alt="img"></p>
+<p> <strong>第二个路径：</strong></p>
+<p><strong>hdfs://beaconstore/user/hadoop/reco/report</strong> </p>
+<p>它的特点是已经许久不新增数据， 但最近访问时间“很新”。</p>
+<p>所以策略可能是 ：</p>
+<ul>
+<li>找到哪些子数据经常访问；</li>
+<li>删掉不访问的子数据 ；</li>
+<li>是否有生命周期，有的话记得在未来删除。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7y31iadj30u00nr76g.jpg" alt="img"></p>
+<p> <strong>第三个路径：</strong></p>
+<p><strong>hdfs://beaconstore/user/hadoop/reco/online_log</strong> </p>
+<p>它的特点是很久很久不新增数据， 且最近访问时间“很老”。</p>
+<p>策略是——建议删除。 </p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7ybusovj30u00ortbj.jpg" alt="img"></p>
+<p>可以看出，不同的HDFS路径，其存在的问题不尽相同，这真的需要具体问题具体分析。</p>
+<p>如果通过分析“第一目标清单”，已经能够达到控制集群存储的目的，大幅降低数据存储，那么可以适当地忽略“第二目标清单”，记住那个目标“单位时间产出比”。这时可以把时间省下来做更多有意义的事情。</p>
+<p><strong>3、最后我们会出具一个Report，给相关的组发送Email，指明应该做哪些优化。</strong></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7yn6gfaj30u00qi0vd.jpg" alt="img"></p>
+<p><strong>四、数据增长之Hive篇</strong></p>
+<p>前文在讲述治理HDFSS的数据增长问题时提到了：</p>
+<ul>
+<li>每日独立“异常路径”数据增长治理</li>
+<li>每季度数据增长过快的“异常数据Team”的深度数据治理</li>
+</ul>
+<p>现在我们就把目标锁定到Hadoop的数据仓库Hive，谈谈数据增长之Hive。</p>
+<p><strong>方法论</strong> </p>
+<p>笔者认为Hive的“数据增长治理”，也分为两点：</p>
+<ul>
+<li>每日观察“新增Hive表”，查看“每日增速过快的”以及“总量过快的”。新增的Hive表，被限定在30天（一个月内）新创建的Hive表。Hive表的创建时间，在Hive-metastore的数据里可以得到。</li>
+<li>每季度观察“冷Hive表”，重点抓“Size最大的，最冷的Hive表”。</li>
+</ul>
+<p>找到可优化“目标Hive表后”，按照前文提及的步骤来优化Hive表背后的HDFS路径，一个控制增量，一个优化存量。</p>
+<p> <strong>细节</strong> </p>
+<p><strong>1、控制增量</strong></p>
+<p>Hadoop管理员每天早上花时间扫一眼最近一个月新建的Hive表里有没有很大的表。</p>
+<p>这里的“大”指的是：</p>
+<ul>
+<li><p>30天总量达到10个TB。 这个很好理解,”月总量值”是可配的，可以随着业务增长放大。</p>
+</li>
+<li><p>“每天平均日增量”达到1个TB。 因为有些表的生命周期可能只有几天，日增量大的表，都要进入“待观察”列表，最好都能强制“被管控”（Data Retention 策略，TTL等） </p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7zaia6lj30u009jmyb.jpg" alt="img"></p>
+</li>
+</ul>
+<p><strong>2、优化存量</strong></p>
+<p>Hive表的底层数据，是存储在HDFS上的文件夹。我们可以通过使用SQL，从Hive－metastore这个MySQL数据库里，查询到Hive表的HDFS路径，Owner等元信息。</p>
+<p>select TBL_NAME, location, owner, db.NAME from TBLS tb left join SDS s on tb.SD_ID=s.SD_ID left join DBS db on tb.DB_ID=db.DB_ID</p>
+<p>在查找到Hive表 －》 HDFS路径的对应关系后，我们又可以根据前文 《基于FsImage的HDFS数据深度分析》所建立的HDFS文件系统数据仓库，查询到HDFS路径的“Last_access_time”，以及路径的Size，平均文件大小等元数据，这保证并确认了hive表的“最后访问时间”是可知的。</p>
+<p>最后，Hive表的几项元信息，都会被缓存到另一张经过ETL后的的数据表Hive_meta_after_etl。这张表的结构如下： </p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7zm7us3j30ty09aq3x.jpg" alt="img"></p>
+<p>hive_meta_after_etl</p>
+<p>有了Hive_meta_after_etl表元数据的数据库，我们就可以设计查询入口：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7zt3ytgj30u00g5abx.jpg" alt="img"></p>
+<p>在选出了运维的目标Hive表后，按照前文中分析HDFS“异常路径”的方法，进行进一步分析即可。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmo7zyvbv1j30ty0xaju3.jpg" alt="img"></p>
+<p>架构</p>
+<p><strong>总结</strong></p>
+<p>总之，为了防患“无止境的数据增长”，公司最好每天都观察数据增长5分钟，并在每个季度Review每个数据Team的增长。</p>
+<p>这里总结了一些通用的原则，供大家参考：</p>
+<ul>
+<li>要明确谁占用的“资源多”，谁Cost的成本高，方便给CTO汇报。</li>
+<li>要打通数据分析系统，在数据团队有疑问、甚至不配合工作时，给他们摆事实、讲道理。</li>
+<li>要把不同数据团队的KPI做排名、做比较，让数据存储上做得差的团队有“羞耻感”。</li>
+<li>在推动整体数据治理这件事时，有必要Involve更高级别的领导，甚至CTO。</li>
+<li>要梳理清楚Team的顶级路径，严格规定路径的使用。承诺只有放在Team顶级路径下的文件是安全的，否则都可能在系统过载时被管理员删除。</li>
+<li>在有限的时间内，让产出最大化，把精力花在最有价值的点上。</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/hadoop/" rel="tag"><i class="fa fa-tag"></i> hadoop</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+              <div>
+                
+
+<script src="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.css">
+
+
+  
+
+
+<div class="likely likely-light">
+	
+ 	 	<div class="twitter">Tweet</div>
+	
+ 	 	<div class="facebook">Share</div>
+	
+ 	 	<div class="linkedin">Link</div>
+	
+ 	 	<div class="gplus">Plus</div>
+	
+ 	 	<div class="vkontakte">Share</div>
+	
+ 	 	<div class="odnoklassniki">Class</div>
+	
+ 	 	<div class="telegram">Send</div>
+	
+ 	 	<div class="whatsapp">Send</div>
+	
+ 	 	<div class="pinterest">Pin</div>
+	
+</div>
+
+              </div>
+            
+            
+            
+              <div>
+                
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Spark-聚类分析-出租车案例.html" rel="next" title="Spark-聚类分析-出租车案例">
+                <i class="fa fa-chevron-left"></i> Spark-聚类分析-出租车案例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTk3My82NTM4"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg" alt="Daniel X">
+            
+              <p class="site-author-name" itemprop="name">Daniel X</p>
+              <div class="site-description motion-element" itemprop="description">專注于大数据技術，分享干货</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">100</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="GitHub &rarr; https://github.com/dudefu"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmR1ZGVmdUBmb3htYWlsLmNvbT9zdWJqZWN0PUhlbGxvJTIwYWdhaW4=" title="E-mail &rarr; mailto:dudefu@foxmail.com?subject=Hello%20again"><i class="fa fa-fw fa-envelope"></i>E-mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHVkZWZ1" title="Weibo &rarr; https://weibo.com/dudefu"><i class="fa fa-fw fa-weibo"></i>Weibo</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93cGEucXEuY29tL21zZ3JkP3Y9MyZ1aW49MTU3NzU3MTk1OSZzaXRlPWR1ZGVmdS5pbmZvJm1lbnU9eWVz" title="QQ &rarr; https://wpa.qq.com/msgrd?v=3&uin=1577571959&site=dudefu.info&menu=yes"><i class="fa fa-fw fa-qq"></i>QQ</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备18110871号 </span>&copy; 2017 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-spinner"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dudefu</span>
+
+  
+
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Pisces</span> v7.1.2</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="26,26,26" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+  <script id="ribbon" size="300" alpha="0.6" zindex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/js.cookie.js?v=7.1.2"></script>
+  <script src="/js/scroll-cookie.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/exturl.js?v=7.1.2"></script>
+
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: true,
+    notify: true,
+    appId: '1N5rpk874DGudJw2wCL9J011-gzGzoHsz',
+    appKey: '9Y83e6suJgx567wtxhKy45IN',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zk-cn' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+    <script>
+  window.livereOptions = {
+    refer: '应对Hadoop集群数据疯长，这里祭出了4个治理对策！.html'
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.1/bluebird.core.min.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/docs/variables.html
+      var isPost = '应对Hadoop集群数据疯长，这里祭出了4个治理对策！'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = '应对Hadoop集群数据疯长，这里祭出了4个治理对策！'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+      if (selected) {
+        selection.removeAllRanges();
+        selection.addRange(selected);
+      }
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
