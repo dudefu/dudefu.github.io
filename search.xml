@@ -102,6 +102,18 @@
 <p>Flink CEP 实战:</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 大数据 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Flink </tag>
+            
+        </tags>
         
     </entry>
     
@@ -780,14 +792,6 @@
             <tag> spark </tag>
             
         </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[还可以这么理解，这下完全懂了！]]></title>
-      <url>/%E8%BF%98%E5%8F%AF%E4%BB%A5%E8%BF%99%E4%B9%88%E7%90%86%E8%A7%A3%EF%BC%8C%E8%BF%99%E4%B8%8B%E5%AE%8C%E5%85%A8%E6%87%82%E4%BA%86%EF%BC%81.html</url>
-      <content type="html"></content>
-      
         
     </entry>
     
@@ -6000,6 +6004,27 @@ export PATH=$PATH:$HIVE_HOME/bin 保存退出。
     </entry>
     
     <entry>
+      <title><![CDATA[JavaWeb开发]]></title>
+      <url>/JavaWeb%E5%AD%A6%E4%B9%A0.html</url>
+      <content type="html"><![CDATA[<p>1 JSP3个编译指令 : page,include,taglib<br>2 JSP动作指令7个：<br>jsp:forward ： 执行页面转向，将请求的处理转发到下一个页面<br>jsp:aram : 用于传递参数，必须与其他支持参数的标签一起使用<br>jsp:include ： 用于动态引入一个JSP页面<br>jsp:plugin : 用于下载JavaBean 或 Applet到客户端执行<br>jsp:useBean : 创建一个JavaBean的实例<br>jsp:setProperty : 设置JavaBean 实例的属性值<br>jsp:getProperty : 输出JavaBean 实例的属性值<br>3 include指令<br>include指令是一个动态include指令，也用于包含某个页面，它不会导入被include页面的编译指令，仅仅将被导入页面的body内容插入本页面<br>forward动作指令和include指令的区别：执行forward时，被forward的页面将完全代替原有页面；而执行include时，被include的页面只是插入原有页面。简而言之：forward拿目标页面代替原有页面，而include则拿目标页面插入原有页面。<br><img src="http://ou3xxg3hg.bkt.clouddn.com/JSP9%E5%A4%A7%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1.png" alt=""></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JavaWeb </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[JavaEE软件开发体系架构]]></title>
       <url>/JavaEE%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84.html</url>
       <content type="html"><![CDATA[<h2 id="两层架构"><a href="#两层架构" class="headerlink" title="两层架构"></a>两层架构</h2><p>传统的客户服务器系统仅只简单地基于两层体系来构建，即客户端（前台）和企业信息系统（后台），没有任何中间件，业务逻辑层与表示层或数据层混在一起。这种两层架构无论从开发、部署、扩展、维护来说，综其只有一个特点——成本高。</p>
@@ -6018,27 +6043,6 @@ export PATH=$PATH:$HIVE_HOME/bin 保存退出。
         <tags>
             
             <tag> JavaEE </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[JavaWeb开发]]></title>
-      <url>/JavaWeb%E5%AD%A6%E4%B9%A0.html</url>
-      <content type="html"><![CDATA[<p>1 JSP3个编译指令 : page,include,taglib<br>2 JSP动作指令7个：<br>jsp:forward ： 执行页面转向，将请求的处理转发到下一个页面<br>jsp:aram : 用于传递参数，必须与其他支持参数的标签一起使用<br>jsp:include ： 用于动态引入一个JSP页面<br>jsp:plugin : 用于下载JavaBean 或 Applet到客户端执行<br>jsp:useBean : 创建一个JavaBean的实例<br>jsp:setProperty : 设置JavaBean 实例的属性值<br>jsp:getProperty : 输出JavaBean 实例的属性值<br>3 include指令<br>include指令是一个动态include指令，也用于包含某个页面，它不会导入被include页面的编译指令，仅仅将被导入页面的body内容插入本页面<br>forward动作指令和include指令的区别：执行forward时，被forward的页面将完全代替原有页面；而执行include时，被include的页面只是插入原有页面。简而言之：forward拿目标页面代替原有页面，而include则拿目标页面插入原有页面。<br><img src="http://ou3xxg3hg.bkt.clouddn.com/JSP9%E5%A4%A7%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1.png" alt=""></p>
-]]></content>
-      
-        <categories>
-            
-            <category> Java </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaWeb </tag>
             
         </tags>
         

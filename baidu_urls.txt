@@ -5,7 +5,6 @@ https://www.dudefu.tk/命令——网络工具中的瑞士军刀.html
 https://www.dudefu.tk/应对Hadoop集群数据疯长，这里祭出了4个治理对策！.html
 https://www.dudefu.tk/Spark-聚类分析-出租车案例.html
 https://www.dudefu.tk/Spark项目智慧城市车流量分析项目之固定卡口下车辆的行车轨迹.html
-https://www.dudefu.tk/还可以这么理解，这下完全懂了！.html
 https://www.dudefu.tk/基于WIFI探针的商业大数据分析系统（hadoop-spark-hbase-bootstrap-echarts）.html
 https://www.dudefu.tk/基于云计算和大数据的模拟车辆行车监控系统.html
 https://www.dudefu.tk/Spark项目落地实战以及日常大数据开发注意事项.html
@@ -95,6 +94,7 @@ https://www.dudefu.tk/MySQL优化（二）.html
 https://www.dudefu.tk/MySQL优化（一）.html
 https://www.dudefu.tk/如何阅读源代码.html
 https://www.dudefu.tk/简析String、StringBuffer与StringBuilder.html
-https://www.dudefu.tk/JavaEE软件开发体系架构.html
 https://www.dudefu.tk/JavaWeb学习.html
+https://www.dudefu.tk/JavaEE软件开发体系架构.html
 https://www.dudefu.tk/Annotations.html
+https://www.dudefu.tk/IE8开发工具“无法附加进程”.html
