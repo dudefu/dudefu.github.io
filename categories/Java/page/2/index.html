@@ -286,7 +286,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">100</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">102</span></a>
 
   </li>
         
@@ -324,7 +324,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">55</span></a>
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">57</span></a>
 
   </li>
         
@@ -469,6 +469,32 @@
         <h2>Java<small>分类</small>
         </h2>
       </div>
+
+      
+        
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h3 class="post-title">
+        
+          <a class="post-title-link" href="/常见SQL语句.html" itemprop="url">
+            
+              <span itemprop="name">常见SQL语句</span>
+            
+          </a>
+        
+      </h3>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2018-01-10T19:24:42+08:00" content="2018-01-10">
+          01-10
+        </time>
+      </div>
+
+    </header>
+  </article>
+
 
       
         
@@ -705,32 +731,6 @@
 
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/数据区、代码区、栈区、堆区.html" itemprop="url">
-            
-              <span itemprop="name">数据区、代码区、栈区、堆区</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-12-04T18:58:19+08:00" content="2017-12-04">
-          12-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
     </div>
 
   </div>
@@ -785,7 +785,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">100</span>
+                    <span class="site-state-item-count">102</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -955,7 +955,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">55</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">57</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1641,7 +1645,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("Java集合常见面试题");titles.push("Java集合体系结构以及集合和数组的区别");titles.push("Java基本数据类型取值范围");titles.push("Java基础编程题");titles.push("自动装箱的陷阱");titles.push("Intellij导出JavaDoc编码异常");titles.push("Java内存区域与内存溢出异常");titles.push("面试题：百度前200页都在这里了");titles.push("Java逃逸分析");titles.push("数据区、代码区、栈区、堆区");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("常见SQL语句");titles.push("Java集合常见面试题");titles.push("Java集合体系结构以及集合和数组的区别");titles.push("Java基本数据类型取值范围");titles.push("Java基础编程题");titles.push("自动装箱的陷阱");titles.push("Intellij导出JavaDoc编码异常");titles.push("Java内存区域与内存溢出异常");titles.push("面试题：百度前200页都在这里了");titles.push("Java逃逸分析");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {

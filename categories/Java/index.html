@@ -286,7 +286,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">100</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">102</span></a>
 
   </li>
         
@@ -324,7 +324,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">55</span></a>
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">57</span></a>
 
   </li>
         
@@ -469,6 +469,32 @@
         <h2>Java<small>分类</small>
         </h2>
       </div>
+
+      
+        
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h3 class="post-title">
+        
+          <a class="post-title-link" href="/正则表达式学习.html" itemprop="url">
+            
+              <span itemprop="name">正则表达式学习</span>
+            
+          </a>
+        
+      </h3>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2021-01-18T16:17:30+08:00" content="2021-01-18">
+          01-18
+        </time>
+      </div>
+
+    </header>
+  </article>
+
 
       
         
@@ -705,32 +731,6 @@
 
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/常见SQL语句.html" itemprop="url">
-            
-              <span itemprop="name">常见SQL语句</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-01-10T19:24:42+08:00" content="2018-01-10">
-          01-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
     </div>
 
   </div>
@@ -785,7 +785,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">100</span>
+                    <span class="site-state-item-count">102</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -955,7 +955,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">55</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">57</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1641,7 +1645,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("如何开启一个线程，开启大量线程会有什么问题，如何优化？");titles.push("一次Java线程池误用引发的血案和总结");titles.push("并发编程和线程池");titles.push("关于fastjson解析后的属性排序问题解决方案");titles.push("hashcode详解");titles.push("FastJson反序列化为什么用TypeReference");titles.push("Java单例模式");titles.push("JVM常见面试题");titles.push("深入理解java虚拟机精华总结");titles.push("常见SQL语句");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("正则表达式学习");titles.push("如何开启一个线程，开启大量线程会有什么问题，如何优化？");titles.push("一次Java线程池误用引发的血案和总结");titles.push("并发编程和线程池");titles.push("关于fastjson解析后的属性排序问题解决方案");titles.push("hashcode详解");titles.push("FastJson反序列化为什么用TypeReference");titles.push("Java单例模式");titles.push("JVM常见面试题");titles.push("深入理解java虚拟机精华总结");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {

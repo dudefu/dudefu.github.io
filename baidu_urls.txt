@@ -1,3 +1,5 @@
+https://www.dudefu.tk/正则表达式学习.html
+https://www.dudefu.tk/命令——网络工具中的瑞士军刀.html
 https://www.dudefu.tk/应对Hadoop集群数据疯长，这里祭出了4个治理对策！.html
 https://www.dudefu.tk/Spark-聚类分析-出租车案例.html
 https://www.dudefu.tk/Spark项目智慧城市车流量分析项目之固定卡口下车辆的行车轨迹.html
@@ -96,5 +98,3 @@ https://www.dudefu.tk/JavaWeb学习.html
 https://www.dudefu.tk/Annotations.html
 https://www.dudefu.tk/IE8开发工具“无法附加进程”.html
 https://www.dudefu.tk/MyBatis上手入门实例.html
-https://www.dudefu.tk/阿里云Maven仓库地址.html
-https://www.dudefu.tk/deepin下搭建基于github和hexo的个人博客.html
