@@ -139,9 +139,9 @@
       <url>/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B4%9E%E5%AF%9F%E6%95%B0%E6%8D%AE%E9%97%B4%E7%9A%84%E5%85%B3%E8%81%94%E4%BB%B7%E5%80%BC.html</url>
       <content type="html"><![CDATA[<p>大家好，我是吴敏。今天分享一个叫图数据库的技术产品。</p>
 <p> <strong>01、 什么是图和图数据库</strong></p>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_png/Rdx7pYibYTUzicyTnfmGwl45nNmmbN3xGrxibt5vsAZackqPZnib4em84QPP8q6ljQF0MQkYIB22lxl9OD060yBIww/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p>
-<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmss77qt1fj30u00gtgpm.jpg" alt="图片"></p>
 <a id="more"></a>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmsu5wrvqpj300z00t3y9.jpg" alt="图片"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmss77qt1fj30u00gtgpm.jpg" alt="图片"></p>
 <p>先来介绍一下什么是图和图数据库，所谓的图和平常认知的图片其实不是同一个概念，图（Graph）在计算机科学里面是一种数据结构，这种数据结构有三个比较主要的概念：点、边和属性。</p>
 <p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmss7lzpmzj30u00gun2h.jpg" alt="图片"></p>
 <p>通俗的说，图结构还有其他的叫法，比如：网络结构、拓扑结构，大致上都是描述的同一种数据结构。</p>
