@@ -3,6 +3,230 @@
   
     
     <entry>
+      <title><![CDATA[Apache Flink 零基础入门（一）：基础概念解析]]></title>
+      <url>/ApacheFlink%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90.html</url>
+      <content type="html"><![CDATA[<h3 id="一、Apache-Flink-的定义、架构及原理"><a href="#一、Apache-Flink-的定义、架构及原理" class="headerlink" title="一、Apache Flink 的定义、架构及原理"></a>一、Apache Flink 的定义、架构及原理</h3><p>Apache Flink 是一个分布式大数据处理引擎，可对有限数据流和无限数据流进行有状态或无状态的计算，能够部署在各种集群环境，对各种规模大小的数据进行快速计算。</p>
+<a id="more"></a>
+<h4 id="1-Flink-Application"><a href="#1-Flink-Application" class="headerlink" title="1. Flink Application"></a><strong>1. Flink Application</strong></h4><p>了解 Flink 应用开发需要先理解 Flink 的 Streams、State、Time 等基础处理语义以及 Flink 兼顾灵活性和方便性的多层次 API。</p>
+<ul>
+<li><strong>Streams：</strong>流，分为有限数据流与无限数据流，unbounded stream 是有始无终的数据流，即无限数据流；而 bounded stream 是限定大小的有始有终的数据集合，即有限数据流，二者的区别在于无限数据流的数据会随时间的推演而持续增加，计算持续进行且不存在结束的状态，相对的有限数据流数据大小固定，计算最终会完成并处于结束的状态。</li>
+<li><strong>State</strong>，状态是计算过程中的数据信息，在容错恢复和 Checkpoint 中有重要的作用，流计算在本质上是 Incremental Processing，因此需要不断查询保持状态；另外，为了确保 Exactly- once 语义，需要数据能够写入到状态中；而持久化存储，能够保证在整个分布式系统运行失败或者挂掉的情况下做到 Exactly- once，这是状态的另外一个价值。</li>
+<li><strong>Time</strong>，分为 Event time、Ingestion time、Processing time，Flink 的无限数据流是一个持续的过程，时间是我们判断业务状态是否滞后，数据处理是否及时的重要依据。</li>
+<li><strong>API</strong>，API 通常分为三层，由上而下可分为 SQL / Table API、DataStream API、ProcessFunction 三层，API 的表达能力及业务抽象能力都非常强大，但越接近 SQL 层，表达能力会逐步减弱，抽象能力会增强，反之，ProcessFunction 层 API 的表达能力非常强，可以进行多种灵活方便的操作，但抽象能力也相对越小。</li>
+</ul>
+<h4 id="2-Flink-Architecture"><a href="#2-Flink-Architecture" class="headerlink" title="2.Flink Architecture"></a><strong>2.Flink Architecture</strong></h4><p>在架构部分，主要分为以下四点：</p>
+<p><img src="https://yqfile.alicdn.com/f273ad0225d6b77b7e1e0151ed1964f12970cd25.jpeg" alt="1_16_001_jpeg"></p>
+<p><strong>第一</strong>， Flink 具备统一的框架处理有界和无界两种数据流的能力</p>
+<p><strong>第二</strong>， 部署灵活，Flink 底层支持多种资源调度器，包括 Yarn、Kubernetes 等。Flink 自身带的 Standalone 的调度器，在部署上也十分灵活。</p>
+<p><strong>第三</strong>， 极高的可伸缩性，可伸缩性对于分布式系统十分重要，阿里巴巴双11大屏采用 Flink 处理海量数据，使用过程中测得 Flink 峰值可达 17 亿/秒。</p>
+<p><strong>第四</strong>， 极致的流式处理性能。Flink 相对于 Storm 最大的特点是将状态语义完全抽象到框架中，支持本地状态读取，避免了大量网络 IO，可以极大提升状态存取的性能。</p>
+<h4 id="3-Flink-Operation"><a href="#3-Flink-Operation" class="headerlink" title="3.Flink Operation"></a><strong>3.Flink Operation</strong></h4><p>后面会有专门课程讲解，此处简单分享 Flink 关于运维及业务监控的内容：</p>
+<ul>
+<li>Flink 具备 7 X 24 小时高可用的 SOA（面向服务架构），原因是在实现上 Flink 提供了一致性的 Checkpoint。Checkpoint 是 Flink 实现容错机制的核心，它周期性的记录计算过程中 Operator 的状态，并生成快照持久化存储。当 Flink 作业发生故障崩溃时，可以有选择的从 Checkpoint 中恢复，保证了计算的一致性。</li>
+<li>Flink 本身提供监控、运维等功能或接口，并有内置的 WebUI，对运行的作业提供 DAG 图以及各种 Metric 等，协助用户管理作业状态。</li>
+</ul>
+<h4 id="4-Flink-的应用场景"><a href="#4-Flink-的应用场景" class="headerlink" title="4.Flink 的应用场景"></a>4.Flink 的应用场景</h4><h5 id="4-1-Flink-的应用场景：Data-Pipeline"><a href="#4-1-Flink-的应用场景：Data-Pipeline" class="headerlink" title="4.1 Flink 的应用场景：Data Pipeline"></a>4.1 Flink 的应用场景：Data Pipeline</h5><p><img src="https://yqfile.alicdn.com/a16e76642ea95d0d71843f29ad5da71b2bbf7196.jpeg" alt="2_16_004_jpeg"></p>
+<p>Data Pipeline 的核心场景类似于数据搬运并在搬运的过程中进行部分数据清洗或者处理，而整个业务架构图的左边是 Periodic ETL，它提供了流式 ETL 或者实时 ETL，能够订阅消息队列的消息并进行处理，清洗完成后实时写入到下游的 Database 或 File system 中。场景举例：</p>
+<ul>
+<li><strong>实时数仓</strong></li>
+</ul>
+<p>当下游要构建实时数仓时，上游则可能需要实时的 Stream ETL。这个过程会进行实时清洗或扩展数据，清洗完成后写入到下游的实时数仓的整个链路中，可保证数据查询的时效性，形成实时数据采集、实时数据处理以及下游的实时 Query。</p>
+<ul>
+<li><strong>搜索引擎推荐</strong></li>
+</ul>
+<p>搜索引擎这块以淘宝为例，当卖家上线新商品时，后台会实时产生消息流，该消息流经过 Flink 系统时会进行数据的处理、扩展。然后将处理及扩展后的数据生成实时索引，写入到搜索引擎中。这样当淘宝卖家上线新商品时，能在秒级或者分钟级实现搜索引擎的搜索。</p>
+<h5 id="4-2-Flink-应用场景：Data-Analytics"><a href="#4-2-Flink-应用场景：Data-Analytics" class="headerlink" title="4.2 Flink 应用场景：Data Analytics"></a><strong>4.2 Flink</strong> <strong>应用场景：Data Analytics</strong></h5><p><img src="https://yqfile.alicdn.com/c12e75424fe6c6058b895b614262f61c8d2f1baf.jpeg" alt="3_005_jpeg"></p>
+<p>Data Analytics，如图，左边是 Batch Analytics，右边是 Streaming Analytics。Batch Analysis 就是传统意义上使用类似于 Map Reduce、Hive、Spark Batch 等，对作业进行分析、处理、生成离线报表，Streaming Analytics 使用流式分析引擎如 Storm，Flink 实时处理分析数据，应用较多的场景如实时大屏、实时报表。</p>
+<h5 id="4-3-Flink-应用场景：Data-Driven"><a href="#4-3-Flink-应用场景：Data-Driven" class="headerlink" title="4.3 Flink 应用场景：Data Driven"></a><strong>4.3 Flink</strong> <strong>应用场景：Data Driven</strong></h5><p><img src="https://yqfile.alicdn.com/334b4162776f26b2bcc85017f719687a05fbc40d.jpeg" alt="4_006_jpeg"></p>
+<p>从某种程度上来说，所有的实时的数据处理或者是流式数据处理都是属于 Data Driven，流计算本质上是 Data Driven 计算。应用较多的如风控系统，当风控系统需要处理各种各样复杂的规则时，Data Driven 就会把处理的规则和逻辑写入到Datastream 的 API 或者是 ProcessFunction 的 API 中，然后将逻辑抽象到整个 Flink 引擎中，当外面的数据流或者是事件进入就会触发相应的规则，这就是 Data Driven 的原理。在触发某些规则后，Data Driven 会进行处理或者是进行预警，这些预警会发到下游产生业务通知，这是 Data Driven 的应用场景，Data Driven 在应用上更多应用于复杂事件的处理。</p>
+<h3 id="二、「有状态的流式处理」概念解析"><a href="#二、「有状态的流式处理」概念解析" class="headerlink" title="二、「有状态的流式处理」概念解析"></a><strong>二、「有状态的流式处理」概念解析</strong></h3><h4 id="1-传统批处理"><a href="#1-传统批处理" class="headerlink" title="1.传统批处理"></a>1.传统批处理</h4><p><img src="https://yqfile.alicdn.com/3b266c8f0ffc568f8d85703679581f20a7f8362a.png" alt="5_04"></p>
+<p>传统批处理方法是持续收取数据，以时间作为划分多个批次的依据，再周期性地执行批次运算。但假设需要计算每小时出现事件转换的次数，如果事件转换跨越了所定义的时间划分，传统批处理会将中介运算结果带到下一个批次进行计算；除此之外，当出现接收到的事件顺序颠倒情况下，传统批处理仍会将中介状态带到下一批次的运算结果中，这种处理方式也不尽如人意。</p>
+<h4 id="2-理想方法"><a href="#2-理想方法" class="headerlink" title="2.理想方法"></a>2.理想方法</h4><p><img src="https://yqfile.alicdn.com/a62d3ce6051eb3a9249855653fc6d953a41a6549.png" alt="6_07"></p>
+<p><strong>第一点</strong>，要有理想方法，这个理想方法是引擎必须要有能力可以累积状态和维护状态，累积状态代表着过去历史中接收过的所有事件，会影响到输出。</p>
+<p><strong>第二点</strong>，时间，时间意味着引擎对于数据完整性有机制可以操控，当所有数据都完全接受到后，输出计算结果。</p>
+<p><strong>第三点</strong>，理想方法模型需要实时产生结果，但更重要的是采用新的持续性数据处理模型来处理实时数据，这样才最符合 continuous data 的特性。</p>
+<h4 id="3-流式处理"><a href="#3-流式处理" class="headerlink" title="3.流式处理"></a>3.流式处理</h4><p><img src="https://yqfile.alicdn.com/f05cbff1caf39e9117ada3272484975fd28b4f2c.png" alt="7_08"></p>
+<p>流式处理简单来讲即有一个无穷无尽的数据源在持续收取数据，以代码作为数据处理的基础逻辑，数据源的数据经过代码处理后产生出结果，然后输出，这就是流式处理的基本原理。</p>
+<h4 id="4-分布式流式处理"><a href="#4-分布式流式处理" class="headerlink" title="4.分布式流式处理"></a>4.分布式流式处理</h4><p><img src="https://yqfile.alicdn.com/55a8733d374d7481323d03577386fa6d819e9032.png" alt="8_09"></p>
+<p>假设 Input Streams 有很多个使用者，每个使用者都有自己的 ID，如果计算每个使用者出现的次数，我们需要让同一个使用者的出现事件流到同一运算代码，这跟其他批次需要做 group by 是同样的概念，所以跟 Stream 一样需要做分区，设定相应的 key，然后让同样的 key 流到同一个 computation instance 做同样的运算。</p>
+<h4 id="5-有状态分布式流式处理"><a href="#5-有状态分布式流式处理" class="headerlink" title="5.有状态分布式流式处理"></a>5.有状态分布式流式处理</h4><p><img src="https://yqfile.alicdn.com/e9e371cc65f42705137953ccb9dd870216c0ce29.png" alt="9_10"></p>
+<p>如图，上述代码中定义了变数 X，X 在数据处理过程中会进行读和写，在最后输出结果时，可以依据变数 X 决定输出的内容，即状态 X 会影响最终的输出结果。这个过程中，第一个重点是先进行了状态 co-partitioned key by，同样的 key 都会流到 computation instance，与使用者出现次数的原理相同，次数即所谓的状态，这个状态一定会跟同一个 key 的事件累积在同一个 computation instance。</p>
+<p><img src="https://yqfile.alicdn.com/0d497c688f0a640d518c71aa5cae341caa5aa638.png" alt="10_11"></p>
+<p>相当于根据输入流的 key 重新分区的 状态，当分区进入 stream 之后，这个 stream 会累积起来的状态也变成 copartiton 了。第二个重点是 embeded local state backend。有状态分散式流式处理的引擎，状态可能会累积到非常大，当 key 非常多时，状态可能就会超出单一节点的 memory 的负荷量，这时候状态必须有状态后端去维护它；在这个状态后端在正常状况下，用 in-memory 维护即可。</p>
+<h3 id="三、Apache-Flink-的优势"><a href="#三、Apache-Flink-的优势" class="headerlink" title="三、Apache Flink 的优势"></a><strong>三、Apache Flink 的优势</strong></h3><h4 id="1-状态容错"><a href="#1-状态容错" class="headerlink" title="1.状态容错"></a>1.状态容错</h4><p>当我们考虑状态容错时难免会想到精确一次的状态容错，应用在运算时累积的状态，每笔输入的事件反映到状态，更改状态都是精确一次，如果修改超过一次的话也意味着数据引擎产生的结果是不可靠的。</p>
+<ul>
+<li>如何确保状态拥有精确一次（Exactly-once guarantee）的容错保证？</li>
+<li>如何在分散式场景下替多个拥有本地状态的运算子产生一个全域一致的快照（Global consistent snapshot）？</li>
+<li>更重要的是，如何在不中断运算的前提下产生快照？</li>
+</ul>
+<h5 id="1-1-简单场景的精确一次容错方法"><a href="#1-1-简单场景的精确一次容错方法" class="headerlink" title="1.1 简单场景的精确一次容错方法"></a>1.1 简单场景的精确一次容错方法</h5><p>还是以使用者出现次数来看，如果某个使用者出现的次数计算不准确，不是精确一次，那么产生的结果是无法作为参考的。在考虑精确的容错保证前，我们先考虑最简单的使用场景，如无限流的数据进入，后面单一的 Process 进行运算，每处理完一笔计算即会累积一次状态，这种情况下如果要确保 Process 产生精确一次的状态容错，每处理完一笔数据，更改完状态后进行一次快照，快照包含在队列中并与相应的状态进行对比，完成一致的快照，就能确保精确一次。</p>
+<h5 id="1-2-分布式状态容错"><a href="#1-2-分布式状态容错" class="headerlink" title="1.2 分布式状态容错"></a>1.2 分布式状态容错</h5><p>Flink 作为分布式的处理引擎，在分布式的场景下，进行多个本地状态的运算，只产生一个全域一致的快照，如需要在不中断运算值的前提下产生全域一致的快照，就涉及到分散式状态容错。</p>
+<ul>
+<li><strong>Global consistent snapshot</strong></li>
+</ul>
+<p><img src="https://yqfile.alicdn.com/7ece51897efca57d6a6c0095d06e5409648f77fe.png" alt="11_21"></p>
+<p>关于 Global consistent snapshot，当 Operator 在分布式的环境中，在各个节点做运算，首先产生 Global consistent snapshot 的方式就是处理每一笔数据的快照点是连续的，这笔运算流过所有的运算值，更改完所有的运算值后，能够看到每一个运算值的状态与该笔运算的位置，即可称为 consistent snapshot，当然，Global consistent snapshot 也是简易场景的延伸。</p>
+<ul>
+<li><strong>容错恢复</strong></li>
+</ul>
+<p><img src="https://yqfile.alicdn.com/108d0ac0398874ebafb0bc2318f3837e4fe789e1.png" alt="12_22"></p>
+<p>首先了解一下 Checkpoint，上面提到连续性快照每个 Operator 运算值本地的状态后端都要维护状态，也就是每次将产生检查点时会将它们传入共享的 DFS 中。当任何一个 Process 挂掉后，可以直接从三个完整的 Checkpoint 将所有的运算值的状态恢复，重新设定到相应位置。Checkpoint 的存在使整个 Process 能够实现分散式环境中的 Exactly-once。</p>
+<h5 id="1-3-分散式快照（Distributed-Snapshots）方法"><a href="#1-3-分散式快照（Distributed-Snapshots）方法" class="headerlink" title="1.3 分散式快照（Distributed Snapshots）方法"></a><strong>1.3</strong> <strong>分散式快照（Distributed Snapshots）方法</strong></h5><p><img src="https://yqfile.alicdn.com/f641b074b2334dd3fc0ef3a4db88fcaa511a29eb.png" alt="13_23"></p>
+<p>关于 Flink 如何在不中断运算的状况下持续产生 Global consistent snapshot，其方式是基于用 simple lamport 演算法机制下延伸的。已知的一个点 Checkpoint barrier， Flink 在某个 Datastream 中会一直安插 Checkpoint barrier，Checkpoint barrier 也会 N — 1等等，Checkpoint barrier N 代表着所有在这个范围里面的数据都是Checkpoint barrier N。</p>
+<p><img src="https://yqfile.alicdn.com/23a231fa509ef45a572bf036c51ee58355742fa0.png" alt="14_25"></p>
+<p>举例：假设现在需要产生 Checkpoint barrier N，但实际上在 Flink 中是由 job manager 触发 Checkpoint，Checkpoint 被触发后开始从数据源产生 Checkpoint barrier。当 job 开始做 Checkpoint barrier N 的时候，可以理解为 Checkpoint barrier N 需要逐步填充左下角的表格。</p>
+<p><img src="https://yqfile.alicdn.com/d064e1275ec4b0825a4311b85b4a8060a5a2e2bd.png" alt="15_26"></p>
+<p>如图，当部分事件标为红色，Checkpoint barrier N 也是红色时，代表着这些数据或事件都由 Checkpoint barrier N 负责。Checkpoint barrier N 后面白色部分的数据或事件则不属于 Checkpoint barrier N。</p>
+<p>在以上的基础上，当数据源收到 Checkpoint barrier N 之后会先将自己的状态保存，以读取 Kafka 资料为例，数据源的状态就是目前它在 Kafka 分区的位置，这个状态也会写入到上面提到的表格中。下游的 Operator 1 会开始运算属于 Checkpoint barrier N 的数据，当 Checkpoint barrier N 跟着这些数据流动到 Operator 1 之后,Operator 1 也将属于 Checkpoint barrier N 的所有数据都反映在状态中，当收到 Checkpoint barrier N 时也会直接对 Checkpoint 去做快照。</p>
+<p><img src="https://yqfile.alicdn.com/b350e67de1c612366deb7d573d64733214cbfbfe.png" alt="16_27"></p>
+<p>当快照完成后继续往下游走，Operator 2 也会接收到所有数据，然后搜索 Checkpoint barrier N 的数据并直接反映到状态，当状态收到 Checkpoint barrier N 之后也会直接写入到 Checkpoint N 中。以上过程到此可以看到 Checkpoint barrier N 已经完成了一个完整的表格，这个表格叫做 Distributed Snapshots，即分布式快照。分布式快照可以用来做状态容错，任何一个节点挂掉的时候可以在之前的 Checkpoint 中将其恢复。继续以上 Process，当多个 Checkpoint 同时进行，Checkpoint barrier N 已经流到 job manager 2，Flink job manager 可以触发其他的 Checkpoint，比如 Checkpoint N + 1，Checkpoint N + 2 等等也同步进行，利用这种机制，可以在不阻挡运算的状况下持续地产生 Checkpoint。</p>
+<h4 id="2-状态维护"><a href="#2-状态维护" class="headerlink" title="2.状态维护"></a>2.状态维护</h4><p>状态维护即用一段代码在本地维护状态值，当状态值非常大时需要本地的状态后端来支持。</p>
+<p><img src="https://yqfile.alicdn.com/942976c94cf14c11c3b7151d5f5205d8aa7359f0.png" alt="17_34"></p>
+<p>如图，在 Flink 程序中，可以采用 getRuntimeContext().getState(desc); 这组 API 去注册状态。Flink 有多种状态后端，采用 API 注册状态后，读取状态时都是通过状态后端来读取的。Flink 有两种不同的状态值，也有两种不同的状态后端：</p>
+<p><img src="https://yqfile.alicdn.com/39233b6ec882c80d2001c2fe1015dfd0c3ba2c5a.png" alt="18_37"></p>
+<ul>
+<li><strong>JVM Heap状态后端</strong>，适合数量较小的状态，当状态量不大时就可以采用 JVM Heap 的状态后端。JVM Heap 状态后端会在每一次运算值需要读取状态时，用 Java object read / writes 进行读或写，不会产生较大代价，但当 Checkpoint 需要将每一个运算值的本地状态放入 Distributed Snapshots 的时候，就需要进行序列化了。</li>
+</ul>
+<p><img src="https://yqfile.alicdn.com/5c2e8be0390d3ff995b6c7b29233f3caf5bfcb54.png" alt="19_40"></p>
+<ul>
+<li><strong>RocksDB 状态后端</strong>，它是一种 out of core 的状态后端。在 Runtime 的本地状态后端让使用者去读取状态的时候会经过磁盘，相当于将状态维护在磁盘里，与之对应的代价可能就是每次读取状态时，都需要经过序列化和反序列化的过程。当需要进行快照时只将应用序列化即可，序列化后的数据直接传输到中央的共享 DFS 中。</li>
+</ul>
+<p>Flink 目前支持以上两种状态后端，一种是纯 memory 的状态后端，另一种是有资源磁盘的状态后端，在维护状态时可以根据状态的数量选择相应的状态后端。</p>
+<h4 id="3-Event-Time"><a href="#3-Event-Time" class="headerlink" title="3.Event - Time"></a>3.Event - Time</h4><p><strong>3.1</strong> <strong>不同时间种类</strong></p>
+<p>在 Flink 及其他进阶的流式处理引擎出现之前，大数据处理引擎一直只支持 Processing-time 的处理。假设定义一个运算 windows 的窗口，windows 运算设定每小时进行结算。以 Processing-time 进行运算时可以发现数据引擎将 3 点至 4 点间收到的数据做结算。实际上在做报表或者分析结果时是想了解真实世界中 3 点至 4 点之间实际产生数据的输出结果，了解实际数据的输出结果就必须采用 Event – Time 了。</p>
+<p><img src="https://yqfile.alicdn.com/2d0a56ba91f27c143db0cab6f5276e8d2d33834b.png" alt="20_42"></p>
+<p>如图，Event - Time 相当于事件，它在数据最源头产生时带有时间戳，后面都需要用时间戳来进行运算。用图来表示，最开始的队列收到数据，每小时对数据划分一个批次，这就是 Event - Time Process 在做的事情。</p>
+<p><strong>3.2</strong> <strong>Event - Time 处理</strong></p>
+<p><img src="https://yqfile.alicdn.com/fb9c08413e705dc0e36d70beb44da682673b00a0.png" alt="21_44"></p>
+<p>Event - Time 是用事件真实产生的时间戳去做 Re-bucketing，把对应时间 3 点到 4 点的数据放在 3 点到 4 点的 Bucket，然后 Bucket 产生结果。所以 Event - Time 跟 Processing - time 的概念是这样对比的存在。</p>
+<p><img src="https://yqfile.alicdn.com/c51c6bad979faf3a0eb66f49dc025036c00f0f3a.png" alt="22_45"></p>
+<p>Event - Time 的重要性在于记录引擎输出运算结果的时间。简单来说，流式引擎连续 24 小时在运行、搜集资料，假设 Pipeline 里有一个 windows Operator 正在做运算，每小时能产生结果，何时输出 windows 的运算值，这个时间点就是 Event - Time 处理的精髓，用来表示该收的数据已经收到。</p>
+<p><strong>3.3</strong> <strong>Watermarks</strong></p>
+<p><img src="https://yqfile.alicdn.com/460bbcae0f2a7366e24ca937c5c7b0cf7f738af9.png" alt="23_46"></p>
+<p>Flink 实际上是用 watermarks 来实现 Event - Time 的功能。Watermarks 在 Flink 中也属于特殊事件，其精髓在于当某个运算值收到带有时间戳“ T ”的 watermarks 时就意味着它不会接收到新的数据了。使用 watermarks 的好处在于可以准确预估收到数据的截止时间。举例，假设预期收到数据时间与输出结果时间的时间差延迟 5 分钟，那么 Flink 中所有的 windows Operator 搜索 3 点至 4 点的数据，但因为存在延迟需要再多等5分钟直至收集完 4：05 分的数据，此时方能判定 4 点钟的资料收集完成了，然后才会产出 3 点至 4 点的数据结果。这个时间段的结果对应的就是 watermarks 的部分。</p>
+<h4 id="4-状态保存与迁移"><a href="#4-状态保存与迁移" class="headerlink" title="4.状态保存与迁移"></a>4.状态保存与迁移</h4><p>流式处理应用无时无刻不在运行，运维上有几个重要考量：</p>
+<ul>
+<li>更改应用逻辑/修 bug 等，如何将前一执行的状态迁移到新的执行？</li>
+<li>如何重新定义运行的平行化程度？</li>
+<li>如何升级运算丛集的版本号？</li>
+</ul>
+<p>Checkpoint 完美符合以上需求，不过 Flink 中还有另外一个名词保存点（Savepoint），当手动产生一个 Checkpoint 的时候，就叫做一个 Savepoint。Savepoint 跟 Checkpoint 的差别在于检查点是 Flink 对于一个有状态应用在运行中利用分布式快照持续周期性的产生 Checkpoint，而 Savepoint 则是手动产生的 Checkpoint，Savepoint 记录着流式应用中所有运算元的状态。</p>
+<p><img src="https://yqfile.alicdn.com/b3a404ef8a36871d98ba6485ede1e799d95d6e3e.png" alt="24_49"></p>
+<p>如图，Savepoint A 和 Savepoint B，无论是变更底层代码逻辑、修 bug 或是升级 Flink 版本，重新定义应用、计算的平行化程度等，最先需要做的事情就是产生 Savepoint。</p>
+<p>Savepoint 产生的原理是在 Checkpoint barrier 流动到所有的 Pipeline 中手动插入从而产生分布式快照，这些分布式快照点即 Savepoint。Savepoint 可以放在任何位置保存，当完成变更时，可以直接从 Savepoint 恢复、执行。</p>
+<p>从 Savepoint 的恢复执行需要注意，在变更应用的过程中时间在持续，如 Kafka 在持续收集资料，当从 Savepoint 恢复时，Savepoint 保存着 Checkpoint 产生的时间以及 Kafka 的相应位置，因此它需要恢复到最新的数据。无论是任何运算，Event - Time 都可以确保产生的结果完全一致。</p>
+<p>假设恢复后的重新运算用 Process Event - Time，将 windows 窗口设为 1 小时，重新运算能够在 10 分钟内将所有的运算结果都包含到单一的 windows 中。而如果使用 Event – Time，则类似于做 Bucketing。在 Bucketing 的状况下，无论重新运算的数量多大，最终重新运算的时间以及 windows 产生的结果都一定能保证完全一致。</p>
+<h3 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h3><p>本文首先从 Apache Flink 的定义、架构、基本原理入手，对大数据流计算相关的基本概念进行辨析，在此基础上简单回顾了大数据处理方式的历史演进以及有状态的流式数据处理的原理，最后从目前有状态的流式处理面临的挑战分析 Apache Flink 作为业界公认为最好的流计算引擎之一所具备的天然优势。希望有助于大家厘清大数据流式处理引擎涉及的基本概念，能够更加得心应手的使用 Flink。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 大数据 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Flink </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[图数据库洞察数据间的关联价值]]></title>
+      <url>/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B4%9E%E5%AF%9F%E6%95%B0%E6%8D%AE%E9%97%B4%E7%9A%84%E5%85%B3%E8%81%94%E4%BB%B7%E5%80%BC.html</url>
+      <content type="html"><![CDATA[<p>大家好，我是吴敏。今天分享一个叫图数据库的技术产品。</p>
+<p> <strong>01、 什么是图和图数据库</strong></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/Rdx7pYibYTUzicyTnfmGwl45nNmmbN3xGrxibt5vsAZackqPZnib4em84QPP8q6ljQF0MQkYIB22lxl9OD060yBIww/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmss77qt1fj30u00gtgpm.jpg" alt="图片"></p>
+<a id="more"></a>
+<p>先来介绍一下什么是图和图数据库，所谓的图和平常认知的图片其实不是同一个概念，图（Graph）在计算机科学里面是一种数据结构，这种数据结构有三个比较主要的概念：点、边和属性。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmss7lzpmzj30u00gun2h.jpg" alt="图片"></p>
+<p>通俗的说，图结构还有其他的叫法，比如：网络结构、拓扑结构，大致上都是描述的同一种数据结构。</p>
+<p>举个例子，上面这个图是典型的图结构（网络结构），人和公司，公司与公司都存在关联关系。这里面存在几个重要的概念，在网络结构中一家公司、一个人可以是一个<strong>点</strong>；还有另外一个概念是<strong>边</strong>，描述的是点与点之间的关系，对应上图中母公司和子公司之间的一个控股关系，也可以是某一个人是另外一个公司的董事长，这样的一个身份关系。点和边基本上组成一个网络结构。</p>
+<p>图结构在工业界使用的时候还会加上一个概念就是<strong>属性</strong>。比如，中间的这个人（点）可以有他的身份证、性别、年龄属性，关系就是边上也可以有一些属性，比如说投资某家公司的投资金额、投资的比例、投资的时间等等，都可以构成这个投资关系的属性。</p>
+<p>像基于上图这样的工商关系，微众银行、腾讯和我们（Nebula Graph）也都是有各自合作的项目。</p>
+<p><strong>1、图数据库的案例 1：反欺诈</strong> </p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmss87lwiuj30u00gt11i.jpg" alt="图片"></p>
+<p>下面来介绍下图的应用。</p>
+<p>一般来说，图在安全场景里面的应用会比较多，上面这种图的中间部分是和 360金融合作的一个项目，主要用于识别诈骗团伙。</p>
+<p>具体来说，现在是互联网时代，很多 APP 支持申请贷款，不管是持牌或者持其他牌照的平台，都可以提供一定的贷款能力。与此同时，也存在团伙“作案”，当然抢银行的少，诈骗、骗贷的团伙多，而这些团伙是有特征的，可以通过一定的方式进行关联。</p>
+<p>在左边的这个例子里，有些的黑产团伙，他们控制的账号会登录一些设备（手机），这些设备和 Wi-Fi 有关联关系。通过这样的 账号-设备-WiFi 关联关系可以识别出来这些团伙。这些团伙被识别出来后，如果团伙相关的人来贷款或者说是来申请授信时，在风控环节会先识别出来。</p>
+<p>在中间这个例子里，红色的点是已知存在风险的账号，最中间的那个区域就是一个风险的团伙，这些节点就是被识别出来的风险节点，它们基于 Wi-Fi 关系将其他点关联到了一起。</p>
+<p>360 金融通过用图的方法大概识别了接近 100 万个有风险的团伙，所以这些团伙哪怕换一个马甲或者其他设备也能第一时间把他们识别出来，进行屏蔽。右边案例图是一些受害人，蓝色的点是诈骗团伙，诈骗团伙还是有挺明显的特征存在的。</p>
+<p><strong>2 图数据库的案例 2：公司信用分 </strong></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmss8qfi2zj30u00gtgqy.jpg" alt="图片"></p>
+<p>上面的例子主要是识别有风险的人，在这个例子里主要讲下 BOSS 直聘的公司风控。在上图中显示了 BOSS 直聘的一些公司，有些公司是很早入驻 BOSS 直聘平台，有些是新注册的。当中存在部分公司不一定可信，需要对这些公司作区分给一定信用分。比如说，公司信用等级好的对它的运营策略会放松点，信用等级差的公司对它的运营审核严格些。因为不停地有新的公司在注册，可以通过不同的运营方式得到这些公司的不同信息，上图这里用的是同这些公司有关联关系的公司。举个例子，我新注册一家公司的时候，这家公司还是会和其它公司有一些互动和关联，例如：该公司的分公司，或是公司同失信被执行人之间有关联关系，通过一轮轮的迭代算出风险评级和信用评级，为新出来的公司提供一个启动初始信用分，这个方法类似于网页权重中使用的 Page Rank。每天晚上 BOSS 直聘会跑几百万社区的权重。</p>
+<p><strong>3 图数据库的案例 3：可信设备 </strong></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmss8wwl41j30u00gwwic.jpg" alt="图片"></p>
+<p>这个例子比较直观。现在每个人基本上都有手机，然后会有常用的手机设备，也可能你会临时换一个设备。这个常用设备下，鉴权的要求比较低。而用临时设备鉴权的要求较高，风控等级较高。还有一种情况就是家人临时使用彼此的设备，这种情况下的鉴权要求可以不需要那么高。因为只要换一个新设备就判断为高风险场景的话，其实对于用户的侵入和打扰很明显。</p>
+<p><strong>4 图数据库的案例 4：智能助理 </strong></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmss9413kgj30u00gtgtf.jpg" alt="图片"></p>
+<p>这个是和美团合作的项目，本身其实是有两方面，一方面是和知识图谱相关，一方面是和深度学习相关。目前来说大多数公司的推荐系统都有基于深度学习的模型。那么会存在一个问题：这个推荐出来的内容可解释性差。简单来说，用户不知道为什么产生这样的列表。因此，美团结合图谱做了一些应用，把所有的菜、地点、人、人与人之间的关系还有这些东西组成大的网，当深度学习模型算出推荐列表之后，取用户和商家之间所有可能的关系，取出一条路径或者多条路径的，在多条路径之间做一些加权或者说计算一些路径规则分，呈现给用户看上去更可理解的理由。比如，这里挺有意思的理由，叫“在北京喜欢北京菜的山东老乡都说这家店很赞”，看到这个理由的时候，你会觉得这个推荐略微合理。当然类似的方法也可以用于像问答机器人这样的 KBQA 的系统。</p>
+<p><strong>5 图数据库的案例 5：外部作弊与刷单</strong></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmss97m4e3j30u00gvq8j.jpg" alt="图片"></h3><p>这是一个刷单的例子，其实很多公司会有运营经费，特别是对新用户会有运营经费，但是这会招来一些羊毛党。这些专业的羊毛党技术很好，他们来薅羊毛的速度比一般的消费者速度快很多，一般前期的大多数的运营经费不是给新用户用掉而是给羊毛党薅走了，羊毛党一般就是那些人，把他们识别出来之后，就可以降低运营经费被薅走的概率。</p>
+<p><strong>6 图数据库的案例 6：数据治理系统</strong></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmss9hlsckj30u00gw43l.jpg" alt="图片"></p>
+<p>这个例子是关于 IT 系统的。我相信现在大多数的公司都是有一个庞大的数仓，几万张甚至几百万张的表，表与表之间又有比较强的依赖关系。例如：一张表或者某几张表取当中几个字段，通过一个 job 清洗，生成下一张表。某一天 DBA 或者某个业务人员发现有一个数据不太对，想知道哪个环节出错了，一层一层往上查，上百层的依赖，用图的方式关联就可以很快的查到哪个地方更有可能出错。这也是我们和微众银行合作的，他们现在正在使用的东西。</p>
+<p><strong>7 图数据库的案例 7、8：服务依赖分析 / 代码依赖分析</strong></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssa14ssmj30u00gvjx4.jpg" alt="图片"></p>
+<p>左边是和运维相关的，右边是和研发相关的事。因为现在基本都是微服务化了，整个微服务之间的调用关系其实是很庞大的。特别是一个大型集团内的RPC 调用关系，运维自己都不一定搞得清楚全局是什么依赖情况。</p>
+<p>这个是美团的例子，把所有的调用关系写到图谱里，大概是百万级别的调用关系。比如说运维想知道过去 7 天可用率低于 4 个 9 的链路有哪些，可以非常快速地识别出来，深度可以是 10 层也可以 100 层。</p>
+<p>右边是一个辅助开发过程的小工具，对研发人员来说挺方便的。对于一个大型的代码仓库，函数之间相互调用。比如说研发今天想改用一个接口，但是我不知道有多少人在调用这个接口，是怎么调用的。对于测试来说，也不知道要测试哪些边界场景。那可以把这些关系都放到图谱里面去，这样大约是一个千万级别的调用关系，把整个调用关系全抽出来之后，那研发说我想看一眼这个接口被多少人调用了，调用方是怎么使用的；QA 要做测试的时候，可能有哪些边界场景受到影响也可以很快地知道。</p>
+<p><strong>02 为什么使用图数据库</strong></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/Rdx7pYibYTUzicyTnfmGwl45nNmmbN3xGrxibt5vsAZackqPZnib4em84QPP8q6ljQF0MQkYIB22lxl9OD060yBIww/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssab1zbzj30u00gu78a.jpg" alt="图片"></p>
+<p>刚才说的其实就是一些图的应用，当然其实这些应用不用图这种数据结构来处理，也是可以的。比如在数仓用 Spark 或者写 SQL 来做也可以。但是为什么更推荐用图数据库呢？有以下几个原因。</p>
+<p><strong>1 一图胜千言 </strong></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssacu9ytj30u00gqdmr.jpg" alt="图片"></p>
+<p>一个是图的表达能力更强。左边是用表的结构方式来处理人物关系和社区关系。右边当中人的是比较重要的节点，他在左边的表中对应的某一行，右边是用图的方式来看。通过不同的着色可以很容易地看出来不同的社区，然后不同的社区之间通过某些特殊的节点来关联。这样远比用表的方式直观得多，特别是在右边图里面查找中心节点比起在左边的表中查找属性值大小要方便的多。</p>
+<p><strong>2 繁琐 vs 简洁 </strong></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssanp5huj30u00gxgrf.jpg" alt="图片"></p>
+<p>第二个是对于图的遍历这种操作来说——相当于表操作中 join。如果用 SQL 来写，大约是左边这么长，也不是算非常复杂；但是用图的查询语言（右侧）来写的话，其实例子核心就是一句话，沿着一个点开始沿着这样一个路径取 Person 数据。所以对于图遍历操作，图专用的查询语言要更简洁。</p>
+<p><strong>3 更快！ </strong></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssato1pij30u00gstcc.jpg" alt="图片"></p>
+<p>使用图还有一个优势是更快，行业内的经典例子就是查询的数据深度越多的时候，图数据库的优势越加明显。对于 4、 5 层深度的查询，小时级别的时延和秒级别的时延，是两种不同的业务形态。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssawspgdj30u00gwn15.jpg" alt="图片"></p>
+<p><strong>4 流行趋势</strong></p>
+<p>最后一个原因是关于流行趋势。在国际上，用于统计各种数据库类型流行情况的 DB-Engines 上，可以看到图数据库的趋势。上图这是这个月最新的数据，绿色是图这种数据库类型流行的趋势，最下面红色的线是关系型数据库的流行趋势。可以看到，图数据库在过去 8 年内保持了比较好的增速，增长了 11 倍。</p>
+<p><strong>03 为什么选择 Nebula Graph</strong></p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/Rdx7pYibYTUzicyTnfmGwl45nNmmbN3xGrxibt5vsAZackqPZnib4em84QPP8q6ljQF0MQkYIB22lxl9OD060yBIww/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssb7yaw9j30u00gvq6z.jpg" alt="图片"></p>
+<p>当然，在整个图数据库领域，产品并不是只有 Nebula Graph 一个，也有很多的其他公司。今天早上也有其他同行在会场上，我想解释一下为什么会推荐 Nebula Graph。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssbapbdmj30u00gxq4a.jpg" alt="图片"></p>
+<p>一般大家选型基于不同的需求看的重点不一样，我想可能会对可靠性、成本性能、功能各个方面进行权衡。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssbdjciej30u00gxgs3.jpg" alt="图片"></p>
+<p>Nebula Graph 是一个开源的产品，源代码是开放在 GitHub 上的。虽然产品的研发时间不长，从 2018 年 10 月开始第一行代码，但是整个项目很活跃。</p>
+<p>上图左下角是 Nebula Graph 中文论坛的情况，在国内有大量的使用者。而 Nebula Graph 本身是开源的项目，整个项目除了我们公司人员之外也有很多国内外贡献者，很多人在使用 Nebula 之后会发现一些 bug 这样就会 file 个 issue，也有不少人会自己动手 fix 和贡献 feature，这样提升了整个研发迭代速度。</p>
+<p>右边是所有 Nebula 的 GitHub 贡献者列表，这些是公开情况，你可以在 GitHub 上面看到。总的来说，贡献者来源很多，并不是背后只有一家公司在研发。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssbgb0w4j30u00gw78k.jpg" alt="图片"></p>
+<p>上图是在生产环境使用 Nebula Graph 的公司。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssbinu8fj30u00gnaii.jpg" alt="图片"></p>
+<p>既然是 Nebula Graph 是开源代码的，那么所有人可以下载和评测。所有的用户都可以根据自己的业务场景做的评测，会更贴近自己的实际场景。而不像某些供应商自己提供的评测，用户难验证这样的评测里面隐藏了多少坑。</p>
+<p>这张图第一个例子是去年和微信合作的项目，他们现在的生产环境单个集群是 50 台机器的规模，它的更新数据量大概是 4,000 亿这样的级别。第二个是美团的例子，美团所做的 Nebula 和其它竞争对手产品的评测。因为美团也是有一个非常高的可用需求，基本上都是要两地多机房。第三个是 BOSS 直聘的评测，从友商产品迁移到 Nebula 之后，从最初只能做 50 亿量级的边的产品，提升到做千亿点边的项目。下面这是贝壳做的评测，公开在今年的DTCC，也是和友商产品的的对比。右边是 360 金融做的评测，生产环境服务器数量减少到原先集群的 1/3，性能是原来的 20 倍以上。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmssbmqw5aj30u00gztbf.jpg" alt="图片"></p>
+<p>虽然软件本身是开源的，但是开源软件是可以商业化的。这个在国内外也是一个比较普遍的事情。Nebula 的源代码是开放的，所以不管是社区版也好，企业版也好，在产品功能内核、可视化、生态方面基本上没有太大的差别。主要的差别是在服务上，社区版如果有问题可以通过开源社区的方式来解决，按照开源协议（Apache 2.0）的约定。而如果是企业版的话，那会提供企业版的严格的 SLA。另外，云这几年流行和增速也非常的快，云目前是在受邀公测的阶段。大家有什么兴趣可以联系我们。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvcGgzTFNtZUdOV09mR1JuQnB5QlRhQQ==" title="https://mp.weixin.qq.com/s/ph3LSmeGNWOfGRnBpyBTaA">文章原址<i class="fa fa-external-link"></i></span></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 图数据库 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NebulaGraph </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Flink知识图谱]]></title>
       <url>/Flink%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1.html</url>
       <content type="html"><![CDATA[<p>社区整理了这样一份知识图谱，由 Apache Flink Committer 执笔，四位 PMC 成员审核，将 Flink 9 大技术版块详细拆分，突出重点内容并搭配全面的学习素材。看完这份图谱，才算真的搞懂 Flink！</p>
@@ -6004,27 +6228,6 @@ export PATH=$PATH:$HIVE_HOME/bin 保存退出。
     </entry>
     
     <entry>
-      <title><![CDATA[JavaWeb开发]]></title>
-      <url>/JavaWeb%E5%AD%A6%E4%B9%A0.html</url>
-      <content type="html"><![CDATA[<p>1 JSP3个编译指令 : page,include,taglib<br>2 JSP动作指令7个：<br>jsp:forward ： 执行页面转向，将请求的处理转发到下一个页面<br>jsp:aram : 用于传递参数，必须与其他支持参数的标签一起使用<br>jsp:include ： 用于动态引入一个JSP页面<br>jsp:plugin : 用于下载JavaBean 或 Applet到客户端执行<br>jsp:useBean : 创建一个JavaBean的实例<br>jsp:setProperty : 设置JavaBean 实例的属性值<br>jsp:getProperty : 输出JavaBean 实例的属性值<br>3 include指令<br>include指令是一个动态include指令，也用于包含某个页面，它不会导入被include页面的编译指令，仅仅将被导入页面的body内容插入本页面<br>forward动作指令和include指令的区别：执行forward时，被forward的页面将完全代替原有页面；而执行include时，被include的页面只是插入原有页面。简而言之：forward拿目标页面代替原有页面，而include则拿目标页面插入原有页面。<br><img src="http://ou3xxg3hg.bkt.clouddn.com/JSP9%E5%A4%A7%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1.png" alt=""></p>
-]]></content>
-      
-        <categories>
-            
-            <category> Java </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaWeb </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[JavaEE软件开发体系架构]]></title>
       <url>/JavaEE%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84.html</url>
       <content type="html"><![CDATA[<h2 id="两层架构"><a href="#两层架构" class="headerlink" title="两层架构"></a>两层架构</h2><p>传统的客户服务器系统仅只简单地基于两层体系来构建，即客户端（前台）和企业信息系统（后台），没有任何中间件，业务逻辑层与表示层或数据层混在一起。这种两层架构无论从开发、部署、扩展、维护来说，综其只有一个特点——成本高。</p>
@@ -6043,6 +6246,27 @@ export PATH=$PATH:$HIVE_HOME/bin 保存退出。
         <tags>
             
             <tag> JavaEE </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[JavaWeb开发]]></title>
+      <url>/JavaWeb%E5%AD%A6%E4%B9%A0.html</url>
+      <content type="html"><![CDATA[<p>1 JSP3个编译指令 : page,include,taglib<br>2 JSP动作指令7个：<br>jsp:forward ： 执行页面转向，将请求的处理转发到下一个页面<br>jsp:aram : 用于传递参数，必须与其他支持参数的标签一起使用<br>jsp:include ： 用于动态引入一个JSP页面<br>jsp:plugin : 用于下载JavaBean 或 Applet到客户端执行<br>jsp:useBean : 创建一个JavaBean的实例<br>jsp:setProperty : 设置JavaBean 实例的属性值<br>jsp:getProperty : 输出JavaBean 实例的属性值<br>3 include指令<br>include指令是一个动态include指令，也用于包含某个页面，它不会导入被include页面的编译指令，仅仅将被导入页面的body内容插入本页面<br>forward动作指令和include指令的区别：执行forward时，被forward的页面将完全代替原有页面；而执行include时，被include的页面只是插入原有页面。简而言之：forward拿目标页面代替原有页面，而include则拿目标页面插入原有页面。<br><img src="http://ou3xxg3hg.bkt.clouddn.com/JSP9%E5%A4%A7%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1.png" alt=""></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JavaWeb </tag>
             
         </tags>
         
