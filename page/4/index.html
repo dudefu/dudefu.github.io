@@ -287,7 +287,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">107</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">117</span></a>
 
   </li>
         
@@ -451,7 +451,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/git配置多个SSH-Key.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/事务特性-ACID.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -471,7 +471,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/git配置多个SSH-Key.html" class="post-title-link" itemprop="url">git配置多个SSH-Key</a>
+                <a href="/事务特性-ACID.html" class="post-title-link" itemprop="url">事务特性-ACID</a>
               
             
           </h2>
@@ -496,7 +496,7 @@
                 
               
 
-              <time title="创建时间：2019-08-16 15:55:12 / 修改时间：16:14:57" itemprop="dateCreated datePublished" datetime="2019-08-16T15:55:12+08:00">2019-08-16</time>
+              <time title="创建时间：2020-11-24 11:47:49 / 修改时间：14:14:44" itemprop="dateCreated datePublished" datetime="2020-11-24T11:47:49+08:00">2020-11-24</time>
             
 
             
@@ -518,7 +518,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/系统/" itemprop="url" rel="index"><span itemprop="name">系统</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
 
                 
                 
@@ -537,8 +537,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/git配置多个SSH-Key.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/git配置多个SSH-Key.html" itemprop="commentCount"></span>
+                <a href="/事务特性-ACID.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/事务特性-ACID.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -546,7 +546,7 @@
 
           
           
-            <span id="/git配置多个SSH-Key.html" class="leancloud_visitors" data-flag-title="git配置多个SSH-Key">
+            <span id="/事务特性-ACID.html" class="leancloud_visitors" data-flag-title="事务特性-ACID">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -578,215 +578,12 @@
 
       
         
-          <h1 id="1、生成一个公司用的SSH-Key"><a href="#1、生成一个公司用的SSH-Key" class="headerlink" title="1、生成一个公司用的SSH-Key"></a>1、生成一个公司用的SSH-Key</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh-keygen -t rsa -C "youremail@yourcompany.com” -f ~/.ssh/id-rsa</span><br></pre></td></tr></table></figure>
-<p>在~/.ssh/目录会生成id-rsa和id-rsa.pub私钥和公钥。 我们将id-rsa.pub中的内容粘帖到公司gitlab服务器的SSH-key的配置中。<br>
+          <p>事务具有4个特征，分别是原子性、一致性、隔离性和持久性，简称事务的ACID特性；</p>
+<h2 id="原子性（atomicity"><a href="#原子性（atomicity" class="headerlink" title="原子性（atomicity)"></a>原子性（atomicity)</h2><p>一个事务要么全部提交成功，要么全部失败回滚，不能只执行其中的一部分操作，这就是事务的原子性。</p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/git配置多个SSH-Key.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/Permission.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Daniel X">
-      <meta itemprop="description" content="專注于大数据技術，分享干货">
-      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="The Future">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/Permission.html" class="post-title-link" itemprop="url">windows添加公钥后，无法克隆的问题解决</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-16 15:51:09" itemprop="dateCreated datePublished" datetime="2019-08-16T15:51:09+08:00">2019-08-16</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-12-25 14:53:38" itemprop="dateModified" datetime="2019-12-25T14:53:38+08:00">2019-12-25</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/系统/" itemprop="url" rel="index"><span itemprop="name">系统</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/Permission.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/Permission.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/Permission.html" class="leancloud_visitors" data-flag-title="windows添加公钥后，无法克隆的问题解决">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>背景：windows下添加公钥后，无法克隆github 上的文件，报错Permission denied (publickey). fatal: Could not read from remote repository.<br>　　博主在github上下载tiny face的的源代码的时候，遇到git clone命令为：git clone –recursive git@github.com:peiyunh/tiny.git<br>　　而当我在ternimal下执行这条语句的时候，出现错误：<br>　　Permissiondenied (publickey).<br>　　fatal:Could not read from remote repository.<br>　　Pleasemake sure you have the correct access rights<br>　　and the repository exists.</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/Permission.html#more" rel="contents">
+              <a class="btn" href="/事务特性-ACID.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -846,7 +643,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/kafka基本操作.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/OLAP和OLTP的区别.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -866,7 +663,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/kafka基本操作.html" class="post-title-link" itemprop="url">kafka基本操作</a>
+                <a href="/OLAP和OLTP的区别.html" class="post-title-link" itemprop="url">OLAP和OLTP的区别</a>
               
             
           </h2>
@@ -891,24 +688,395 @@
                 
               
 
-              <time title="创建时间：2019-07-26 09:57:03" itemprop="dateCreated datePublished" datetime="2019-07-26T09:57:03+08:00">2019-07-26</time>
+              <time title="创建时间：2020-11-23 17:33:03 / 修改时间：17:49:01" itemprop="dateCreated datePublished" datetime="2020-11-23T17:33:03+08:00">2020-11-23</time>
             
 
             
               
 
               
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
                 
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                
-
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="fa fa-comment-o"></i>
                 </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/OLAP和OLTP的区别.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/OLAP和OLTP的区别.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/OLAP和OLTP的区别.html" class="leancloud_visitors" data-flag-title="OLAP和OLTP的区别">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>OLAP（On-Line Analytical Processing）联机分析处理，也称为面向交易的处理过程，其基本特征是前台接收的用户数据可以立即传送到计算中心进行处理，并在很短的时间内给出处理结果，是对用户操作快速响应的方式之一。应用在数据仓库，使用对象是决策者。OLAP系统强调的是数据分析，响应速度要求没那么高。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/OLAP和OLTP的区别.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/MySQL8-0修改密码问题.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
                 
-                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-11-30 17:28:40" itemprop="dateModified" datetime="2020-11-30T17:28:40+08:00">2020-11-30</time>
+                <a href="/MySQL8-0修改密码问题.html" class="post-title-link" itemprop="url">MySQL8.0修改密码问题</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-05-18 17:25:42 / 修改时间：17:27:49" itemprop="dateCreated datePublished" datetime="2020-05-18T17:25:42+08:00">2020-05-18</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/MySQL8-0修改密码问题.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/MySQL8-0修改密码问题.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/MySQL8-0修改密码问题.html" class="leancloud_visitors" data-flag-title="MySQL8.0修改密码问题">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>MySQL5.7和之前的用户修改密码方式：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -e "<span class="keyword">Set</span> <span class="keyword">password</span>=<span class="keyword">password</span>(‘<span class="number">123</span>’);"</span><br><span class="line">mysql -uroot -p123.com -e "<span class="keyword">use</span> mysql;<span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> authentication_string=<span class="keyword">password</span>(<span class="string">'456'</span>) <span class="keyword">where</span> <span class="keyword">user</span>=<span class="string">'root'</span>;"</span><br><span class="line"><span class="keyword">update</span> mysql.user <span class="keyword">set</span> authentication_string=<span class="keyword">password</span>(<span class="string">"123"</span>) <span class="keyword">where</span> <span class="keyword">user</span>=<span class="string">'root'</span>;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/MySQL8-0修改密码问题.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/centos7-5-Ambari2-7-3部署安装.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/centos7-5-Ambari2-7-3部署安装.html" class="post-title-link" itemprop="url">centos7.5+Ambari2.7.3部署安装</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-05-15 11:51:32 / 修改时间：12:07:52" itemprop="dateCreated datePublished" datetime="2020-05-15T11:51:32+08:00">2020-05-15</time>
+            
+
+            
+              
+
               
             
           </span>
@@ -944,8 +1112,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/kafka基本操作.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/kafka基本操作.html" itemprop="commentCount"></span>
+                <a href="/centos7-5-Ambari2-7-3部署安装.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/centos7-5-Ambari2-7-3部署安装.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -953,7 +1121,7 @@
 
           
           
-            <span id="/kafka基本操作.html" class="leancloud_visitors" data-flag-title="kafka基本操作">
+            <span id="/centos7-5-Ambari2-7-3部署安装.html" class="leancloud_visitors" data-flag-title="centos7.5+Ambari2.7.3部署安装">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -985,12 +1153,11 @@
 
       
         
-          <h2 id="kafka基本操作："><a href="#kafka基本操作：" class="headerlink" title="kafka基本操作："></a>kafka基本操作：</h2><h2 id="查看topic主题："><a href="#查看topic主题：" class="headerlink" title="查看topic主题："></a>查看topic主题：</h2><p>kafka-topics.sh –list –zookeeper node1:2181,node2:2181,node3:2181</p>
-<h2 id="查看分区："><a href="#查看分区：" class="headerlink" title="查看分区："></a>查看分区：</h2><p>kafka-topics.sh –zookeeper node2:2181,node3:2181,node4:2181  –describe –topic  MotorVehicle<br>kafka-topics.sh –zookeeper node2:2181,node3:2181,node4:2181  –describe –topic  WifiRecord<br>kafka-topics.sh –zookeeper node2:2181,node3:2181,node4:2181  –describe –topic  ImsiRecord<br>
+          <p>–环境信息：<br>182.15.240.145 master<br>182.15.240.146 slave1<br>182.15.240.147 slave2</p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/kafka基本操作.html#more" rel="contents">
+              <a class="btn" href="/centos7-5-Ambari2-7-3部署安装.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -998,7 +1165,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
 
@@ -1050,7 +1217,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/kafka如何彻底删除topic及数据.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/CDH5-16-1集群企业真正离线部署.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -1070,7 +1237,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/kafka如何彻底删除topic及数据.html" class="post-title-link" itemprop="url">kafka如何彻底删除topic及数据</a>
+                <a href="/CDH5-16-1集群企业真正离线部署.html" class="post-title-link" itemprop="url">CDH5.16.1集群企业真正离线部署</a>
               
             
           </h2>
@@ -1095,24 +1262,12 @@
                 
               
 
-              <time title="创建时间：2019-07-26 09:56:39" itemprop="dateCreated datePublished" datetime="2019-07-26T09:56:39+08:00">2019-07-26</time>
+              <time title="创建时间：2020-03-25 16:58:47 / 修改时间：17:18:19" itemprop="dateCreated datePublished" datetime="2020-03-25T16:58:47+08:00">2020-03-25</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-07-30 11:21:35" itemprop="dateModified" datetime="2019-07-30T11:21:35+08:00">2019-07-30</time>
               
             
           </span>
@@ -1148,8 +1303,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/kafka如何彻底删除topic及数据.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/kafka如何彻底删除topic及数据.html" itemprop="commentCount"></span>
+                <a href="/CDH5-16-1集群企业真正离线部署.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/CDH5-16-1集群企业真正离线部署.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1157,7 +1312,7 @@
 
           
           
-            <span id="/kafka如何彻底删除topic及数据.html" class="leancloud_visitors" data-flag-title="kafka如何彻底删除topic及数据">
+            <span id="/CDH5-16-1集群企业真正离线部署.html" class="leancloud_visitors" data-flag-title="CDH5.16.1集群企业真正离线部署">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -1189,12 +1344,13 @@
 
       
         
-          <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>删除kafka topic及其数据，严格来说并不是很难的操作。但是，往往给kafka 使用者带来诸多问题。项目组之前接触过多个开发者，发现都会偶然出现无法彻底删除kafka的情况。本文总结多个删除kafka topic的应用场景，总结一套删除kafka topic的标准操作方法。</p>
-<h2 id="step1："><a href="#step1：" class="headerlink" title="step1："></a>step1：</h2><p>如果需要被删除topic 此时正在被程序 produce和consume，则这些生产和消费程序需要停止。<br>因为如果有程序正在生产或者消费该topic，则该topic的offset信息一致会在broker更新。调用kafka delete命令则无法删除该topic。<br>同时，需要设置 auto.create.topics.enable = false，默认设置为true。如果设置为true，则produce或者fetch 不存在的topic也会自动创建这个topic。这样会给删除topic带来很多意向不到的问题。<br>所以，这一步很重要，必须设置auto.create.topics.enable = false，并认真把生产和消费程序彻底全部停止。<br>
+          <p>视频:<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL2F2NTIxNjcyMTk=" title="https://www.bilibili.com/video/av52167219">https://www.bilibili.com/video/av52167219<i class="fa fa-external-link"></i></span><br>PS:建议先看课程视频1-2篇，再根据视频或文档部署，<br>如有问题，及时与@若泽数据J哥联系。</p>
+<hr>
+<h2 id="一-准备工作"><a href="#一-准备工作" class="headerlink" title="一.准备工作"></a>一.准备工作</h2><h4 id="1-离线部署主要分为三块"><a href="#1-离线部署主要分为三块" class="headerlink" title="1.离线部署主要分为三块:"></a>1.离线部署主要分为三块:</h4><p>a.MySQL离线部署<br>b.CM离线部署<br>c.Parcel文件离线源部署</p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/kafka如何彻底删除topic及数据.html#more" rel="contents">
+              <a class="btn" href="/CDH5-16-1集群企业真正离线部署.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1202,7 +1358,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
 
@@ -1254,7 +1410,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/修改kafka保留天数对数据入库的影响.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/一次Java线程池误用引发的血案和总结.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -1274,7 +1430,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/修改kafka保留天数对数据入库的影响.html" class="post-title-link" itemprop="url">修改kafka保留天数对数据入库的影响</a>
+                <a href="/一次Java线程池误用引发的血案和总结.html" class="post-title-link" itemprop="url">一次Java线程池误用引发的血案和总结</a>
               
             
           </h2>
@@ -1299,807 +1455,12 @@
                 
               
 
-              <time title="创建时间：2019-07-26 09:56:00" itemprop="dateCreated datePublished" datetime="2019-07-26T09:56:00+08:00">2019-07-26</time>
+              <time title="创建时间：2020-03-13 10:30:45 / 修改时间：11:11:15" itemprop="dateCreated datePublished" datetime="2020-03-13T10:30:45+08:00">2020-03-13</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-07-30 12:20:36" itemprop="dateModified" datetime="2019-07-30T12:20:36+08:00">2019-07-30</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/修改kafka保留天数对数据入库的影响.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/修改kafka保留天数对数据入库的影响.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/修改kafka保留天数对数据入库的影响.html" class="leancloud_visitors" data-flag-title="修改kafka保留天数对数据入库的影响">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="场景介绍："><a href="#场景介绍：" class="headerlink" title="场景介绍："></a>场景介绍：</h2><p>Kafka集群三个broker，同时有一个生产者和一个消费者，生产者producer 已生产2个多小时约10万条数据，同时消费者将数据插入hbase中。</p>
-<h2 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h2><p>1、打开ambari操作界面，在kafka配置页下修改保留天数的参数log.retention.hours 为1小时，同时修改文件大小segment为10000。（此处数值的设置，为了方便测试）<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/修改kafka保留天数对数据入库的影响.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/创建分布式图数据库JanusGraph对象的两种方法.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Daniel X">
-      <meta itemprop="description" content="專注于大数据技術，分享干货">
-      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="The Future">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/创建分布式图数据库JanusGraph对象的两种方法.html" class="post-title-link" itemprop="url">创建分布式图数据库JanusGraph对象的两种方法</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-04 15:18:35" itemprop="dateCreated datePublished" datetime="2019-07-04T15:18:35+08:00">2019-07-04</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-07-30 10:11:33" itemprop="dateModified" datetime="2019-07-30T10:11:33+08:00">2019-07-30</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/图数据库/" itemprop="url" rel="index"><span itemprop="name">图数据库</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/创建分布式图数据库JanusGraph对象的两种方法.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/创建分布式图数据库JanusGraph对象的两种方法.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/创建分布式图数据库JanusGraph对象的两种方法.html" class="leancloud_visitors" data-flag-title="创建分布式图数据库JanusGraph对象的两种方法">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>JanusGraph 是一个分布式图数据库，相对于neo4j可进行横向扩展，且存储和图引擎分离，架构优美，本文将介绍JanusGraph的两种创建方式。<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/创建分布式图数据库JanusGraph对象的两种方法.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/JanusGraph系统架构.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Daniel X">
-      <meta itemprop="description" content="專注于大数据技術，分享干货">
-      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="The Future">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/JanusGraph系统架构.html" class="post-title-link" itemprop="url">JanusGraph系统架构</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-04 14:28:24 / 修改时间：15:29:14" itemprop="dateCreated datePublished" datetime="2019-07-04T14:28:24+08:00">2019-07-04</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/图数据库/" itemprop="url" rel="index"><span itemprop="name">图数据库</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/JanusGraph系统架构.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/JanusGraph系统架构.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/JanusGraph系统架构.html" class="leancloud_visitors" data-flag-title="JanusGraph系统架构">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>JanusGraph是一个图形数据库引擎。 JanusGraph本身专注于压缩图序列化、丰富图数据建模、高效的查询执行。 此外，JanusGraph利用Hadoop进行图分析和批处理。JanusGraph为数据持久化，数据索引和客户端访问实现了强大的模块化接口。 JanusGraph的模块化架构使其能够与各种存储，索引和客户端技术进行互操作; 这也使得JanusGraph升级对应的组件过程变得更加简单。<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/JanusGraph系统架构.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/多节点时间同步.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Daniel X">
-      <meta itemprop="description" content="專注于大数据技術，分享干货">
-      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="The Future">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/多节点时间同步.html" class="post-title-link" itemprop="url">多节点时间同步</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-06-13 17:31:00" itemprop="dateCreated datePublished" datetime="2019-06-13T17:31:00+08:00">2019-06-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-27 17:09:36" itemprop="dateModified" datetime="2019-06-27T17:09:36+08:00">2019-06-27</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/大数据/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/多节点时间同步.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/多节点时间同步.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/多节点时间同步.html" class="leancloud_visitors" data-flag-title="多节点时间同步">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>linux 系统有两个时钟：一个是硬件时钟，即BIOS时间；另一个是系统时钟，是linux系统Kernel（内核）时间。<br>系统开启时，系统会读取硬件时间，设置系统时间。因此，设置了系统时间，重启时会失效。要想永久更改时间，可以先同步系统时间（基于网络时间，准确性较高），再同步系统时间。<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/多节点时间同步.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/FastJson反序列化为什么用TypeReference.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Daniel X">
-      <meta itemprop="description" content="專注于大数据技術，分享干货">
-      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="The Future">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/FastJson反序列化为什么用TypeReference.html" class="post-title-link" itemprop="url">FastJson反序列化为什么用TypeReference</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-05-09 10:41:01" itemprop="dateCreated datePublished" datetime="2019-05-09T10:41:01+08:00">2019-05-09</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-11-30 17:28:27" itemprop="dateModified" datetime="2020-11-30T17:28:27+08:00">2020-11-30</time>
               
             
           </span>
@@ -2135,8 +1496,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/FastJson反序列化为什么用TypeReference.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/FastJson反序列化为什么用TypeReference.html" itemprop="commentCount"></span>
+                <a href="/一次Java线程池误用引发的血案和总结.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/一次Java线程池误用引发的血案和总结.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2144,7 +1505,7 @@
 
           
           
-            <span id="/FastJson反序列化为什么用TypeReference.html" class="leancloud_visitors" data-flag-title="FastJson反序列化为什么用TypeReference">
+            <span id="/一次Java线程池误用引发的血案和总结.html" class="leancloud_visitors" data-flag-title="一次Java线程池误用引发的血案和总结">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -2176,11 +1537,11 @@
 
       
         
-          <p>泛型序列化非TypeReference code：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Map&lt;String, Person&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line">    map.put(<span class="string">"one"</span>, <span class="keyword">new</span> Person(<span class="string">"zhangsan"</span>));</span><br><span class="line">    map.put(<span class="string">"two"</span>, <span class="keyword">new</span> Person(<span class="string">"lisi"</span>));</span><br><span class="line">    String jsonStr = JSON.toJSONString(map);</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = jsonStr.getBytes();</span><br><span class="line">    String json = <span class="keyword">new</span> String(bytes);</span><br><span class="line">    Map&lt;String, Person&gt; res = JSON.parseObject(json, Map.class);</span><br><span class="line">    System.out.println(res.get(<span class="string">"one"</span>));</span><br><span class="line">    System.out.println(res.get(<span class="string">"one"</span>).getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <h2 id="这是一个十分严重的问题"><a href="#这是一个十分严重的问题" class="headerlink" title="这是一个十分严重的问题"></a>这是一个十分严重的问题</h2><p>自从最近的某年某月某天起，线上服务开始变得不那么稳定。在高峰期，时常有几台机器的内存持续飙升，并且无法回收，导致服务不可用。</p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/FastJson反序列化为什么用TypeReference.html#more" rel="contents">
+              <a class="btn" href="/一次Java线程池误用引发的血案和总结.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2240,7 +1601,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/driver.html">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/并发编程和线程池.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Daniel X">
@@ -2260,7 +1621,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/driver.html" class="post-title-link" itemprop="url">spark项目在IDEA运行正常，spark-submit提示没有合适驱动</a>
+                <a href="/并发编程和线程池.html" class="post-title-link" itemprop="url">并发编程和线程池</a>
               
             
           </h2>
@@ -2285,12 +1646,618 @@
                 
               
 
-              <time title="创建时间：2019-05-09 10:30:14 / 修改时间：20:15:39" itemprop="dateCreated datePublished" datetime="2019-05-09T10:30:14+08:00">2019-05-09</time>
+              <time title="创建时间：2020-03-06 14:37:48" itemprop="dateCreated datePublished" datetime="2020-03-06T14:37:48+08:00">2020-03-06</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-10 11:38:20" itemprop="dateModified" datetime="2020-03-10T11:38:20+08:00">2020-03-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/并发编程和线程池.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/并发编程和线程池.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/并发编程和线程池.html" class="leancloud_visitors" data-flag-title="并发编程和线程池">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>并发编程和线程池</p>
+<h2 id="练气期（并发编程基础）"><a href="#练气期（并发编程基础）" class="headerlink" title="练气期（并发编程基础）"></a>练气期（并发编程基础）</h2><h3 id="练气期一层（this）"><a href="#练气期一层（this）" class="headerlink" title="练气期一层（this）"></a>练气期一层（this）</h3><p><em>synchronized(this)和synchronized方法都是锁当前对象。</em></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/并发编程和线程池.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/关于fastjson解析后的属性排序问题解决方案.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/关于fastjson解析后的属性排序问题解决方案.html" class="post-title-link" itemprop="url">关于fastjson解析后的属性排序问题解决方案</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-25 14:27:46" itemprop="dateCreated datePublished" datetime="2019-12-25T14:27:46+08:00">2019-12-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-05 10:34:37" itemprop="dateModified" datetime="2020-03-05T10:34:37+08:00">2020-03-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/关于fastjson解析后的属性排序问题解决方案.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/关于fastjson解析后的属性排序问题解决方案.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/关于fastjson解析后的属性排序问题解决方案.html" class="leancloud_visitors" data-flag-title="关于fastjson解析后的属性排序问题解决方案">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="问题起因："><a href="#问题起因：" class="headerlink" title="问题起因："></a>问题起因：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String testJson = <span class="string">"&#123;\"lh_u\":32,\"ps\":7,\"qt\":24,\"ns\":87,\"gm\":11,\"dp\":2,\"lh_ua\":34,\"ft\":82,\"jzsj\":\"24时\",\"lg\":71,\"yt\":6,\"jzrq\":\"3月4日\",\"ba\":62&#125;"</span>;</span><br><span class="line">JSONObject jsonObject = JSON.parseObject(jsonString); ----- ①</span><br><span class="line">System.out.println(jsonObject.toJSONString());</span><br></pre></td></tr></table></figure>
+<p>上述方法得到的jsonObject属性排序和字符串的字段排序是一样的，如果想对jsonObject的属性进行排序，可以做此处理：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JSONObject jsonObjectNew1 = JSON.parseObject(JSON.toJSONString(jsonObject,SerializerFeature.MapSortField));</span><br><span class="line">JSONObject jsonObjectNew2 = JSON.parseObject(JSON.toJSONString(jsonObject,SerializerFeature.MapSortField),Feature.OrderedField);</span><br></pre></td></tr></table></figure></p>
+<p>将jsonObject转成按字母排序的字符串，然后再转成jsonObject对象，再次转成jsonObject时如果不加Feature.OrderedField，则jsonObject和①中的一样，加上则保持属性顺序不变。<br><span class="exturl" data-url="aHR0cHM6Ly93d3cub3NjaGluYS5uZXQvcXVlc3Rpb24vMjMzNjU2MF8yMjk0Nzg/c29ydD10aW1l" title="https://www.oschina.net/question/2336560_229478?sort=time">参考文章<i class="fa fa-external-link"></i></span></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/hashcode详解.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/hashcode详解.html" class="post-title-link" itemprop="url">hashcode详解</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-24 10:39:05 / 修改时间：10:45:13" itemprop="dateCreated datePublished" datetime="2019-12-24T10:39:05+08:00">2019-12-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/hashcode详解.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/hashcode详解.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/hashcode详解.html" class="leancloud_visitors" data-flag-title="hashcode详解">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h2><p>写这篇文章是因为在看hashMap源码时遇到有什么hashcode值，然后就去查，脑袋里面是有映像的，不就是在Object中有equals和hashcode方法嘛，这在学java基础的时候就遇到过，不过那时候无所谓，不懂就不懂，就一笔带过去了，然后到现在，又回过头来补本应该以前就搞清楚的问题，所以知道了一个道理，学习不是一个追求速度的事情，不懂就要去查清楚，弄明白，一步一个脚印，虽然刚开始可能会很慢，不过慢慢的，学习的多了，理解的多了，会越来越快的。越来越轻松，不至于现在还在补原来的知识。后悔也无事于补了，起码现在知道了这个道理，学习永远都不会迟，只要突然一天的醒悟，一切都会慢慢好起来的。　　<br>弄懂这知识点，查了很多博文，发现很多类似，我不知道哪个才是原著，所以复制一个我觉得比较好的，不过看了也有些迷惑，我会写下来。<br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmd5dWFuMTk4ODA2MDYvYXJ0aWNsZS9kZXRhaWxzLzUxMjQwMzcy" title="http://blog.csdn.net/zhangyuan19880606/article/details/51240372">引用博文<i class="fa fa-external-link"></i></span><br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/hashcode详解.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/greenplum安装与部署（详细）.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/greenplum安装与部署（详细）.html" class="post-title-link" itemprop="url">greenplum安装与部署（详细）</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-29 18:07:04" itemprop="dateCreated datePublished" datetime="2019-11-29T18:07:04+08:00">2019-11-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-12-01 14:57:49" itemprop="dateModified" datetime="2019-12-01T14:57:49+08:00">2019-12-01</time>
               
             
           </span>
@@ -2326,8 +2293,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/driver.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/driver.html" itemprop="commentCount"></span>
+                <a href="/greenplum安装与部署（详细）.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/greenplum安装与部署（详细）.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2335,7 +2302,7 @@
 
           
           
-            <span id="/driver.html" class="leancloud_visitors" data-flag-title="spark项目在IDEA运行正常，spark-submit提示没有合适驱动">
+            <span id="/greenplum安装与部署（详细）.html" class="leancloud_visitors" data-flag-title="greenplum安装与部署（详细）">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -2367,11 +2334,11 @@
 
       
         
-          <h2 id="java-sql-SQLException-No-suitable-driver-解决方案"><a href="#java-sql-SQLException-No-suitable-driver-解决方案" class="headerlink" title="java.sql.SQLException: No suitable driver 解决方案"></a>java.sql.SQLException: No suitable driver 解决方案</h2><p>报错代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.sql.SQLException: No suitable driver	at java.sql.DriverManager.getDriver(DriverManager.java:<span class="number">315</span>)	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions$$anonfun$<span class="number">7</span>.apply(JDBCOptions.scala:<span class="number">85</span>)	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions$$anonfun$<span class="number">7</span>.apply(JDBCOptions.scala:<span class="number">85</span>)	at scala.Option.getOrElse(Option.scala:<span class="number">121</span>)	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.&lt;init&gt;(JDBCOptions.scala:<span class="number">84</span>)	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.&lt;init&gt;(JDBCOptions.scala:<span class="number">35</span>)	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:<span class="number">60</span>)	at org.apache.spark.sql.execution.datasources.SaveIntoDataSourceCommand.run(SaveIntoDataSourceCommand.scala:<span class="number">45</span>)	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult$lzycompute(commands.scala:<span class="number">70</span>)	at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult(commands.scala:<span class="number">68</span>)	at org.apache.spark.sql.execution.command.ExecutedCommandExec.doExecute(commands.scala:<span class="number">86</span>)	at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$<span class="number">1</span>.apply(SparkPlan.scala:<span class="number">131</span>)	at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$<span class="number">1</span>.apply(SparkPlan.scala:<span class="number">127</span>)	at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$<span class="number">1</span>.apply(SparkPlan.scala:<span class="number">155</span>)	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:<span class="number">151</span>)	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:<span class="number">152</span>)	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:<span class="number">127</span>)	at org.apache.spark.sql.execution.QueryExecution.toRdd$lzycompute(QueryExecution.scala:<span class="number">80</span>)	at org.apache.spark.sql.execution.QueryExecution.toRdd(QueryExecution.scala:<span class="number">80</span>)	at org.apache.spark.sql.DataFrameWriter$$anonfun$runCommand$<span class="number">1</span>.apply(DataFrameWriter.scala:<span class="number">656</span>)	at org.apache.spark.sql.DataFrameWriter$$anonfun$runCommand$<span class="number">1</span>.apply(DataFrameWriter.scala:<span class="number">656</span>)	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:<span class="number">77</span>)	at org.apache.spark.sql.DataFrameWriter.runCommand(DataFrameWriter.scala:<span class="number">656</span>)	at org.apache.spark.sql.DataFrameWriter.saveToV1Source(DataFrameWriter.scala:<span class="number">273</span>)	at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:<span class="number">267</span>)	at org.apache.spark.sql.DataFrameWriter.jdbc(DataFrameWriter.scala:<span class="number">501</span>)	at com.xinyi.multiCollision.service.JobService$.dealWithMoreData(JobService.scala:<span class="number">406</span>)	at com.xinyi.multiCollision.sparkJob.MultiCollisionApp$.main(MultiCollisionApp.scala:<span class="number">70</span>)	at com.xinyi.multiCollision.sparkJob.MultiCollisionApp.main(MultiCollisionApp.scala)	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">62</span>)	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)	at java.lang.reflect.Method.invoke(Method.java:<span class="number">498</span>)	at org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:<span class="number">52</span>)	at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:<span class="number">904</span>)	at org.apache.spark.deploy.SparkSubmit$.doRunMain$<span class="number">1</span>(SparkSubmit.scala:<span class="number">198</span>)	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:<span class="number">228</span>)	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:<span class="number">137</span>)	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)</span><br></pre></td></tr></table></figure></p>
+          <h2 id="修改系统配置"><a href="#修改系统配置" class="headerlink" title="修改系统配置"></a>修改系统配置</h2><h3 id="1-1-gp服务器列表"><a href="#1-1-gp服务器列表" class="headerlink" title="1.1  gp服务器列表"></a>1.1  gp服务器列表</h3><p>192.168.7.11  hadoop01   主节点<br>192.168.7.12  hadoop02   数据节点1<br>192.168.7.13  hadoop03   数据节点2<br>192.168.7.14  hadoop04   主节点切换备份节点<br>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/driver.html#more" rel="contents">
+              <a class="btn" href="/greenplum安装与部署（详细）.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2379,7 +2346,7 @@
           <!--/noindex-->
         
       
-    </div>
+    </p></div>
 
     
 
@@ -2420,7 +2387,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2464,7 +2431,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">107</span>
+                    <span class="site-state-item-count">117</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3326,7 +3293,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("git配置多个SSH-Key");titles.push("windows添加公钥后，无法克隆的问题解决");titles.push("kafka基本操作");titles.push("kafka如何彻底删除topic及数据");titles.push("修改kafka保留天数对数据入库的影响");titles.push("创建分布式图数据库JanusGraph对象的两种方法");titles.push("JanusGraph系统架构");titles.push("多节点时间同步");titles.push("FastJson反序列化为什么用TypeReference");titles.push("spark项目在IDEA运行正常，spark-submit提示没有合适驱动");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("事务特性-ACID");titles.push("OLAP和OLTP的区别");titles.push("MySQL8.0修改密码问题");titles.push("centos7.5+Ambari2.7.3部署安装");titles.push("CDH5.16.1集群企业真正离线部署");titles.push("一次Java线程池误用引发的血案和总结");titles.push("并发编程和线程池");titles.push("关于fastjson解析后的属性排序问题解决方案");titles.push("hashcode详解");titles.push("greenplum安装与部署（详细）");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {

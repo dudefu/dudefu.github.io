@@ -146,19 +146,19 @@
 <meta property="og:site_name" content="The Future">
 <meta property="og:description" content="前面已经为大家介绍了 Flink 的基本概念以及安装部署的过程，从而希望能够帮助读者建立起对 Flink 的初步印象。本次课程开始，我们将进入第二部分，即 Flink 实际开发的相关内容。本次课程将首先介绍 Flink 开发中比较核心的 DataStream API 。我们首先将回顾分布式流处理的一些基本概念，这些概念对于理解实际的 DataStream API 有非常大的作用。然后，我们将详细介">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://yqfile.alicdn.com/d5d3695dedda642721f6eaafe24eefddcbcf94b4.png">
-<meta property="og:image" content="https://yqfile.alicdn.com/2bad6cc96760356f56b6999d737eb3e0a5d755df.png">
-<meta property="og:image" content="https://yqfile.alicdn.com/be98fa513efde1e7424aa5ce159a0e8276454cd7.png">
-<meta property="og:image" content="https://yqfile.alicdn.com/0aa03be7e04063a930eb280157ae3379cc924555.png">
-<meta property="og:image" content="https://yqfile.alicdn.com/8b9bd087feaa2fe8175fb448f56a831b15ac7e4b.png">
-<meta property="og:image" content="https://yqfile.alicdn.com/651c8a522fd4226e873ca4cc358bdcc3ae8e7f49.png">
-<meta property="og:image" content="https://yqfile.alicdn.com/b87abf7399c43d209cdfd0bfc391ececafc281a5.png">
-<meta property="og:image" content="https://yqfile.alicdn.com/caa52dbd1f544f951ee1eb0933a68c58d054d3e5.png">
-<meta property="og:updated_time" content="2021-01-19T06:36:09.779Z">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtx3vaoymj30k00b942m.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtx3zwz95j30k00b9abg.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxav5a66j30k00b9aap.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxb1mr5oj30k00b9dgv.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxb8614sj30k00b9mxp.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxa8iaumj30k00b9wft.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxaddsw4j30k00b9q4d.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxajahvbj30k00b93zm.jpg">
+<meta property="og:updated_time" content="2021-01-20T01:54:03.764Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apache Flink 零基础入门（三）：DataStream API 编程">
 <meta name="twitter:description" content="前面已经为大家介绍了 Flink 的基本概念以及安装部署的过程，从而希望能够帮助读者建立起对 Flink 的初步印象。本次课程开始，我们将进入第二部分，即 Flink 实际开发的相关内容。本次课程将首先介绍 Flink 开发中比较核心的 DataStream API 。我们首先将回顾分布式流处理的一些基本概念，这些概念对于理解实际的 DataStream API 有非常大的作用。然后，我们将详细介">
-<meta name="twitter:image" content="https://yqfile.alicdn.com/d5d3695dedda642721f6eaafe24eefddcbcf94b4.png">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtx3vaoymj30k00b942m.jpg">
 
 
 
@@ -297,7 +297,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">107</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">117</span></a>
 
   </li>
         
@@ -506,12 +506,24 @@
                 
               
 
-              <time title="创建时间：2021-01-19 14:13:34 / 修改时间：14:36:09" itemprop="dateCreated datePublished" datetime="2021-01-19T14:13:34+08:00">2021-01-19</time>
+              <time title="创建时间：2021-01-19 14:13:34" itemprop="dateCreated datePublished" datetime="2021-01-19T14:13:34+08:00">2021-01-19</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-01-20 09:54:03" itemprop="dateModified" datetime="2021-01-20T09:54:03+08:00">2021-01-20</time>
               
             
           </span>
@@ -590,12 +602,12 @@
         <p>前面已经为大家介绍了<span class="exturl" data-url="aHR0cHM6Ly95cS5hbGl5dW4uY29tL2FydGljbGVzLzcwODc2OD9zcG09YTJjNGUuMTExNTU0MzUuMC4wLjI2YWYzMzEyVkNheTJk" title="https://yq.aliyun.com/articles/708768?spm=a2c4e.11155435.0.0.26af3312VCay2d"> Flink 的基本概念以及安装部署的过程<i class="fa fa-external-link"></i></span>，从而希望能够帮助读者建立起对 Flink 的初步印象。本次课程开始，我们将进入第二部分，即 Flink 实际开发的相关内容。本次课程将首先介绍 Flink 开发中比较核心的 DataStream API 。我们首先将回顾分布式流处理的一些基本概念，这些概念对于理解实际的 DataStream API 有非常大的作用。然后，我们将详细介绍 DataStream API 的设计，最后我们将通过一个例子来演示 DataStream API 的使用。</p>
 <a id="more"></a>
 <h3 id="1-流处理基本概念"><a href="#1-流处理基本概念" class="headerlink" title="1. 流处理基本概念"></a>1. 流处理基本概念</h3><p>对于什么是流处理，从不同的角度有不同的定义。其实流处理与批处理这两个概念是对立统一的，它们的关系有点类似于对于 Java 中的 ArrayList 中的元素，是直接看作一个有限数据集并用下标去访问，还是用迭代器去访问。</p>
-<p><img src="https://yqfile.alicdn.com/d5d3695dedda642721f6eaafe24eefddcbcf94b4.png" alt="_04"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtx3vaoymj30k00b942m.jpg" alt="_04"></p>
 <blockquote>
 <p>图1. 左图硬币分类器。硬币分类器也可以看作一个流处理系统，用于硬币分类的各部分组件提前串联在一起，硬币不断进入系统，并最终被输出到不同的队列中供后续使用。右图同理。</p>
 </blockquote>
 <p>流处理系统本身有很多自己的特点。一般来说，由于需要支持无限数据集的处理，流处理系统一般采用一种数据驱动的处理方式。它会提前设置一些算子，然后等到数据到达后对数据进行处理。为了表达复杂的计算逻辑，包括 Flink 在内的分布式流处理引擎一般采用 DAG 图来表示整个计算逻辑，其中 DAG 图中的每一个点就代表一个基本的逻辑单元，也就是前面说的算子。由于计算逻辑被组织成有向图，数据会按照边的方向，从一些特殊的 Source 节点流入系统，然后通过网络传输、本地传输等不同的数据传输方式在算子之间进行发送和处理，最后会通过另外一些特殊的 Sink 节点将计算结果发送到某个外部系统或数据库中。</p>
-<p><img src="https://yqfile.alicdn.com/2bad6cc96760356f56b6999d737eb3e0a5d755df.png" alt="_05"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtx3zwz95j30k00b9abg.jpg" alt="_05"></p>
 <blockquote>
 <p>图2. 一个 DAG 计算逻辑图与实际的物理时模型。逻辑图中的每个算子在物理图中可能有多个并发。</p>
 </blockquote>
@@ -618,12 +630,12 @@
 <p>为了实现流式 Word Count，我们首先要先获得一个 StreamExecutionEnvironment 对象。它是我们构建图过程中的上下文对象。基于这个对象，我们可以添加一些算子。对于流处理程度，我们一般需要首先创建一个数据源去接入数据。在这个例子中，我们使用了 Environment 对象中内置的读取文件的数据源。这一步之后，我们拿到的是一个 DataStream 对象，它可以看作一个无限的数据集，可以在该集合上进行一序列的操作。例如，在 Word Count 例子中，我们首先将每一条记录（即文件中的一行）分隔为单词，这是通过 FlatMap 操作来实现的。调用 FlatMap 将会在底层的 DAG 图中添加一个 FlatMap 算子。然后，我们得到了一个记录是单词的流。我们将流中的单词进行分组（keyBy），然后累积计算每一个单词的数据（sum(1)）。计算出的单词的数据组成了一个新的流，我们将它写入到输出文件中。</p>
 <p>最后，我们需要调用 env#execute 方法来开始程序的执行。需要强调的是，前面我们调用的所有方法，都不是在实际处理数据，而是在构通表达计算逻辑的 DAG 图。只有当我们将整个图构建完成并显式的调用 Execute 方法后，框架才会把计算图提供到集群中，接入数据并执行实际的逻辑。</p>
 <p>基于流式 Word Count 的例子可以看出，基于 Flink 的 DataStream API 来编写流处理程序一般需要三步：通过 Source 接入数据、进行一系统列的处理以及将数据写出。最后，不要忘记显式调用 Execute 方式，否则前面编写的逻辑并不会真正执行。</p>
-<p><img src="https://yqfile.alicdn.com/be98fa513efde1e7424aa5ce159a0e8276454cd7.png" alt="_09"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxav5a66j30k00b9aap.jpg" alt="_09"></p>
 <blockquote>
 <p>图3. Flink DataStream 操作概览</p>
 </blockquote>
 <p>从上面的例子中还可以看出，Flink DataStream API 的核心，就是代表流数据的 DataStream 对象。整个计算逻辑图的构建就是围绕调用 DataStream 对象上的不同操作产生新的 DataStream 对象展开的。整体来说，DataStream 上的操作可以分为四类。第一类是对于单条记录的操作，比如筛除掉不符合要求的记录（Filter 操作），或者将每条记录都做一个转换（Map 操作）。第二类是对多条记录的操作。比如说统计一个小时内的订单总成交量，就需要将一个小时内的所有订单记录的成交量加到一起。为了支持这种类型的操作，就得通过 Window 将需要的记录关联到一起进行处理。第三类是对多个流进行操作并转换为单个流。例如，多个流可以通过 Union、Join 或 Connect 等操作合到一起。这些操作合并的逻辑不同，但是它们最终都会产生了一个新的统一的流，从而可以进行一些跨流的操作。最后， DataStream 还支持与合并对称的操作，即把一个流按一定规则拆分为多个流（Split 操作），每个流是之前流的一个子集，这样我们就可以对不同的流作不同的处理。</p>
-<p><img src="https://yqfile.alicdn.com/0aa03be7e04063a930eb280157ae3379cc924555.png" alt="_10"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxb1mr5oj30k00b9dgv.jpg" alt="_10"></p>
 <blockquote>
 <p>图4. 不同类型的 DataStream 子类型。不同的子类型支持不同的操作集合。</p>
 </blockquote>
@@ -631,7 +643,7 @@
 <p>类似的，对于 Connect 操作，在调用 streamA.connect(streamB)后可以得到一个专门的 ConnectedStream。ConnectedStream 支持的操作与普通的 DataStream 有所区别，由于它代表两个不同的流混合的结果，因此它允许用户对两个流中的记录分别指定不同的处理逻辑，然后它们的处理结果形成一个新的 DataStream 流。由于不同记录的处理是在同一个算子中进行的，因此它们在处理时可以方便的共享一些状态信息。上层的一些 Join 操作，在底层也是需要依赖于 Connect 操作来实现的。</p>
 <p>另外，如前所述，我们可以通过 Window 操作对流可以按时间或者个数进行一些切分，从而将流切分成一个个较小的分组。具体的切分逻辑可以由用户进行选择。当一个分组中所有记录都到达后，用户可以拿到该分组中的所有记录，从而可以进行一些遍历或者累加操作。这样，对每个分组的处理都可以得到一组输出数据，这些输出数据形成了一个新的基本流。</p>
 <p>对于普通的 DataStream，我们必须使用 allWindow 操作，它代表对整个流进行统一的 Window 处理，因此是不能使用多个算子实例进行同时计算的。针对这一问题，就需要我们首先使用 KeyBy 方法对记录按 Key 进行分组，然后才可以并行的对不同 Key 对应的记录进行单独的 Window 操作。KeyBy 操作是我们日常编程中最重要的操作之一，下面我们会更详细的介绍。</p>
-<p><img src="https://yqfile.alicdn.com/8b9bd087feaa2fe8175fb448f56a831b15ac7e4b.png" alt="_11"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxb8614sj30k00b9mxp.jpg" alt="_11"></p>
 <blockquote>
 <p>图5. 基本流上的 Window 操作与 KeyedStream 上的 Window 操对比。KeyedStream 上的 Window 操作使采用多个实例并发处理成为了可能。</p>
 </blockquote>
@@ -648,12 +660,12 @@
 <li>Rescale：当上游和下游算子的实例数为 n 或 m 时，如果 n &lt; m，则每个上游实例向ceil(m/n)或floor(m/n)个下游实例轮询发送数据；如果 n &gt; m，则 floor(n/m) 或 ceil(n/m) 个上游实例向下游实例轮询发送数据。</li>
 <li>PartitionCustomer：当上述内置分配方式不满足需求时，用户还可以选择自定义分组方式。</li>
 </ul>
-<p><img src="https://yqfile.alicdn.com/651c8a522fd4226e873ca4cc358bdcc3ae8e7f49.png" alt="_13"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxa8iaumj30k00b9wft.jpg" alt="_13"></p>
 <blockquote>
 <p>图6. 除keyBy外其它的物理分组方式。</p>
 </blockquote>
 <p>除分组方式外，Flink DataStream API 中另一个重要概念就是类型系统。图 7 所示，Flink DataStream 对像都是强类型的，每一个 DataStream 对象都需要指定元素的类型，Flink 自己底层的序列化机制正是依赖于这些信息对序列化等进行优化。具体来说，在 Flink 底层，它是使用 TypeInformation 对象对类型进行描述的，TypeInformation 对象定义了一组类型相关的信息供序列化框架使用。</p>
-<p><img src="https://yqfile.alicdn.com/b87abf7399c43d209cdfd0bfc391ececafc281a5.png" alt="_14"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxaddsw4j30k00b9q4d.jpg" alt="_14"></p>
 <blockquote>
 <p>图7. Flink DataStream API 中的类型系统</p>
 </blockquote>
@@ -668,7 +680,7 @@
 <p>如果只统计各个类型的成交量，则程序可以到此为止，我们可以直接在 Sum 后添加一个 Sink 算子对不断更新的各类型成交量进行输出。但是，我们还需要统计所有类型的总成交量。为了做到这一点，我们需要将所有记录输出到同一个计算节点的实例上。我们可以通过 KeyBy 并且对所有记录返回同一个 Key，将所有记录分到同一个组中，从而可以全部发送到同一个实例上。</p>
 <p>然后，我们使用 Fold 方法来在算子中维护每种类型商品的成交量。注意虽然目前 Fold 方法已经被标记为 Deprecated，但是在 DataStream API 中暂时还没有能替代它的其它操作，所以我们仍然使用 Fold 方法。这一方法接收一个初始值，然后当后续流中每条记录到达的时候，算子会调用所传递的 FoldFunction 对初始值进行更新，并发送更新后的值。我们使用一个 HashMap 来对各个类别的当前成交量进行维护，当有一条新的&lt;商品类别，成交量&gt;到达时，我们就更新该 HashMap。这样在 Sink 中，我们收到的是最新的商品类别和成交量的 HashMap，我们可以依赖这个值来输出各个商品的成交量和总的成交量。</p>
 <p>需要指出的是，这个例子主要是用来演示 DataStream API 的用法，实际上还会有更高效的写法，此外，更上层的 Table / SQL 还支持 Retraction 机制，可以更好的处理这种情况。</p>
-<p><img src="https://yqfile.alicdn.com/caa52dbd1f544f951ee1eb0933a68c58d054d3e5.png" alt="_17"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtxajahvbj30k00b93zm.jpg" alt="_17"></p>
 <blockquote>
 <p>图8. API 原理图</p>
 </blockquote>
@@ -816,6 +828,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/零基础入门：从0到1学会apache Flink.html" rel="prev" title="零基础入门：从0到1学会apache Flink">
+                零基础入门：从0到1学会apache Flink <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -890,7 +906,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">107</span>
+                    <span class="site-state-item-count">117</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

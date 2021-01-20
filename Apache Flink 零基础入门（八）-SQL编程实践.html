@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本文是 Apache Flink 零基础入门系列文章第八篇，将通过五个实例讲解 Flink SQL 的编程实践。  注： 本教程实践基于 Ververica 开源的 sql-training 项目。基于 Flink 1.7.2 。  通过本课你能学到什么？">
+<meta name="keywords" content="Flink">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ApacheFlink零基础入门（八）:SQL编程实践">
+<meta property="og:url" content="https://www.dudefu.tk/Apache Flink 零基础入门（八）-SQL编程实践.html">
+<meta property="og:site_name" content="The Future">
+<meta property="og:description" content="本文是 Apache Flink 零基础入门系列文章第八篇，将通过五个实例讲解 Flink SQL 的编程实践。  注： 本教程实践基于 Ververica 开源的 sql-training 项目。基于 Flink 1.7.2 。  通过本课你能学到什么？">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzdctkroj30w20u0myx.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzdj8rbsj30sq0840t8.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzdmsmuvj31b30u0djc.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzdsk09ij31b30u0aem.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtze4clttj322i0u0abu.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtze8cjcpj324p0u0mz4.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzec439fj31ot0u0tbg.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzefvk82j31240u0djl.jpg">
+<meta property="og:updated_time" content="2021-01-20T03:06:37.297Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ApacheFlink零基础入门（八）:SQL编程实践">
+<meta name="twitter:description" content="本文是 Apache Flink 零基础入门系列文章第八篇，将通过五个实例讲解 Flink SQL 的编程实践。  注： 本教程实践基于 Ververica 开源的 sql-training 项目。基于 Flink 1.7.2 。  通过本课你能学到什么？">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzdctkroj30w20u0myx.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.dudefu.tk/Apache Flink 零基础入门（八）-SQL编程实践">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>ApacheFlink零基础入门（八）:SQL编程实践 | The Future</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">The Future</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Stay hungry,stay foolish.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">117</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">13</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">58</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-something">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/something" rel="section"><i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>干货</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/Apache Flink 零基础入门（八）-SQL编程实践.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">ApacheFlink零基础入门（八）:SQL编程实践
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-01-20 11:03:22 / 修改时间：11:06:37" itemprop="dateCreated datePublished" datetime="2021-01-20T11:03:22+08:00">2021-01-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/大数据/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/Apache Flink 零基础入门（八）-SQL编程实践.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Apache Flink 零基础入门（八）-SQL编程实践.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/Apache Flink 零基础入门（八）-SQL编程实践.html" class="leancloud_visitors" data-flag-title="ApacheFlink零基础入门（八）:SQL编程实践">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是 Apache Flink <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9ncm91cC9zYz9zcG09YTJjNmguMTI4ODMyODMuMTM2NDU2My4xNi41ZjFmMjAxY0loaFR0NyMvP19rPXkycWc5cg==" title="https://developer.aliyun.com/group/sc?spm=a2c6h.12883283.1364563.16.5f1f201cIhhTt7#/?_k=y2qg9r">零基础入门系列文章<i class="fa fa-external-link"></i></span>第八篇，将通过五个实例讲解 Flink SQL 的编程实践。</p>
+<blockquote>
+<p>注： 本教程实践基于 Ververica 开源的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZlcnZlcmljYS9zcWwtdHJhaW5pbmc=" title="https://github.com/ververica/sql-training">sql-training<i class="fa fa-external-link"></i></span> 项目。基于 Flink 1.7.2 。</p>
+</blockquote>
+<h2 id="通过本课你能学到什么？"><a href="#通过本课你能学到什么？" class="headerlink" title="通过本课你能学到什么？"></a>通过本课你能学到什么？</h2><a id="more"></a>
+<p>本文将通过五个实例来贯穿 Flink SQL 的编程实践，主要会涵盖以下几个方面的内容。</p>
+<ol>
+<li>如何使用 SQL CLI 客户端</li>
+<li>如何在流上运行 SQL 查询</li>
+<li>运行 window aggregate 与 non-window aggregate，理解其区别</li>
+<li>如何用 SQL 消费 Kafka 数据</li>
+<li>如何用 SQL 将结果写入 Kafka 和 ElasticSearch</li>
+</ol>
+<p>本文假定您已具备基础的 SQL 知识。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>本文教程是基于 Docker 进行的，因此你只需要安装了 <span class="exturl" data-url="aHR0cHM6Ly93d3cuZG9ja2VyLmNvbS8=" title="https://www.docker.com/">Docker<i class="fa fa-external-link"></i></span> 即可。不需要依赖 Java、Scala 环境、或是IDE。</p>
+<p>注意：Docker 默认配置的资源可能不太够，会导致运行 Flink Job 时卡死。因此推荐配置 Docker 资源到 3-4 GB，3-4 CPUs。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzdctkroj30w20u0myx.jpg" alt="img"></p>
+<p>本次教程的环境使用 Docker Compose 来安装，包含了所需的各种服务的容器，包括：</p>
+<ul>
+<li>Flink SQL Client：用来提交query，以及可视化结果</li>
+<li>Flink JobManager 和 TaskManager：用来运行 Flink SQL 任务。</li>
+<li>Apache Kafka：用来生成输入流和写入结果流。</li>
+<li>Apache Zookeeper：Kafka 的依赖项</li>
+<li>ElasticSearch：用来写入结果</li>
+</ul>
+<p>我们已经提供好了Docker Compose 配置文件，可以直接下载 <span class="exturl" data-url="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3ZlcnZlcmljYS9zcWwtdHJhaW5pbmcvbWFzdGVyL2RvY2tlci1jb21wb3NlLnltbA==" title="https://raw.githubusercontent.com/ververica/sql-training/master/docker-compose.yml">docker-compose.yml<i class="fa fa-external-link"></i></span> 文件。</p>
+<p>然后打开命令行窗口，进入存放 <code>docker-compose.yml</code> 文件的目录，然后运行以下命令：</p>
+<ul>
+<li><strong>Linux &amp; MacOS</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>Windows</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set COMPOSE_CONVERT_WINDOWS_PATHS=1</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p><code>docker-compose</code> 命令会启动所有所需的容器。第一次运行的时候，Docker 会自动地从 Docker Hub 下载镜像，这可能会需要一段时间（将近 2.3GB）。之后运行的话，几秒钟就能启动起来了。运行成功的话，会在命令行中看到以下输出，并且也可以在 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo4MDgxLw==" title="http://localhost:8081/">http://localhost:8081<i class="fa fa-external-link"></i></span> 访问到 Flink Web UI。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzdj8rbsj30sq0840t8.jpg" alt="img"></p>
+<h2 id="运行-Flink-SQL-CLI-客户端"><a href="#运行-Flink-SQL-CLI-客户端" class="headerlink" title="运行 Flink SQL CLI 客户端"></a>运行 Flink SQL CLI 客户端</h2><p>运行下面命令进入 Flink SQL CLI 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose exec sql-client ./sql-client.sh</span><br></pre></td></tr></table></figure>
+<p>该命令会在容器中启动 Flink SQL CLI 客户端。然后你会看到如下的欢迎界面。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzdmsmuvj31b30u0djc.jpg" alt="img"></p>
+<h2 id="数据介绍"><a href="#数据介绍" class="headerlink" title="数据介绍"></a>数据介绍</h2><p>Docker Compose 中已经预先注册了一些表和数据，可以运行 <code>SHOW TABLES;</code> 来查看。本文会用到的数据是 <code>Rides</code> 表，这是一张出租车的行车记录数据流，包含了时间和位置信息，运行 <code>DESCRIBE Rides;</code> 可以查看表结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Flink SQL&gt; DESCRIBE Rides;</span><br><span class="line">root</span><br><span class="line"> |-- rideId: Long           // 行为ID (包含两条记录，一条入一条出）</span><br><span class="line"> |-- taxiId: Long           // 出租车ID </span><br><span class="line"> |-- isStart: Boolean       // 开始 or 结束</span><br><span class="line"> |-- lon: Float             // 经度</span><br><span class="line"> |-- lat: Float             // 纬度</span><br><span class="line"> |-- rideTime: TimeIndicatorTypeInfo(rowtime)     // 时间</span><br><span class="line"> |-- psgCnt: Integer        // 乘客数</span><br></pre></td></tr></table></figure>
+<p>Rides 表的详细定义见 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZlcnZlcmljYS9zcWwtdHJhaW5pbmcvYmxvYi9tYXN0ZXIvYnVpbGQtaW1hZ2UvdHJhaW5pbmctY29uZmlnLnlhbWw=" title="https://github.com/ververica/sql-training/blob/master/build-image/training-config.yaml">training-config.yaml<i class="fa fa-external-link"></i></span>。</p>
+<h2 id="实例1：过滤"><a href="#实例1：过滤" class="headerlink" title="实例1：过滤"></a>实例1：过滤</h2><p>例如我们现在只想查看<strong>发生在纽约的行车记录</strong>。</p>
+<p>注：Docker 环境中已经预定义了一些内置函数，如 <code>isInNYC(lon, lat)</code> 可以确定一个经纬度是否在纽约，<code>toAreaId(lon, lat)</code> 可以将经纬度转换成区块。</p>
+<p>因此，此处我们可以使用 <code>isInNYC</code> 来快速过滤出纽约的行车记录。在 SQL CLI 中运行如下 Query：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM Rides WHERE isInNYC(lon, lat);</span><br></pre></td></tr></table></figure>
+<p>SQL CLI 便会提交一个 SQL 任务到 Docker 集群中，从数据源（Rides 流存储在Kafka中）不断拉取数据，并通过 <code>isInNYC</code> 过滤出所需的数据。SQL CLI 也会进入可视化模式，并不断刷新展示过滤后的结果：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzdsk09ij31b30u0aem.jpg" alt="img"></p>
+<p>也可以到 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo4MDgxLw==" title="http://localhost:8081/">http://localhost:8081<i class="fa fa-external-link"></i></span> 查看 Flink 作业的运行情况。</p>
+<h2 id="实例2：Group-Aggregate"><a href="#实例2：Group-Aggregate" class="headerlink" title="实例2：Group Aggregate"></a>实例2：Group Aggregate</h2><p>我们的另一个需求是计算<strong>搭载每种乘客数量的行车事件数</strong>。也就是搭载1个乘客的行车数、搭载2个乘客的行车… 当然，我们仍然只关心纽约的行车事件。</p>
+<p>因此，我们可以按照乘客数<code>psgCnt</code>做分组，使用 <code>COUNT(*)</code> 计算出每个分组的事件数，注意在分组前需要先过滤出<code>isInNYC</code>的数据。在 SQL CLI 中运行如下 Query：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT psgCnt, COUNT(*) AS cnt </span><br><span class="line">FROM Rides </span><br><span class="line">WHERE isInNYC(lon, lat)</span><br><span class="line">GROUP BY psgCnt;</span><br></pre></td></tr></table></figure>
+<p>SQL CLI 的可视化结果如下所示，结果每秒都在发生变化。不过最大的乘客数不会超过 6 人。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtze4clttj322i0u0abu.jpg" alt="img"></p>
+<h2 id="实例3：Window-Aggregate"><a href="#实例3：Window-Aggregate" class="headerlink" title="实例3：Window Aggregate"></a>实例3：Window Aggregate</h2><p>为了持续地监测纽约的交通流量，需要计算出<strong>每个区块每5分钟的进入的车辆数</strong>。我们只关心至少有5辆车子进入的区块。</p>
+<p>此处需要涉及到窗口计算（每5分钟），所以需要用到 Tumbling Window 的语法。“每个区块” 所以还要按照 <code>toAreaId</code> 进行分组计算。“进入的车辆数” 所以在分组前需要根据 <code>isStart</code> 字段过滤出进入的行车记录，并使用 <code>COUNT(*)</code> 统计车辆数。最后还有一个 “至少有5辆车子的区块” 的条件，这是一个基于统计值的过滤条件，所以可以用 SQL HAVING 子句来完成。</p>
+<p>最后的 Query 如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">  toAreaId(lon, lat) AS area, </span><br><span class="line">  TUMBLE_END(rideTime, INTERVAL &apos;5&apos; MINUTE) AS window_end, </span><br><span class="line">  COUNT(*) AS cnt </span><br><span class="line">FROM Rides </span><br><span class="line">WHERE isInNYC(lon, lat) and isStart</span><br><span class="line">GROUP BY </span><br><span class="line">  toAreaId(lon, lat), </span><br><span class="line">  TUMBLE(rideTime, INTERVAL &apos;5&apos; MINUTE) </span><br><span class="line">HAVING COUNT(*) &gt;= 5;</span><br></pre></td></tr></table></figure>
+<p>在 SQL CLI 中运行后，其可视化结果如下所示，每个 area + window_end 的结果输出后就不会再发生变化，但是会每隔 5 分钟会输出一批新窗口的结果。因为 Docker 环境中的source我们做了10倍的加速读取（相对于原始速度），所以演示的时候，大概每隔30秒就会输出一批新窗口。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtze8cjcpj324p0u0mz4.jpg" alt="img"></p>
+<h2 id="Window-Aggregate-与-Group-Aggregate-的区别"><a href="#Window-Aggregate-与-Group-Aggregate-的区别" class="headerlink" title="Window Aggregate 与 Group Aggregate 的区别"></a>Window Aggregate 与 Group Aggregate 的区别</h2><p>从实例2和实例3的结果显示上，可以体验出来 Window Aggregate 与 Group Aggregate 是有一些明显的区别的。其主要的区别是，Window Aggregate 是当window结束时才输出，其输出的结果是最终值，不会再进行修改，其输出流是一个 <strong>Append 流</strong>。而 Group Aggregate 是每处理一条数据，就输出最新的结果，其结果是在不断更新的，就好像数据库中的数据一样，其输出流是一个 <strong>Update 流</strong>。</p>
+<p>另外一个区别是，window 由于有 watermark ，可以精确知道哪些窗口已经过期了，所以可以及时清理过期状态，保证状态维持在稳定的大小。而 Group Aggregate 因为不知道哪些数据是过期的，所以状态会无限增长，这对于生产作业来说不是很稳定，所以建议对 Group Aggregate 的作业配上 State TTL 的配置。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzec439fj31ot0u0tbg.jpg" alt="img"></p>
+<p>例如统计每个店铺每天的实时PV，那么就可以将 TTL 配置成 24+ 小时，因为一天前的状态一般来说就用不到了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT  DATE_FORMAT(ts, &apos;yyyy-MM-dd&apos;), shop_id, COUNT(*) as pv</span><br><span class="line">FROM T</span><br><span class="line">GROUP BY DATE_FORMAT(ts, &apos;yyyy-MM-dd&apos;), shop_id</span><br></pre></td></tr></table></figure>
+<p>当然，如果 TTL 配置地太小，可能会清除掉一些有用的状态和数据，从而导致数据精确性地问题。这也是用户需要权衡地一个参数。</p>
+<h2 id="实例4：将-Append-流写入-Kafka"><a href="#实例4：将-Append-流写入-Kafka" class="headerlink" title="实例4：将 Append 流写入 Kafka"></a>实例4：将 Append 流写入 Kafka</h2><p>上一小节介绍了 Window Aggregate 和 Group Aggregate 的区别，以及 Append 流和 Update 流的区别。在 Flink 中，目前 Update 流只能写入支持更新的外部存储，如 MySQL, HBase, ElasticSearch。Append 流可以写入任意地存储，不过一般写入日志类型的系统，如 Kafka。</p>
+<p>这里我们希望将<strong>“每10分钟的搭乘的乘客数”</strong>写入Kafka。</p>
+<p>我们已经预定义了一张 Kafka 的结果表 <code>Sink_TenMinPsgCnts</code>（<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZlcnZlcmljYS9zcWwtdHJhaW5pbmcvYmxvYi9tYXN0ZXIvYnVpbGQtaW1hZ2UvdHJhaW5pbmctY29uZmlnLnlhbWw=" title="https://github.com/ververica/sql-training/blob/master/build-image/training-config.yaml">training-config.yaml<i class="fa fa-external-link"></i></span> 中有完整的表定义）。</p>
+<p>在执行 Query 前，我们先运行如下命令，来监控写入到 <code>TenMinPsgCnts</code> topic 中的数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose exec sql-client /opt/kafka-client/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic TenMinPsgCnts --from-beginning</span><br></pre></td></tr></table></figure>
+<p>每10分钟的搭乘的乘客数可以使用 Tumbling Window 来描述，我们使用 <code>INSERT INTO Sink_TenMinPsgCnts</code> 来直接将 Query 结果写入到结果表。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO Sink_TenMinPsgCnts </span><br><span class="line">SELECT </span><br><span class="line">  TUMBLE_START(rideTime, INTERVAL &apos;10&apos; MINUTE) AS cntStart,  </span><br><span class="line">  TUMBLE_END(rideTime, INTERVAL &apos;10&apos; MINUTE) AS cntEnd,</span><br><span class="line">  CAST(SUM(psgCnt) AS BIGINT) AS cnt </span><br><span class="line">FROM Rides </span><br><span class="line">GROUP BY TUMBLE(rideTime, INTERVAL &apos;10&apos; MINUTE);</span><br></pre></td></tr></table></figure>
+<p>我们可以监控到 <code>TenMinPsgCnts</code> topic 的数据以 JSON 的形式写入到了 Kafka 中：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtzefvk82j31240u0djl.jpg" alt="img"></p>
+<h2 id="实例5：将-Update-流写入-ElasticSearch"><a href="#实例5：将-Update-流写入-ElasticSearch" class="headerlink" title="实例5：将 Update 流写入 ElasticSearch"></a>实例5：将 Update 流写入 ElasticSearch</h2><p>最后我们实践一下将一个持续更新的 Update 流写入 ElasticSearch 中。我们希望将<strong>“每个区域出发的行车数”</strong>，写入到 ES 中。</p>
+<p>我们也已经预定义好了一张 <code>Sink_AreaCnts</code> 的 ElasticSearch 结果表（<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZlcnZlcmljYS9zcWwtdHJhaW5pbmcvYmxvYi9tYXN0ZXIvYnVpbGQtaW1hZ2UvdHJhaW5pbmctY29uZmlnLnlhbWw=" title="https://github.com/ververica/sql-training/blob/master/build-image/training-config.yaml">training-config.yaml<i class="fa fa-external-link"></i></span> 中有完整的表定义）。该表中只有两个字段 <code>areaId</code> 和 <code>cnt</code>。</p>
+<p>同样的，我们也使用 <code>INSERT INTO</code> 将 Query 结果直接写入到 <code>Sink_AreaCnts</code> 表中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO Sink_AreaCnts </span><br><span class="line">SELECT toAreaId(lon, lat) AS areaId, COUNT(*) AS cnt </span><br><span class="line">FROM Rides </span><br><span class="line">WHERE isStart</span><br><span class="line">GROUP BY toAreaId(lon, lat);</span><br></pre></td></tr></table></figure>
+<p>在 SQL CLI 中执行上述 Query 后，Elasticsearch 会自动地创建 <code>area-cnts</code> 索引。Elasticsearch 提供了一个 REST API 。我们可以访问</p>
+<ul>
+<li>查看<code>area-cnts</code>索引的详细信息： <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo5MjAwL2FyZWEtY250cw==" title="http://localhost:9200/area-cnts">http://localhost:9200/area-cnts<i class="fa fa-external-link"></i></span></li>
+<li>查看<code>area-cnts</code>索引的统计信息： <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo5MjAwL2FyZWEtY250cy9fc3RhdHM=" title="http://localhost:9200/area-cnts/_stats">http://localhost:9200/area-cnts/_stats<i class="fa fa-external-link"></i></span></li>
+<li>返回<code>area-cnts</code>索引的内容：<span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo5MjAwL2FyZWEtY250cy9fc2VhcmNo" title="http://localhost:9200/area-cnts/_search">http://localhost:9200/area-cnts/_search<i class="fa fa-external-link"></i></span></li>
+<li>显示 区块 49791 的行车数：<span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo5MjAwL2FyZWEtY250cy9fc2VhcmNoP3E9YXJlYUlkOjQ5Nzkx" title="http://localhost:9200/area-cnts/_search?q=areaId:49791">http://localhost:9200/area-cnts/_search?q=areaId:49791<i class="fa fa-external-link"></i></span></li>
+</ul>
+<p>随着 Query 的一直运行，你也可以观察到一些统计值（<code>_all.primaries.docs.count</code>, <code>_all.primaries.docs.deleted</code>）在不断的增长：<span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo5MjAwL2FyZWEtY250cy9fc3RhdHM=" title="http://localhost:9200/area-cnts/_stats">http://localhost:9200/area-cnts/_stats<i class="fa fa-external-link"></i></span></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文带大家使用 Docker Compose 快速上手 Flink SQL 的编程，并对比 Window Aggregate 和 Group Aggregate 的区别，以及这两种类型的作业如何写入到 外部系统中。感兴趣的同学，可以基于这个 Docker 环境更加深入地去实践，例如运行自己写的 UDF , UDTF, UDAF。查询内置地其他源表等等。</p>
+<hr>
+<p><strong>▼ Apache Flink 社区推荐 ▼</strong></p>
+<p>Apache Flink 及大数据领域顶级盛会 Flink Forward Asia 2019 重磅开启，目前正在征集议题，限量早鸟票优惠ing。了解 Flink Forward Asia 2019 的更多信息，请查看：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9zcGVjaWFsL2ZmYTIwMTk=" title="https://developer.aliyun.com/special/ffa2019">https://developer.aliyun.com/special/ffa2019<i class="fa fa-external-link"></i></span></p>
+<p>首届 Apache Flink 极客挑战赛重磅开启，聚焦机器学习与性能优化两大热门领域，40万奖金等你拿，加入挑战请点击：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly90aWFuY2hpLmFsaXl1bi5jb20vbWFya2V0cy90aWFuY2hpL2ZsaW5rMjAxOQ==" title="https://tianchi.aliyun.com/markets/tianchi/flink2019">https://tianchi.aliyun.com/markets/tianchi/flink2019<i class="fa fa-external-link"></i></span></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Flink/" rel="tag"><i class="fa fa-tag"></i> Flink</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+              <div>
+                
+
+<script src="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.css">
+
+
+  
+
+
+<div class="likely likely-light">
+	
+ 	 	<div class="twitter">Tweet</div>
+	
+ 	 	<div class="facebook">Share</div>
+	
+ 	 	<div class="linkedin">Link</div>
+	
+ 	 	<div class="gplus">Plus</div>
+	
+ 	 	<div class="vkontakte">Share</div>
+	
+ 	 	<div class="odnoklassniki">Class</div>
+	
+ 	 	<div class="telegram">Send</div>
+	
+ 	 	<div class="whatsapp">Send</div>
+	
+ 	 	<div class="pinterest">Pin</div>
+	
+</div>
+
+              </div>
+            
+            
+            
+              <div>
+                
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Apache Flink 零基础入门（七）-TableAPI编程.html" rel="next" title="Apache Flink 零基础入门（七）:Table API 编程">
+                <i class="fa fa-chevron-left"></i> Apache Flink 零基础入门（七）:Table API 编程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTk3My82NTM4"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg" alt="Daniel X">
+            
+              <p class="site-author-name" itemprop="name">Daniel X</p>
+              <div class="site-description motion-element" itemprop="description">專注于大数据技術，分享干货</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">117</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="GitHub &rarr; https://github.com/dudefu"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmR1ZGVmdUBmb3htYWlsLmNvbT9zdWJqZWN0PUhlbGxvJTIwYWdhaW4=" title="E-mail &rarr; mailto:dudefu@foxmail.com?subject=Hello%20again"><i class="fa fa-fw fa-envelope"></i>E-mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHVkZWZ1" title="Weibo &rarr; https://weibo.com/dudefu"><i class="fa fa-fw fa-weibo"></i>Weibo</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93cGEucXEuY29tL21zZ3JkP3Y9MyZ1aW49MTU3NzU3MTk1OSZzaXRlPWR1ZGVmdS5pbmZvJm1lbnU9eWVz" title="QQ &rarr; https://wpa.qq.com/msgrd?v=3&uin=1577571959&site=dudefu.info&menu=yes"><i class="fa fa-fw fa-qq"></i>QQ</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过本课你能学到什么？"><span class="nav-number">1.</span> <span class="nav-text">通过本课你能学到什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境准备"><span class="nav-number">2.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行-Flink-SQL-CLI-客户端"><span class="nav-number">3.</span> <span class="nav-text">运行 Flink SQL CLI 客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据介绍"><span class="nav-number">4.</span> <span class="nav-text">数据介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例1：过滤"><span class="nav-number">5.</span> <span class="nav-text">实例1：过滤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例2：Group-Aggregate"><span class="nav-number">6.</span> <span class="nav-text">实例2：Group Aggregate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例3：Window-Aggregate"><span class="nav-number">7.</span> <span class="nav-text">实例3：Window Aggregate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Window-Aggregate-与-Group-Aggregate-的区别"><span class="nav-number">8.</span> <span class="nav-text">Window Aggregate 与 Group Aggregate 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例4：将-Append-流写入-Kafka"><span class="nav-number">9.</span> <span class="nav-text">实例4：将 Append 流写入 Kafka</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例5：将-Update-流写入-ElasticSearch"><span class="nav-number">10.</span> <span class="nav-text">实例5：将 Update 流写入 ElasticSearch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备18110871号 </span>&copy; 2017 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-spinner"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dudefu</span>
+
+  
+
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Pisces</span> v7.1.2</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="26,26,26" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+  <script id="ribbon" size="300" alpha="0.6" zindex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/js.cookie.js?v=7.1.2"></script>
+  <script src="/js/scroll-cookie.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/exturl.js?v=7.1.2"></script>
+
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: true,
+    notify: true,
+    appId: '1N5rpk874DGudJw2wCL9J011-gzGzoHsz',
+    appKey: '9Y83e6suJgx567wtxhKy45IN',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zk-cn' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+    <script>
+  window.livereOptions = {
+    refer: 'Apache Flink 零基础入门（八）-SQL编程实践.html'
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.1/bluebird.core.min.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/docs/variables.html
+      var isPost = 'ApacheFlink零基础入门（八）:SQL编程实践'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'ApacheFlink零基础入门（八）:SQL编程实践'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+      if (selected) {
+        selection.removeAllRanges();
+        selection.addRange(selected);
+      }
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

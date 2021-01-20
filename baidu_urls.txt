@@ -1,3 +1,13 @@
+https://www.dudefu.tk/Apache Flink 零基础入门（八）-SQL编程实践.html
+https://www.dudefu.tk/Apache Flink 零基础入门（七）-TableAPI编程.html
+https://www.dudefu.tk/Apache Flink 零基础入门（六）：状态管理及容错机制.html
+https://www.dudefu.tk/Apache Flink 零基础入门（五）：流处理核心组件Time.html
+https://www.dudefu.tk/1.html
+https://www.dudefu.tk/Apache Flink 零基础入门（四）：客户端操作的 5 种模式.html
+https://www.dudefu.tk/Apache Flink 全领域干货合集.html
+https://www.dudefu.tk/流式处理术语解释Exactly-once与Effectively-once.html
+https://www.dudefu.tk/流处理系统中的“exactly Once”语义保证.html
+https://www.dudefu.tk/零基础入门：从0到1学会apache Flink.html
 https://www.dudefu.tk/Apache Flink 零基础入门（三）：DataStream API 编程.html
 https://www.dudefu.tk/Apache Flink 零基础入门（二）：开发环境搭建和应用的配置、部署及运行.html
 https://www.dudefu.tk/Apache Flink 零基础入门（一）：基础概念解析.html
@@ -88,13 +98,3 @@ https://www.dudefu.tk/并发和并行的区别.html
 https://www.dudefu.tk/Java实现九九乘法表.html
 https://www.dudefu.tk/java中内存分配策略及堆和栈的比较.html
 https://www.dudefu.tk/Java内存机制和内存地址.html
-https://www.dudefu.tk/Java语言基础.html
-https://www.dudefu.tk/变量和常量.html
-https://www.dudefu.tk/Java入门.html
-https://www.dudefu.tk/计算机的基础.html
-https://www.dudefu.tk/MySQL备份.html
-https://www.dudefu.tk/Intellij IDEA 激活方法.html
-https://www.dudefu.tk/MySQL优化（二）.html
-https://www.dudefu.tk/MySQL优化（一）.html
-https://www.dudefu.tk/如何阅读源代码.html
-https://www.dudefu.tk/简析String、StringBuffer与StringBuilder.html

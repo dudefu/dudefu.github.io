@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="文章概述：本文主要包含三部分：第一部分，主要介绍什么是 Table API，从概念角度进行分析，让大家有一个感性的认识；第二部分，从代码的层面介绍怎么使用 Table API；第三部分，介绍 Table API 近期的动态。文章结构如下：">
+<meta name="keywords" content="Flink">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache Flink 零基础入门（七）:Table API 编程">
+<meta property="og:url" content="https://www.dudefu.tk/Apache Flink 零基础入门（七）-TableAPI编程.html">
+<meta property="og:site_name" content="The Future">
+<meta property="og:description" content="文章概述：本文主要包含三部分：第一部分，主要介绍什么是 Table API，从概念角度进行分析，让大家有一个感性的认识；第二部分，从代码的层面介绍怎么使用 Table API；第三部分，介绍 Table API 近期的动态。文章结构如下：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz8olt2uj30eu0570tl.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz90xii1j31i20u046k.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz939udsj31hy0u0wl2.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz97bcdjj31hu0u0118.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz98tylnj31hw0u048a.jpg">
+<meta property="og:image" content="https://ucc.alicdn.com/pic/developer-ecology/1a2a581c078a42e696b4a85a6ed0feaa.png">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9cbsapj31hx0u0jz4.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9ebisnj30nh0d7jsu.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9gtbh5j31h10u048b.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9lbtuqj31hb0u0wku.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9nn6q0j31hk0u048j.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9sfuw5j31hf0u07ej.jpg">
+<meta property="og:updated_time" content="2021-01-20T03:02:21.026Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apache Flink 零基础入门（七）:Table API 编程">
+<meta name="twitter:description" content="文章概述：本文主要包含三部分：第一部分，主要介绍什么是 Table API，从概念角度进行分析，让大家有一个感性的认识；第二部分，从代码的层面介绍怎么使用 Table API；第三部分，介绍 Table API 近期的动态。文章结构如下：">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz8olt2uj30eu0570tl.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.dudefu.tk/Apache Flink 零基础入门（七）-TableAPI编程">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Apache Flink 零基础入门（七）:Table API 编程 | The Future</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">The Future</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Stay hungry,stay foolish.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">117</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">13</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">58</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-something">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/something" rel="section"><i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>干货</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/Apache Flink 零基础入门（七）-TableAPI编程.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Apache Flink 零基础入门（七）:Table API 编程
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-01-20 10:59:26 / 修改时间：11:02:21" itemprop="dateCreated datePublished" datetime="2021-01-20T10:59:26+08:00">2021-01-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/大数据/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/Apache Flink 零基础入门（七）-TableAPI编程.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Apache Flink 零基础入门（七）-TableAPI编程.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/Apache Flink 零基础入门（七）-TableAPI编程.html" class="leancloud_visitors" data-flag-title="Apache Flink 零基础入门（七）:Table API 编程">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>文章概述：</strong>本文主要包含三部分：第一部分，主要介绍什么是 Table API，从概念角度进行分析，让大家有一个感性的认识；第二部分，从代码的层面介绍怎么使用 Table API；第三部分，介绍 Table API 近期的动态。文章结构如下：</p>
+<a id="more"></a>
+<ul>
+<li>什么是 Table API<ul>
+<li>Flink API 总览</li>
+<li>Table API 的特性</li>
+</ul>
+</li>
+<li>Table API 编程<ul>
+<li>WordCount 示例</li>
+<li>Table API 操作<ul>
+<li>如何获取一个 Table</li>
+<li>如果输出一个 Table</li>
+<li>如果查询一个 Table</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Table API 动态</li>
+</ul>
+<h1 id="一、什么是-Table-API"><a href="#一、什么是-Table-API" class="headerlink" title="一、什么是 Table API"></a>一、什么是 Table API</h1><p>为了更好地了解 Table API，我们先看下 Flink 都提供了哪些 API 供用户使用。</p>
+<h2 id="1-Flink-API-总览"><a href="#1-Flink-API-总览" class="headerlink" title="1.Flink API 总览"></a>1.Flink API 总览</h2><p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz8olt2uj30eu0570tl.jpg" alt="01 flink_api.png"></p>
+<p>如图，Flink 根据使用的便捷性和表达能力的强弱提供了 3 层 API，由上到下，表达能力逐渐增强，比如 processFunction，是最底层的 API，表达能力最强，我们可以用他来操作 state 和 timer 等复杂功能。Datastream API 相对于 processFunction 来说，又进行了进一步封装，提供了很多标准的语义算子给大家使用，比如我们常用的 window 算子（包括 Tumble, slide,session 等）。那么最上面的 SQL 和 Table API 使用最为便捷，具有自身的很多特点，重点归纳如下：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz90xii1j31i20u046k.jpg" alt="02 table_api_and_sql.png"></p>
+<p><strong>第一</strong>，Table API &amp; SQL 是一种声明式的 API。用户只需关心做什么，不用关心怎么做，比如图中的 WordCount 例子，只需要关心按什么维度聚合，做哪种类型的聚合，不需要关心底层的实现。</p>
+<p><strong>第二</strong>，高性能。Table API &amp; SQL 底层会有优化器对 query 进行优化。举个例子，假如 WordCount 的例子里写了两个 count 操作，优化器会识别并避免重复的计算，计算的时候只保留一个 count 操作，输出的时候再把相同的值输出两遍即可，以达到更好的性能。</p>
+<p><strong>第三</strong>，流批统一。上图例子可以发现，API 并没有区分流和批，同一套 query 可以流批复用，对业务开发来说，避免开发两套代码。</p>
+<p><strong>第四</strong>，标准稳定。Table API &amp; SQL 遵循 SQL 标准，不易变动。API 比较稳定的好处是不用考虑 API 兼容性问题。</p>
+<p><strong>第五</strong>，易理解。语义明确，所见即所得。</p>
+<h2 id="2-Table-API-特性"><a href="#2-Table-API-特性" class="headerlink" title="2.Table API 特性"></a>2.Table API 特性</h2><p>上一小节介绍了 Table API 和 SQL 一些共有的特性，这个小节重点介绍下 Table API 自身的特性。主要可以归纳为以下两点：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz939udsj31hy0u0wl2.jpg" alt="03 tableapi_properties.png"></p>
+<p>第一，Table API 使得多声明的数据处理写起来比较容易。</p>
+<p>怎么理解？比如我们有一个 Table（tab），并且需要执行一些过滤操作然后输出到结果表，对应的实现是：tab.where(“a &lt; 10”).inertInto(“resultTable1”)；此外，我们还需要做另外一些筛选，然后也对结果输出，即 tab.where(“a &gt; 100”).insertInto(“resultTable2”)。你会发现，用 Table API 写起来会非常简洁方便，两行代码就把功能实现了。</p>
+<p>第二，Table API 是 Flink 自身的一套 API，这使得我们更容易地去扩展标准的 SQL。当然，在扩展 SQL 的时候并不是随意的去扩展，需要考虑 API 的语义、原子性和正交性，并且当且仅当需要的时候才去添加。</p>
+<p>对比 SQL，我们可以认为 Table API 是 SQL 的超集。SQL 有的操作，Table API 可以有，然而我们又可以从易用性和功能性地角度对 SQL 进行扩展和提升。</p>
+<h1 id="二、Table-API编程"><a href="#二、Table-API编程" class="headerlink" title="二、Table API编程"></a>二、Table API编程</h1><p>第一章介绍了 Table API 相关的概念。这一章我们来看下如何用 Table API 来编程。本章会先从一个 WordCount 的例子出发，让大家对 Table API 编程先有一个大概的认识，然后再具体介绍一下 Table API 的操作，比如，如何获取一个 Table，如何输出一个 Table，以及如何对 Table 执行查询操作。</p>
+<h2 id="1-WordCount举例"><a href="#1-WordCount举例" class="headerlink" title="1.WordCount举例"></a>1.WordCount举例</h2><p>这是一个完整的，用 java 编写的 batch 版本的 WordCount 例子，此外，还有 scala 和 streaming 版本的 WordCount，都统一上传到了 github 上（<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hlcXVuODEyOC9UYWJsZUFwaURlbW/vvInvvIzlpKflrrblj6/ku6XkuIvovb3kuIvmnaXlsJ3or5Xov5DooYzmiJbogIXkv67mlLnjgII=" title="https://github.com/hequn8128/TableApiDemo），大家可以下载下来尝试运行或者修改。">https://github.com/hequn8128/TableApiDemo），大家可以下载下来尝试运行或者修改。<i class="fa fa-external-link"></i></span></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import org.apache.flink.api.common.typeinfo.Types;</span><br><span class="line">import org.apache.flink.api.java.ExecutionEnvironment;</span><br><span class="line">import org.apache.flink.table.api.Table;</span><br><span class="line">import org.apache.flink.table.api.java.BatchTableEnvironment;</span><br><span class="line">import org.apache.flink.table.descriptors.FileSystem;</span><br><span class="line">import org.apache.flink.table.descriptors.OldCsv;</span><br><span class="line">import org.apache.flink.table.descriptors.Schema;</span><br><span class="line">import org.apache.flink.types.Row;</span><br><span class="line"></span><br><span class="line">public class JavaBatchWordCount &#123;   // line:10</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();</span><br><span class="line">        BatchTableEnvironment tEnv = BatchTableEnvironment.create(env);</span><br><span class="line"></span><br><span class="line">        String path = JavaBatchWordCount.class.getClassLoader().getResource(&quot;words.txt&quot;).getPath();</span><br><span class="line">        tEnv.connect(new FileSystem().path(path))</span><br><span class="line">            .withFormat(new OldCsv().field(&quot;word&quot;, Types.STRING).lineDelimiter(&quot;\n&quot;))</span><br><span class="line">            .withSchema(new Schema().field(&quot;word&quot;, Types.STRING))</span><br><span class="line">            .registerTableSource(&quot;fileSource&quot;);  // line:20</span><br><span class="line"></span><br><span class="line">        Table result = tEnv.scan(&quot;fileSource&quot;)</span><br><span class="line">            .groupBy(&quot;word&quot;)</span><br><span class="line">            .select(&quot;word, count(1) as count&quot;);</span><br><span class="line"></span><br><span class="line">        tEnv.toDataSet(result, Row.class).print();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们具体看下这个 WordCount 的例子。首先，第13、14行，是对 environment 的一些初始化，先通过 ExecutionEnvironment 的 getExecutionEnvironment 方法拿到执行环境，然后再通过 BatchTableEnvironment 的 create 拿到对应的 Table 环境，拿到环境后，我们可以注册 TableSource、TableSink 或执行一些其他操作。</p>
+<p>这里需要注意的是，ExecutionEnvironment 跟 BatchTableEnvironment 都是对应 Java 的版本，对于 scala 程序，这里需要是一个对应 scala 版本的 environment。这也是初学者一开始可能会遇到的问题，因为 environent 有很多且容易混淆。为了让大家更好区分这些 environment，下面对 environment 进行了一些归纳。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz97bcdjj31hu0u0118.jpg" alt="004 table_environment.png"></p>
+<p>这里从 batch/stream，还有 Java/scala，对 environment 进行了分类，对于这些 environment 使用时需要特别注意，不要 import 错了。environment 的问题，社区已经进行了一些讨论，如上图下方的<span class="exturl" data-url="aHR0cHM6Ly9tYWlsLmdvb2dsZS5jb20vbWFpbC91LzAvP3RhYj13bSNzZWFyY2gvbGFiZWwlM0FmbGluay1kZXYrdGFibGUrZW52aXJvbm1lbnQvRk1mY2d4dnpNQmxoVFdWanhsekNuVlpzTHZ2RGttcGg=" title="https://mail.google.com/mail/u/0/?tab=wm#search/label%3Aflink-dev+table+environment/FMfcgxvzMBlhTWVjxlzCnVZsLvvDkmph">链接<i class="fa fa-external-link"></i></span>，这里不再具体展开。</p>
+<p>我们再回到刚刚的 WordCount 的例子，拿到 environment 后，需要做的第二件事情是注册对应的TableSource。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tEnv.connect(new FileSystem().path(path))</span><br><span class="line">    .withFormat(new OldCsv().field(&quot;word&quot;, Types.STRING).lineDelimiter(&quot;\n&quot;))</span><br><span class="line">    .withSchema(new Schema().field(&quot;word&quot;, Types.STRING))</span><br><span class="line">    .registerTableSource(&quot;fileSource&quot;);</span><br></pre></td></tr></table></figure>
+<p>使用起来也非常方便，首先，因为我们要读一个文件，需要指定读取文件的路径，指定了之后，我们需要再描述文件内容的格式，比如他是 csv 的文件并且行分割符是什么。还有就是指定这个文件对应的 Schema 是什么，比如只有一列单词，并且类型是 String。最后，我们需要把 TableSource 注册到 environment 里去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Table result = tEnv.scan(&quot;fileSource&quot;)</span><br><span class="line">    .groupBy(&quot;word&quot;)</span><br><span class="line">    .select(&quot;word, count(1) as count&quot;);</span><br><span class="line"></span><br><span class="line">tEnv.toDataSet(result, Row.class).print();</span><br></pre></td></tr></table></figure>
+<p>通过 scan 刚才注册好的 TableSource，我们可以拿到一个 Table 对象，并执行相应的一些操作，比如 GroupBy，count。最后，可以把 Table 按 DataSet 的方式进行输出。</p>
+<p>以上便是一个 Table API 的 WordCount 完整例子。涉及 Table 的获取，Table 的操作，以及 Table 的输出。接下来会具体介绍如何获取 Table、输出 Table 和执行 Table 操作。</p>
+<h2 id="2-如何获取一个Table"><a href="#2-如何获取一个Table" class="headerlink" title="2.如何获取一个Table"></a>2.如何获取一个Table</h2><p>获取 Table 大体可以分为两步，第一步，注册对应的 TableSource；第二步，调用 Table environement 的 scan 方法获取 Table 对象。注册 Table Source 又有3种方法：通过 Table descriptor 来注册，通过自定义 source 来注册，或者通过 DataStream 来注册。具体的注册方式如下图所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz98tylnj31hw0u048a.jpg" alt="04 get_table.png"></p>
+<h2 id="3-如何输出一个Table"><a href="#3-如何输出一个Table" class="headerlink" title="3.如何输出一个Table"></a>3.如何输出一个Table</h2><p>对应输出 Table，我们也有类似的3种方法：Table descriptor, 自定义 Table sink 以及输出成一个 DataStream。如下图所示：</p>
+<p><img src="https://ucc.alicdn.com/pic/developer-ecology/1a2a581c078a42e696b4a85a6ed0feaa.png" alt="05 emit_table.png"></p>
+<h2 id="4-如何操作一个Table"><a href="#4-如何操作一个Table" class="headerlink" title="4.如何操作一个Table"></a>4.如何操作一个Table</h2><h3 id="4-1-Table-操作总览"><a href="#4-1-Table-操作总览" class="headerlink" title="4.1 Table 操作总览"></a>4.1 Table 操作总览</h3><p>第2、3节介绍了如何获取和输出一个 Table，本节主要介绍如何对 Table 进行操作。Table 上有很多操作，比如一些 projection 操作 select、filter、where；聚合操作，如 groupBy、flatAggrgate；还有join操作，等等。我们以一个具体的例子来介绍下 Table 上各操作的转换流程。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9cbsapj31hx0u0jz4.jpg" alt="06 api_on_table.png"></p>
+<p>如上图，当我们拿到一个 Table 后，调用 groupBy 会返回一个 GroupedTable。GroupedTable 里只有 select 方法，对 GroupedTable 调用 select 方法会返回一个 Table。拿到这个 Table 后，我们可以再调用 Table 上的方法。图中其他 Table，如 OverWindowedTable 也是类似的流程。值得注意的是，引入各个类型的 Table 是为了保证 API 的合法性和便利性，比如 groupBy 之后只有 select 操作是有意义的，在编辑器上可以直接点出来。</p>
+<p>前面我们提到，可以将 Table API 看成是 SQL 的超集，因此我们也可以对 Table 里的操作按此进行分类，大致分为三类，如下图所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9ebisnj30nh0d7jsu.jpg" alt="07 table_method_classification.png"></p>
+<p>第一类，是跟 SQL 对齐的一些操作，比如 select, filter, join 等。第二类，是一些提升 Table API 易用性的操作。第三类，是增强 Table API 功能的一些操作。第一类操作由于和 SQL 类似，比较容易理解，其次，也可以查看官方的文档，了解具体的方法，所以这里不再展开介绍。下面的章节会重点介绍后两类操作，这些操作也是 Table API 独有的。</p>
+<h3 id="4-2-提升易用性相关操作"><a href="#4-2-提升易用性相关操作" class="headerlink" title="4.2 提升易用性相关操作"></a>4.2 提升易用性相关操作</h3><p>介绍易用性之前，我们先来看一个问题。<strong>假设我们有一张很大的表，里面有一百列，此时需要去掉一列，那么SQL怎么写？</strong>我们需要 select 剩下的 99 列！显然这会给用户带来不小的代价。为了解决这个问题，我们在Table上引入了一个 dropColumns 方法。利用 dropColumns 方法，我们便可以只写去掉的列。与此对应，还引入了 addColumns, addOrReplaceColumns 和 renameColumns 方法，如下图所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9gtbh5j31h10u048b.jpg" alt="08 dropColumns.png"></p>
+<p>解决了刚才的问题后，我们再看下面另一个问题：<strong>假设还是一张100列的表，我们需要选第20到第80列，那么我们如何操作呢？</strong>为了解决这个问题，我们又引入了 withColumns 和 withoutColumns 方法。对于刚才的问题，我们可以简单地写成 table.select(“withColumns(20 to 80)”)。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9lbtuqj31hb0u0wku.jpg" alt="09 withColumns.png"></p>
+<h3 id="4-3-增强功能相关操作"><a href="#4-3-增强功能相关操作" class="headerlink" title="4.3 增强功能相关操作"></a>4.3 增强功能相关操作</h3><p>该小节会介绍下 TableAggregateFunction 的功能和用法。在引入 TableAggregateFunction 之前，Flink 里有三种自定义函数：ScalarFunction，TableFunction 和 AggregateFunction。我们可以从输入和输出的维度对这些自定义函数进行分类。如下图所示，ScalarFunction 是输入一行，输出一行；TableFunction 是输入一行，输出多行；AggregateFunction 是输入多行输出一行。为了让语义更加完整，Table API 新加了 TableAggregateFunction，它可以接收和输出多行。TableAggregateFunction 添加后，Table API 的功能可以得到很大的扩展，某种程度上可以用它来实现自定义 operator。比如，我们可以用 TableAggregateFunction 来实现 TopN。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9nn6q0j31hk0u048j.jpg" alt="10 table_aggregate_function.png"></p>
+<p>TableAggregateFunction 使用也很简单，方法签名和用法如下图所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gmtz9sfuw5j31hf0u07ej.jpg" alt="11 flatAggregate.png"></p>
+<p>用法上，我们只需要调用 table.flatAggregate()，然后传入一个 TableAggregateFunction 实例即可。用户可以继承 TableAggregateFunction 来实现自定义的函数。继承的时候，需要先定义一个 Accumulator，用来存取状态，此外自定义的 TableAggregateFunction 需要实现 accumulate 和 emitValue 方法。accumulate 方法用来处理输入的数据，而 emitValue 方法负责根据 accumulator 里的状态输出结果。</p>
+<h1 id="三、Table-API-动态"><a href="#三、Table-API-动态" class="headerlink" title="三、Table API 动态"></a>三、Table API 动态</h1><p>最后介绍下 Table API 近期的动态：</p>
+<p><strong>1.Flip-29</strong></p>
+<p>主要是 Table API 功能和易用性的增强。比如刚刚介绍的 columns 相关操作，还有 TableAggregateFunction。</p>
+<p>社区对应的 jira 是：<span class="exturl" data-url="aHR0cHM6Ly9pc3N1ZXMuYXBhY2hlLm9yZy9qaXJhL2Jyb3dzZS9GTElOSy0xMDk3Mg==" title="https://issues.apache.org/jira/browse/FLINK-10972">https://issues.apache.org/jira/browse/FLINK-10972<i class="fa fa-external-link"></i></span></p>
+<p><strong>2.Python Table API</strong></p>
+<p>希望在 Table API 上增加 python 语言的支持。这个应该是 Python 用户的福音。</p>
+<p>社区对应的 jira 是：<span class="exturl" data-url="aHR0cHM6Ly9pc3N1ZXMuYXBhY2hlLm9yZy9qaXJhL2Jyb3dzZS9GTElOSy0xMjMwOA==" title="https://issues.apache.org/jira/browse/FLINK-12308">https://issues.apache.org/jira/browse/FLINK-12308<i class="fa fa-external-link"></i></span></p>
+<p><strong>3.Interactive Programming(交互式编程)</strong></p>
+<p>即 Table 上会提供一个 cache 算子，执行 cache 操作可以缓存 table 的结果，并在这个结果上做其他操作。社区对应 jira 是：<span class="exturl" data-url="aHR0cHM6Ly9pc3N1ZXMuYXBhY2hlLm9yZy9qaXJhL2Jyb3dzZS9GTElOSy0xMTE5OQ==" title="https://issues.apache.org/jira/browse/FLINK-11199">https://issues.apache.org/jira/browse/FLINK-11199<i class="fa fa-external-link"></i></span></p>
+<p><strong>4.Iterative Processing(迭代计算)</strong></p>
+<p>Table 上会支持一个 iterator 的算子，该算子可以用来执行迭代计算。比如迭代 100 次，或者指定一个收敛的条件，在机器学习领域使用比较广泛。社区对应 jira 是：<span class="exturl" data-url="aHR0cHM6Ly9pc3N1ZXMuYXBhY2hlLm9yZy9qaXJhL2Jyb3dzZS9GTElOSy0xMTE5OQ==" title="https://issues.apache.org/jira/browse/FLINK-11199">https://issues.apache.org/jira/browse/FLINK-11199<i class="fa fa-external-link"></i></span></p>
+<hr>
+<p><strong>▼ Apache Flink 社区推荐 ▼</strong></p>
+<p>Apache Flink 及大数据领域顶级盛会 Flink Forward Asia 2019 重磅开启，目前正在征集议题，限量早鸟票优惠ing。了解 Flink Forward Asia 2019 的更多信息，请查看：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9zcGVjaWFsL2ZmYTIwMTk=" title="https://developer.aliyun.com/special/ffa2019">https://developer.aliyun.com/special/ffa2019<i class="fa fa-external-link"></i></span></p>
+<p>首届 Apache Flink 极客挑战赛重磅开启，聚焦机器学习与性能优化两大热门领域，40万奖金等你拿，加入挑战请点击：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly90aWFuY2hpLmFsaXl1bi5jb20vbWFya2V0cy90aWFuY2hpL2ZsaW5rMjAxOQ==" title="https://tianchi.aliyun.com/markets/tianchi/flink2019">https://tianchi.aliyun.com/markets/tianchi/flink2019<i class="fa fa-external-link"></i></span></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Flink/" rel="tag"><i class="fa fa-tag"></i> Flink</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+              <div>
+                
+
+<script src="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.css">
+
+
+  
+
+
+<div class="likely likely-light">
+	
+ 	 	<div class="twitter">Tweet</div>
+	
+ 	 	<div class="facebook">Share</div>
+	
+ 	 	<div class="linkedin">Link</div>
+	
+ 	 	<div class="gplus">Plus</div>
+	
+ 	 	<div class="vkontakte">Share</div>
+	
+ 	 	<div class="odnoklassniki">Class</div>
+	
+ 	 	<div class="telegram">Send</div>
+	
+ 	 	<div class="whatsapp">Send</div>
+	
+ 	 	<div class="pinterest">Pin</div>
+	
+</div>
+
+              </div>
+            
+            
+            
+              <div>
+                
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Apache Flink 零基础入门（六）：状态管理及容错机制.html" rel="next" title="ApacheFlink零基础入门教程（六）：状态管理及容错机制">
+                <i class="fa fa-chevron-left"></i> ApacheFlink零基础入门教程（六）：状态管理及容错机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Apache Flink 零基础入门（八）-SQL编程实践.html" rel="prev" title="ApacheFlink零基础入门（八）:SQL编程实践">
+                ApacheFlink零基础入门（八）:SQL编程实践 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTk3My82NTM4"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg" alt="Daniel X">
+            
+              <p class="site-author-name" itemprop="name">Daniel X</p>
+              <div class="site-description motion-element" itemprop="description">專注于大数据技術，分享干货</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">117</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="GitHub &rarr; https://github.com/dudefu"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmR1ZGVmdUBmb3htYWlsLmNvbT9zdWJqZWN0PUhlbGxvJTIwYWdhaW4=" title="E-mail &rarr; mailto:dudefu@foxmail.com?subject=Hello%20again"><i class="fa fa-fw fa-envelope"></i>E-mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHVkZWZ1" title="Weibo &rarr; https://weibo.com/dudefu"><i class="fa fa-fw fa-weibo"></i>Weibo</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93cGEucXEuY29tL21zZ3JkP3Y9MyZ1aW49MTU3NzU3MTk1OSZzaXRlPWR1ZGVmdS5pbmZvJm1lbnU9eWVz" title="QQ &rarr; https://wpa.qq.com/msgrd?v=3&uin=1577571959&site=dudefu.info&menu=yes"><i class="fa fa-fw fa-qq"></i>QQ</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、什么是-Table-API"><span class="nav-number">1.</span> <span class="nav-text">一、什么是 Table API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Flink-API-总览"><span class="nav-number">1.1.</span> <span class="nav-text">1.Flink API 总览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Table-API-特性"><span class="nav-number">1.2.</span> <span class="nav-text">2.Table API 特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Table-API编程"><span class="nav-number">2.</span> <span class="nav-text">二、Table API编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-WordCount举例"><span class="nav-number">2.1.</span> <span class="nav-text">1.WordCount举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-如何获取一个Table"><span class="nav-number">2.2.</span> <span class="nav-text">2.如何获取一个Table</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-如何输出一个Table"><span class="nav-number">2.3.</span> <span class="nav-text">3.如何输出一个Table</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-如何操作一个Table"><span class="nav-number">2.4.</span> <span class="nav-text">4.如何操作一个Table</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Table-操作总览"><span class="nav-number">2.4.1.</span> <span class="nav-text">4.1 Table 操作总览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-提升易用性相关操作"><span class="nav-number">2.4.2.</span> <span class="nav-text">4.2 提升易用性相关操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-增强功能相关操作"><span class="nav-number">2.4.3.</span> <span class="nav-text">4.3 增强功能相关操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Table-API-动态"><span class="nav-number">3.</span> <span class="nav-text">三、Table API 动态</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备18110871号 </span>&copy; 2017 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-spinner"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dudefu</span>
+
+  
+
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Pisces</span> v7.1.2</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="26,26,26" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+  <script id="ribbon" size="300" alpha="0.6" zindex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/js.cookie.js?v=7.1.2"></script>
+  <script src="/js/scroll-cookie.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/exturl.js?v=7.1.2"></script>
+
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: true,
+    notify: true,
+    appId: '1N5rpk874DGudJw2wCL9J011-gzGzoHsz',
+    appKey: '9Y83e6suJgx567wtxhKy45IN',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zk-cn' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+    <script>
+  window.livereOptions = {
+    refer: 'Apache Flink 零基础入门（七）-TableAPI编程.html'
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.1/bluebird.core.min.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/docs/variables.html
+      var isPost = 'Apache Flink 零基础入门（七）:Table API 编程'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'Apache Flink 零基础入门（七）:Table API 编程'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+      if (selected) {
+        selection.removeAllRanges();
+        selection.addRange(selected);
+      }
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
