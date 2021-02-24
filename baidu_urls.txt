@@ -2,7 +2,6 @@ https://www.dudefu.tk/Apache Flink 零基础入门（八）-SQL编程实践.html
 https://www.dudefu.tk/Apache Flink 零基础入门（七）-TableAPI编程.html
 https://www.dudefu.tk/Apache Flink 零基础入门（六）：状态管理及容错机制.html
 https://www.dudefu.tk/Apache Flink 零基础入门（五）：流处理核心组件Time.html
-https://www.dudefu.tk/1.html
 https://www.dudefu.tk/Apache Flink 零基础入门（四）：客户端操作的 5 种模式.html
 https://www.dudefu.tk/Apache Flink 全领域干货合集.html
 https://www.dudefu.tk/流式处理术语解释Exactly-once与Effectively-once.html
@@ -98,3 +97,4 @@ https://www.dudefu.tk/并发和并行的区别.html
 https://www.dudefu.tk/Java实现九九乘法表.html
 https://www.dudefu.tk/java中内存分配策略及堆和栈的比较.html
 https://www.dudefu.tk/Java内存机制和内存地址.html
+https://www.dudefu.tk/Java语言基础.html
