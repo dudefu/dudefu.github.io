@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="### 由啤酒和尿布引出： 在一家超市中，人们发现了一个特别有趣的现象：尿布与啤酒这两种风马牛不相及的商品居然摆在一起。但这一奇怪的举措居然使尿布和啤酒的稍量大幅增加了。这可不是一个笑话，而是一直被商家所津津乐道的发生在美国沃尔玛连锁超市的真实案例。原来，美国的妇女通常在家照顾孩子，所以她们经常会嘱咐丈夫在下班回家的路上为孩子买尿布，而丈夫在买尿布的同时又会顺手购买自己爱喝的啤酒。这个发现为商家带">
+<meta name="keywords" content="Apriori">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apriori算法简介---关联规则的频繁项集算法">
+<meta property="og:url" content="https://www.dudefu.tk/Apriori算法简介-关联规则的频繁项集算法.html">
+<meta property="og:site_name" content="The Future">
+<meta property="og:description" content="### 由啤酒和尿布引出： 在一家超市中，人们发现了一个特别有趣的现象：尿布与啤酒这两种风马牛不相及的商品居然摆在一起。但这一奇怪的举措居然使尿布和啤酒的稍量大幅增加了。这可不是一个笑话，而是一直被商家所津津乐道的发生在美国沃尔玛连锁超市的真实案例。原来，美国的妇女通常在家照顾孩子，所以她们经常会嘱咐丈夫在下班回家的路上为孩子买尿布，而丈夫在买尿布的同时又会顺手购买自己爱喝的啤酒。这个发现为商家带">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEly1gnyouvav9rj30iq0e4t9o.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008eGmZEly1gnyod66yp3j30im0e1mzf.jpg">
+<meta property="og:updated_time" content="2021-02-24T08:43:19.403Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apriori算法简介---关联规则的频繁项集算法">
+<meta name="twitter:description" content="### 由啤酒和尿布引出： 在一家超市中，人们发现了一个特别有趣的现象：尿布与啤酒这两种风马牛不相及的商品居然摆在一起。但这一奇怪的举措居然使尿布和啤酒的稍量大幅增加了。这可不是一个笑话，而是一直被商家所津津乐道的发生在美国沃尔玛连锁超市的真实案例。原来，美国的妇女通常在家照顾孩子，所以她们经常会嘱咐丈夫在下班回家的路上为孩子买尿布，而丈夫在买尿布的同时又会顺手购买自己爱喝的啤酒。这个发现为商家带">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008eGmZEly1gnyouvav9rj30iq0e4t9o.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.dudefu.tk/Apriori算法简介-关联规则的频繁项集算法">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Apriori算法简介---关联规则的频繁项集算法 | The Future</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">The Future</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Stay hungry,stay foolish.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">119</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">14</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">59</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-something">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/something" rel="section"><i class="menu-item-icon fa fa-fw fa-paper-plane"></i> <br>干货</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></span>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.dudefu.tk/Apriori算法简介-关联规则的频繁项集算法.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Daniel X">
+      <meta itemprop="description" content="專注于大数据技術，分享干货">
+      <meta itemprop="image" content="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Future">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Apriori算法简介---关联规则的频繁项集算法
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-02-24 15:31:12 / 修改时间：16:43:19" itemprop="dateCreated datePublished" datetime="2021-02-24T15:31:12+08:00">2021-02-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/数据挖掘/" itemprop="url" rel="index"><span itemprop="name">数据挖掘</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/Apriori算法简介-关联规则的频繁项集算法.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Apriori算法简介-关联规则的频繁项集算法.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/Apriori算法简介-关联规则的频繁项集算法.html" class="leancloud_visitors" data-flag-title="Apriori算法简介---关联规则的频繁项集算法">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>### 由啤酒和尿布引出：</strong></p>
+<p>在一家超市中，人们发现了一个特别有趣的现象：尿布与啤酒这两种<span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3Lzk0OTM0Lmh0bQ==" title="http://baike.baidu.com/view/94934.htm">风马牛不相及<i class="fa fa-external-link"></i></span>的商品居然摆在一起。但这一奇怪的举措居然使尿布和啤酒的稍量大幅增加了。这可不是一个笑话，而是一直被商家所津津乐道的发生在<span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzIzOTguaHRt" title="http://baike.baidu.com/view/2398.htm">美国<i class="fa fa-external-link"></i></span>沃尔玛连锁超市的真实案例。原来，<span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzIzOTguaHRt" title="http://baike.baidu.com/view/2398.htm">美国<i class="fa fa-external-link"></i></span>的妇女通常在家照顾孩子，所以她们经常会嘱咐丈夫在下班回家的路上为孩子买尿布，而丈夫在买尿布的同时又会顺手购买自己爱喝的啤酒。这个发现为商家带来了大量的利润，但是如何从浩如烟海却又<span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzQ2MDM3Lmh0bQ==" title="http://baike.baidu.com/view/46037.htm">杂乱无章<i class="fa fa-external-link"></i></span>的数据中，发现啤酒和尿布销售之间的联系呢？这又给了我们什么样的启示呢？这是怎么做到的呢，这就是数据的挖掘，需要对数据之间的关联规则进行分析，进行购物篮分析。</p>
+<a id="more"></a>
+<p>Apriori算法是一种挖掘<strong>关联规则的频繁项集</strong>算法，其核心思想是通过候选集生成和情节的向下封闭检测两个阶段来挖掘频繁项集。而且算法已经被广泛的应用到商业、网络安全等各个领域。</p>
+<p>Apriori算法是一种最有影响的挖掘布尔关联规则频繁项集的算法。很多的的挖掘算法是在Apriori算法的基础上进行改进的，比如基于散列（Hash）的方法，基于数据分割（Partition）的方法以及不产生候选项集的FP-GROWTH方法等。因此要了解关联规则算法不得不先要了解Apriori算法。</p>
+<p>Apriori算法是一种最有影响的挖掘<span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzQ2MDYwLmh0bQ==" title="http://baike.baidu.com/view/46060.htm">布尔<i class="fa fa-external-link"></i></span>关联规则频繁项集的算法。其核心是基于两阶段频集思想的递推算法。该关联规则在分类上属于单维、单层、<span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzQ2MDYwLmh0bQ==" title="http://baike.baidu.com/view/46060.htm">布尔<i class="fa fa-external-link"></i></span>关联规则。在这里，所有支持度大于最小支持度的项集称为频繁项集，简称频集。可<strong>能产生大量的候选集,以及可能需要重复扫描数据库</strong>，是Apriori<span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3Lzc0MjAuaHRt" title="http://baike.baidu.com/view/7420.htm">算法<i class="fa fa-external-link"></i></span>的两大缺点</p>
+<p><strong>### 频繁项集</strong></p>
+<p>项的集合称为项集。包含k个项的项集称为k-项集。集合{computer,ativirus_software}是一个二项集。项集的出项频率是包含项集的事务数，简称为项集的频率，支持度计数或计数。注意，定义项集的支持度有时称为相对支持度，而出现的频率称为绝对支持度。如果项集<strong>I</strong>的相对支持度满足预定义的最小支持度阈值，则<strong>I</strong>是频繁项集。</p>
+<p><strong>### <span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzQ2MDYwLmh0bQ==" title="http://baike.baidu.com/view/46060.htm">布尔<i class="fa fa-external-link"></i></span>关联规则:</strong></p>
+<p>关联规则是形如X→Y的蕴涵式，其中且， X和Y分别称为关联规则的先导(antecedent或left-hand-side, LHS)和后继(consequent或right-hand-side, RHS) 。</p>
+<p><strong>### 定义</strong></p>
+<p>根据 <span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzE2MjM0NzguaHRt" title="http://baike.baidu.com/view/1623478.htm">韩家炜<i class="fa fa-external-link"></i></span>等观点，关联规则定义为：</p>
+<p>假设I是 <strong>项</strong>的集合。给定一个交易数据库D，其中每个 <strong>事务</strong>(Transaction)t是I的非空子集，即，每一个交易都与一个唯一的 <span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzM5MDkzMi5odG0=" title="http://baike.baidu.com/view/390932.htm">标识符<i class="fa fa-external-link"></i></span>TID(Transaction ID)对应。关联规则在D中的 <strong><span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzQzMzU2OTUuaHRt" title="http://baike.baidu.com/view/4335695.htm">支持度<i class="fa fa-external-link"></i></span></strong>(support)是D中事务同时包含X、Y的百分比，即 <span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzQ1MzIwLmh0bQ==" title="http://baike.baidu.com/view/45320.htm">概率<i class="fa fa-external-link"></i></span>； <strong><span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzQzNDQwNC5odG0=" title="http://baike.baidu.com/view/434404.htm">置信度<i class="fa fa-external-link"></i></span></strong>(confidence)是D中事物已经包含X的情况下，包含Y的百分比，即 <span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3Lzk2NTg5MS5odG0=" title="http://baike.baidu.com/view/965891.htm">条件概率<i class="fa fa-external-link"></i></span>。如果满足 <strong>最小支持度<span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzQwOTIxNi5odG0=" title="http://baike.baidu.com/view/409216.htm">阈值<i class="fa fa-external-link"></i></span></strong>和 <strong>最小<span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzQzNDQwNC5odG0=" title="http://baike.baidu.com/view/434404.htm">置信度<i class="fa fa-external-link"></i></span>阈值</strong>。这些阈值是根据挖掘需要人为设定。</p>
+<p>基本概念表1：关联规则的简单例子</p>
+<p>| TID | 网球拍 | 网 球 | 运动鞋 | 羽毛球 |</p>
+<p>| —- | —— | —– | —— | —— |</p>
+<p>| 1  | 1   | 1   | 1   | 0   |</p>
+<p>| 2  | 1   | 1   | 0   | 0   |</p>
+<p>| 3  | 1   | 0   | 0   | 0   |</p>
+<p>| 4  | 1   | 0   | 1   | 0   |</p>
+<p>| 5  | 0   | 1   | 1   | 1   |</p>
+<p>| 6  | 1   | 1   | 0   | 0   |</p>
+<p>用一个简单的例子说明。表1是顾客购买记录的数据库D，包含6个事务。项集I={网球拍,网球,运动鞋,羽毛球}。考虑关联规则（频繁二项集）：网球拍与网球，事务1,2,3,4,6包含网球拍，事务1,2,6同时包含网球拍和网球，X^Y=3, D=6，支持度(X^Y)/D=0.5；X=5, 置信度(X^Y)/X=0.6。若给定最小支持度α = 0.5，最小 <span class="exturl" data-url="aHR0cDovL2JhaWtlLmJhaWR1LmNvbS92aWV3LzQzNDQwNC5odG0=" title="http://baike.baidu.com/view/434404.htm">置信度<i class="fa fa-external-link"></i></span>β = 0.6，认为购买网球拍和购买网球之间存在关联。</p>
+<p><strong>##</strong> <strong>挖掘关联规则</strong></p>
+<p><strong>###</strong> <strong>什么是关联规则</strong></p>
+<p>一言蔽之，关联规则是形如<em>X</em>→<em>Y</em>的蕴涵式，表示通过<em>X</em>可以推导“得到”<em>Y</em>，其中<em>X</em>和<em>Y</em>分别称为关联规则的先导<em>(antecedent</em>或<em>left-hand-side, LHS)</em>和后继<em>(consequent</em>或<em>right-hand-side, RHS)</em></p>
+<p><strong>###</strong> <strong>如何量化关联规则</strong></p>
+<p>关联规则挖掘的一个典型例子便是购物车分析。通过关联规则挖掘能够发现顾客放入购物车中的不同商品之间的关联，分析顾客的消费习惯。这种关联规则的方向能够帮助卖家了解哪些商品被顾客频繁购买，从而帮助他们开发更好的营销策略。比如：将经常同时购买的商品摆近一些，以便进一步刺激这些商品一起销售；或者，将两件经常同时购买的商品摆远一点，这样可能诱发买这两件商品的用户一路挑选其他商品。</p>
+<p>在数据挖掘当中，通常用“<strong>支持度</strong>”（<em>support</em>）和“<strong>置性度</strong>”（<em>confidence</em>）两个概念来量化事物之间的关联规则。它们分别反映所发现规则的有用性和确定性。</p>
+<p>对于A-&gt;B</p>
+<p>\<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">\&gt; ①***\*支持度\****：P(A ∩ B)，既有A又有B的概率</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">\&gt; ②***\*置信度\****：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">\&gt; P(B|A)，在A发生的事件中同时发生B的概率 p(AB)/P(A)  例如购物篮分析：牛奶 ⇒ 面包</span><br><span class="line"></span><br><span class="line">\&gt;</span><br><span class="line"></span><br><span class="line">\&gt; **例子**：[支持度：3%，置信度：40%]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">\&gt; &gt; 支持度3%：意味着3%顾客同时购买牛奶和面包</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">\&gt; &gt; 置信度40%：意味着购买牛奶的顾客40%也购买面包</span><br><span class="line"></span><br><span class="line">\</span><br></pre></td></tr></table></figure></p>
+<p>比如：</p>
+<p><em>Computer =&gt; antivirus_software ,</em> 其中 <em>support=2%, confidence=60%</em></p>
+<p>表示的意思是所有的商品交易中有<em>2%</em>的顾客同时买了电脑和杀毒软件，并且购买电脑的顾客中有<em>60%</em>也购买了杀毒软件。在关联规则的挖掘过程中，通常会设定最小支持度阈值和最小置性度阈值，如果某条关联规则满足最小支持度阈值和最小置性度阈值，则认为该规则可以给用户带来感兴趣的信息。</p>
+<p><strong>###</strong> <strong>关联规则挖掘过程</strong></p>
+<p>1) 几个基本概念：</p>
+<p>关联规则<em>A-&gt;B</em>的<strong>支持度*</strong>support=P(AB)<em>，指的是事件</em>A<em>和事件</em>B*同时发生的概率。</p>
+<p><strong><em>\</em>置信度***</strong>confidence=P(B|A)=P(AB)/P(A),<em>指的是发生事件</em>A<em>的基础上发生事件</em>B*的概率。</p>
+<p>同时满足最小支持度阈值和最小置信度阈值的规则称为<strong>强规则</strong>。</p>
+<p>如果事件<em>A</em>中包含<em>k</em>个元素，那么称这个事件<em>A</em>为<strong><em>\</em>k\</strong>*<em>项集，*<em>*</em>并且事件</em>A<em>满足最小支持度阈值的事件称为<strong>频繁**</strong></em>*k*<em>*<em>项集**</em></em>。</p>
+<p>2) 挖掘过程：</p>
+<p>第一，找出所有的频繁项集；</p>
+<p>第二，由频繁项集产生强规则。</p>
+<p><strong>##</strong> <strong>Apriori介绍</strong></p>
+<p>Apriori算法使用频繁项集的先验知识，使用一种称作逐层搜索的迭代方法，<em>k</em>项集用于探索<em>(k+1)</em>项集。首先，通过扫描事务（交易）记录，找出所有的频繁<em>1</em>项集，该集合记做<em>L1</em>，然后利用<em>L1</em>找频繁<em>2</em>项集的集合<em>L2</em>，<em>L2</em>找<em>L3</em>，如此下去，直到不能再找到任何频繁<em>k</em>项集。最后再在所有的频繁集中找出强规则，即产生用户感兴趣的关联规则。</p>
+<p>其中，<strong><em>\</em>Apriori**</strong>算法具有这样一条<strong>性质</strong>：任一频繁项集的所有非空子集也必须是频繁的。因为假如<em>P(I)&lt;</em> 最小支持度阈值，当有元素<em>A</em>添加到<em>I</em>中时，结果项集（<em>A</em>∩<em>I</em>）不可能比<em>I</em>出现次数更多。因此<em>A</em>∩<em>I</em>也不是频繁的。</p>
+<p><em>2.2</em> 连接步和剪枝步</p>
+<p><em>1）</em> 连接步</p>
+<p>若有两个k-1项集，每个项集按照“属性-值”（一般按值）的字母顺序进行排序。如果两个k-1项集的前k-2个项相同，而最后一个项不同，则证明它们是可连接的，即这个k-1项集可以联姻，即可连接生成k项集。使如有两个3项集：｛a, b, c｝{a, b, d}，这两个3项集就是可连接的，它们可以连接生成4项集｛a, b, c, d｝。又如两个3项集｛a, b, c｝｛a, d, e｝，这两个3项集显示是不能连接生成3项集的。</p>
+<p>剪枝步</p>
+<p>若一个项集的子集不是频繁项集，则该项集肯定也不是频繁项集。这个很好理解，举一个例子，若存在3项集｛a, b, c｝，如果它的2项子集｛a, b｝的支持度即同时出现的次数达不到阈值，则｛a, b, c｝同时出现的次数显然也是达不到阈值的。因此，若存在一个项集的子集不是频繁项集，那么该项集就应该被无情的舍弃。</p>
+<p><strong><em>\</em>Apriori算法流程**</strong>：</p>
+<p>\1. 过<strong>单趟扫描数据库</strong>D；计算出各个1项集的支持度，得 到频繁1项集的集合。</p>
+<p>\2. 从2项集开始循环，由频繁k-1项集生成频繁频繁k项集。</p>
+<p>  2.1 <strong>连接步</strong>：为了生成，预先生成,由2个只有一个项不同的属于的频集做一 个（k-2）JOIN运算得到的。</p>
+<p>  2.2 <strong>剪枝步</strong>：由于是的超集，所以可能有些元素不是频繁的。舍弃掉子集不是频繁项集即不在频繁k-1项集中的项集</p>
+<p>  2.3 扫描数据库，计算2.3步中过滤后的k项集的支持度，舍弃掉支持度小于阈值的项集，生成频繁k项集。</p>
+<p>\3. 当当前生成的频繁k项集中只有一个项集时循环结束</p>
+<p>  【注意】</p>
+<p>在剪枝步中的每个元 素需在交易数据库中进行验证来决定其是否加入，这里的验证过程 是算法性能的一个瓶颈。这个方法要求多次扫描可能很大的交易数据库。可能产生大量的候选集，以及可能需要重复扫描数据库，是Apriori算法的<strong>两大缺 点</strong>。</p>
+<p> <strong><em>Apriori\</em>算法实例</strong></p>
+<p>| <strong><em>\</em>交易\</strong>*<em>ID*<strong>* | </strong></em>*商品*<em>*<em>ID*<em>*<em>列表\</em></em></em></em> |</p>
+<p>| ———————- | ——————————– |</p>
+<p>| <em>T100</em>         | <em>I1</em>，<em>I2</em>，<em>I5</em>         |</p>
+<p>| <em>T200</em>         | <em>I2</em>，<em>I4</em>            |</p>
+<p>| <em>T300</em>         | <em>I2</em>，<em>I3</em>            |</p>
+<p>| <em>T400</em>         | <em>I1</em>，<em>I2</em>，<em>I4</em>         |</p>
+<p>| <em>T500</em>         | <em>I1</em>，<em>I3</em>            |</p>
+<p>| <em>T600</em>         | <em>I2</em>，<em>I3</em>            |</p>
+<p>| <em>T700</em>         | <em>I1</em>，<em>I3</em>            |</p>
+<p>| <em>T800</em>         | <em>I1</em>，<em>I2</em>，<em>I3</em>，<em>I5</em>      |</p>
+<p>| <em>T900</em>         | <em>I1</em>，<em>I2</em>，<em>I3</em>         |</p>
+<p>上图为某商场的交易记录，共有<em>9</em>个事务，利用<em>Apriori</em>算法寻找所有的频繁项集的过程如下<em>:</em></p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gnyouvav9rj30iq0e4t9o.jpg" alt="1351116342_6943"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">详细介绍下候选3项集的集合**C3**的产生过程：从连接步，首先C3=&#123;&#123;I1,I2,I3&#125;，&#123;I1,I2,I5&#125;，&#123;I1,I3,I5&#125;，&#123;I2,I3,I4&#125;，&#123;I2,I3,I5&#125;，&#123;I2,I4,I5&#125;&#125;（C3是由**L2**与自身连接产生）。根据Apriori性质，频繁项集的所有子集也必须频繁的，可以确定有4个候选集&#123;I1,I3,I5&#125;，&#123;I2,I3,I4&#125;，&#123;I2,I3,I5&#125;，&#123;I2,I4,I5&#125;&#125;不可能时频繁的，因为它们存在子集不属于频繁集，因此将它们从C3中删除。注意，由于**Apriori**算法使用逐层搜索技术，给定候选k项集后，只需检查它们的（k-1）个子集是否频繁。</span><br></pre></td></tr></table></figure>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gnyod66yp3j30im0e1mzf.jpg" alt="img"></p>
+<h3 id="3、总结与优化"><a href="#3、总结与优化" class="headerlink" title="3、总结与优化"></a>3、总结与优化</h3><p> ①Apriori算法的缺点：</p>
+<p>(1)由频繁k-1项集进行<strong>自连接生成的候选频繁k项集数量巨大</strong>。</p>
+<p>(2)在验证候选频繁k项集的时候<strong>需要对整个数据库进行扫描</strong>，非常耗时。</p>
+<p> ②网上提到的频集算法的几种优化方法：</p>
+<ol>
+<li>基于划分的方法。</li>
+<li>基于hash的方法。</li>
+<li>基于采样的方法。</li>
+<li><p>减少交易的个数。</p>
+<p>我重点看了“基于划分的方法”改进算法，现在简单介绍一下实现思想：</p>
+</li>
+</ol>
+<p>基于划分(partition)的算法，这个算法先把数据库从逻辑上<strong>分成几个互不相交的块</strong>，每次单独考虑一个分块并 对它生成所有的频集，然后把产生的频集合并，用来生成所有可能的频集，最后计算这些项集的支持度。</p>
+<p>其中，partition算法要注意的是分片的大小选取，要<strong>保证每个分片可以被放入到内存</strong>。当每个分片产生频集后，再合并产生产生全局的候选k-项集。若在多个处理器分片，可以通过处理器之间共享一个杂凑树来产生频集。</p>
+<p>转自：<span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl6aGVuZ25hbmh1YS9hcnRpY2xlL2RldGFpbHMvOTA2MTc1NQ==" title="http://blog.csdn.net/lizhengnanhua/article/details/9061755">http://blog.csdn.net/lizhengnanhua/article/details/9061755<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXVzdGRqeC9hcnRpY2xlL2RldGFpbHMvMTI3NzA4ODM=" title="http://blog.csdn.net/qustdjx/article/details/12770883">http://blog.csdn.net/qustdjx/article/details/12770883<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1aWJpYW5zaGVuMjAxMi9hcnRpY2xlL2RldGFpbHMvNTE1MzA5NTI/ZGlzdF9yZXF1ZXN0X2lkPTA3NTM0MTk4LWZiYmUtNDgyNS05YmZmLTIxZmJkOGI3MmExZCZhbXA7ZGVwdGhfMS0=" title="https://blog.csdn.net/suibianshen2012/article/details/51530952?dist_request_id=07534198-fbbe-4825-9bff-21fbd8b72a1d&amp;depth_1-">转载地址<i class="fa fa-external-link"></i></span></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Apriori/" rel="tag"><i class="fa fa-tag"></i> Apriori</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+              <div>
+                
+
+<script src="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.css">
+
+
+  
+
+
+<div class="likely likely-light">
+	
+ 	 	<div class="twitter">Tweet</div>
+	
+ 	 	<div class="facebook">Share</div>
+	
+ 	 	<div class="linkedin">Link</div>
+	
+ 	 	<div class="gplus">Plus</div>
+	
+ 	 	<div class="vkontakte">Share</div>
+	
+ 	 	<div class="odnoklassniki">Class</div>
+	
+ 	 	<div class="telegram">Send</div>
+	
+ 	 	<div class="whatsapp">Send</div>
+	
+ 	 	<div class="pinterest">Pin</div>
+	
+</div>
+
+              </div>
+            
+            
+            
+              <div>
+                
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Apriori算法简析.html" rel="next" title="Apriori算法简析">
+                <i class="fa fa-chevron-left"></i> Apriori算法简析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/浅谈数据挖掘中的关联规则挖掘.html" rel="prev" title="浅谈数据挖掘中的关联规则挖掘">
+                浅谈数据挖掘中的关联规则挖掘 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTk3My82NTM4"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://hexoblog-1254111960.cos.ap-guangzhou.myqcloud.com/HexoBlog-tou.jpg" alt="Daniel X">
+            
+              <p class="site-author-name" itemprop="name">Daniel X</p>
+              <div class="site-description motion-element" itemprop="description">專注于大数据技術，分享干货</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">119</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1ZGVmdQ==" title="GitHub &rarr; https://github.com/dudefu"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="bWFpbHRvOmR1ZGVmdUBmb3htYWlsLmNvbT9zdWJqZWN0PUhlbGxvJTIwYWdhaW4=" title="E-mail &rarr; mailto:dudefu@foxmail.com?subject=Hello%20again"><i class="fa fa-fw fa-envelope"></i>E-mail</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vZHVkZWZ1" title="Weibo &rarr; https://weibo.com/dudefu"><i class="fa fa-fw fa-weibo"></i>Weibo</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly93cGEucXEuY29tL21zZ3JkP3Y9MyZ1aW49MTU3NzU3MTk1OSZzaXRlPWR1ZGVmdS5pbmZvJm1lbnU9eWVz" title="QQ &rarr; https://wpa.qq.com/msgrd?v=3&uin=1577571959&site=dudefu.info&menu=yes"><i class="fa fa-fw fa-qq"></i>QQ</span>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#3、总结与优化"><span class="nav-number">1.</span> <span class="nav-text">3、总结与优化</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5taWl0Lmdvdi5jbg==">粤ICP备18110871号 </span>&copy; 2017 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-spinner"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dudefu</span>
+
+  
+
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT.Pisces</span> v7.1.2</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="26,26,26" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+  <script id="ribbon" size="300" alpha="0.6" zindex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/js.cookie.js?v=7.1.2"></script>
+  <script src="/js/scroll-cookie.js?v=7.1.2"></script>
+
+
+  
+  <script src="/js/exturl.js?v=7.1.2"></script>
+
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: true,
+    notify: true,
+    appId: '1N5rpk874DGudJw2wCL9J011-gzGzoHsz',
+    appKey: '9Y83e6suJgx567wtxhKy45IN',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zk-cn' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+    <script>
+  window.livereOptions = {
+    refer: 'Apriori算法简介-关联规则的频繁项集算法.html'
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.1/bluebird.core.min.js"></script>
+  
+  <script>
+    (function () {
+
+      firebase.initializeApp({
+        apiKey: '',
+        projectId: ''
+      })
+
+      function getCount(doc, increaseCount) {
+        //increaseCount will be false when not in article page
+
+        return doc.get().then(function (d) {
+          var count
+          if (!d.exists) { //has no data, initialize count
+            if (increaseCount) {
+              doc.set({
+                count: 1
+              })
+              count = 1
+            }
+            else {
+              count = 0
+            }
+          }
+          else { //has data
+            count = d.data().count
+            if (increaseCount) {
+              if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                doc.set({ //increase count
+                  count: count + 1
+                })
+                count++
+              }
+            }
+          }
+          if (window.localStorage && increaseCount) { //mark as visited
+            localStorage.setItem(title, true)
+          }
+
+          return count
+        })
+      }
+
+      function appendCountTo(el) {
+        return function (count) {
+          $(el).append(
+            $('<span>').addClass('post-visitors-count').append(
+              $('<span>').addClass('post-meta-divider').text('|')
+            ).append(
+              $('<span>').addClass('post-meta-item-icon').append(
+                $('<i>').addClass('fa fa-users')
+              )
+              ).append($('<span>').text('阅读次数 ' + count))
+          )
+        }
+      }
+
+      var db = firebase.firestore()
+      var articles = db.collection('articles')
+
+      //https://hexo.io/docs/variables.html
+      var isPost = 'Apriori算法简介---关联规则的频繁项集算法'.length > 0
+      var isArchive = '' === 'true'
+      var isCategory = ''.length > 0
+      var isTag = ''.length > 0
+
+      if (isPost) { //is article page
+        var title = 'Apriori算法简介---关联规则的频繁项集算法'
+        var doc = articles.doc(title)
+
+        getCount(doc, true).then(appendCountTo($('.post-meta')))
+      }
+      else if (!isArchive && !isCategory && !isTag) { //is index page
+        var titles = [] //array to titles
+
+        var postsstr = '' //if you have a better way to get titles of posts, please change it
+        eval(postsstr)
+
+        var promises = titles.map(function (title) {
+          return articles.doc(title)
+        }).map(function (doc) {
+          return getCount(doc)
+        })
+        Promise.all(promises).then(function (counts) {
+          var metas = $('.post-meta')
+          counts.forEach(function (val, idx) {
+            appendCountTo(metas[idx])(val)
+          })
+        })
+      }
+    })()
+  </script>
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'dark',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+  <script>
+  
+    bookmark.scrollToMark('auto', "#更多");
+  
+  </script>
+
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+      if (selected) {
+        selection.removeAllRanges();
+        selection.addRange(selected);
+      }
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
