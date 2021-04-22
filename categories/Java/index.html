@@ -286,7 +286,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">121</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">123</span></a>
 
   </li>
         
@@ -305,7 +305,7 @@
       
     
 
-    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">14</span></a>
+    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">15</span></a>
 
   </li>
         
@@ -324,7 +324,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">60</span></a>
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">63</span></a>
 
   </li>
         
@@ -462,6 +462,32 @@
         <h2>Java<small>分类</small>
         </h2>
       </div>
+
+      
+        
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h3 class="post-title">
+        
+          <a class="post-title-link" href="/IoC和AOP学习.html" itemprop="url">
+            
+              <span itemprop="name">IoC和AOP学习</span>
+            
+          </a>
+        
+      </h3>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2021-03-23T09:31:21+08:00" content="2021-03-23">
+          03-23
+        </time>
+      </div>
+
+    </header>
+  </article>
+
 
       
         
@@ -698,32 +724,6 @@
 
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/Java单例模式.html" itemprop="url">
-            
-              <span itemprop="name">Java单例模式</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-05-01T20:01:46+08:00" content="2018-05-01">
-          05-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
     </div>
 
   </div>
@@ -778,7 +778,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">121</span>
+                    <span class="site-state-item-count">123</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -823,7 +823,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">14</span>
+                      
+                    
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -960,7 +962,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">60</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">63</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1646,7 +1654,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("多态的学习2");titles.push("多态的学习");titles.push("正则表达式学习");titles.push("如何开启一个线程，开启大量线程会有什么问题，如何优化？");titles.push("一次Java线程池误用引发的血案和总结");titles.push("并发编程和线程池");titles.push("关于fastjson解析后的属性排序问题解决方案");titles.push("hashcode详解");titles.push("FastJson反序列化为什么用TypeReference");titles.push("Java单例模式");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("IoC和AOP学习");titles.push("多态的学习2");titles.push("多态的学习");titles.push("正则表达式学习");titles.push("如何开启一个线程，开启大量线程会有什么问题，如何优化？");titles.push("一次Java线程池误用引发的血案和总结");titles.push("并发编程和线程池");titles.push("关于fastjson解析后的属性排序问题解决方案");titles.push("hashcode详解");titles.push("FastJson反序列化为什么用TypeReference");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {

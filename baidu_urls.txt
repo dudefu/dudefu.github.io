@@ -1,3 +1,5 @@
+https://www.dudefu.tk/temporary.html
+https://www.dudefu.tk/IoC和AOP学习.html
 https://www.dudefu.tk/多态的学习2.html
 https://www.dudefu.tk/多态的学习.html
 https://www.dudefu.tk/浅谈数据挖掘中的关联规则挖掘.html
@@ -96,5 +98,3 @@ https://www.dudefu.tk/Java逃逸分析.html
 https://www.dudefu.tk/数据区、代码区、栈区、堆区.html
 https://www.dudefu.tk/Java常用类和方法重点总结.html
 https://www.dudefu.tk/给出一组年龄，求最大年龄，最小年龄.html
-https://www.dudefu.tk/不使用第三个变量交换两变量的值.html
-https://www.dudefu.tk/使用Java倒序输出12345.html

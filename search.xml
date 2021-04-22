@@ -3,6 +3,162 @@
   
     
     <entry>
+      <title><![CDATA[using filesort VS using temporary]]></title>
+      <url>/temporary.html</url>
+      <content type="html"><![CDATA[<p><strong>背景</strong></p>
+<p>MySQL 执行查询语句， 对于order by谓词，可能会使用filesort或者temporary。比如explain一条语句的时候，会看到Extra字段中可能会出现，using filesort和using temporary。下面我们就来探讨下两个的区别和适用场景。</p>
+<a id="more"></a>
+<p><strong>解释</strong></p>
+<ol>
+<li>using filesort</li>
+</ol>
+<p>filesort主要用于查询数据结果集的排序操作，首先MySQL会使用sort_buffer_size大小的内存进行排序，如果结果集超过了sort_buffer_size大小，会把这一个排序后的chunk转移到file上，最后使用多路归并排序完成所有数据的排序操作。</p>
+<p>MySQL filesort有两种使用模式:</p>
+<p>模式1: sort的item保存了所需要的所有字段，排序完成后，没有必要再回表扫描。</p>
+<p>模式2: sort的item仅包括，待排序完成后，根据rowid查询所需要的columns。</p>
+<p>很明显，模式1能够极大的减少回表的随机IO。</p>
+<ol>
+<li>using temporary</li>
+</ol>
+<p>MySQL使用临时表保存临时的结构，以用于后续的处理，MySQL首先创建heap引擎的临时表，如果临时的数据过多，超过max_heap_table_size的大小，会自动把临时表转换成MyISAM引擎的表来使用。</p>
+<p>从上面的解释上来看，filesort和temporary的使用场景的区别并不是很明显，不过，有以下的原则:</p>
+<p>filesort只能应用在单个表上，如果有多个表的数据需要排序，那么MySQL会先使用using temporary保存临时数据，然后再在临时表上使用filesort进行排序，最后输出结果。</p>
+<p><strong>适用场景</strong></p>
+<p>我们看一下下面的三个case:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create table t1(    </span><br><span class="line">   id int, col1 int, col2 varchar(10),</span><br><span class="line">   key(id, col1));</span><br><span class="line">create table t2(</span><br><span class="line">   id int, col1 int, col2 varchar(10),</span><br><span class="line">   key(col1));</span><br></pre></td></tr></table></figure>
+<p>case 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from t1 force index(id), t2 where t1.id=1 and t1.col1 = t2.col2 order by t1.col1 ;</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+-------+------+-------------+</span><br><span class="line">| id | select_type | table | type | possible_keys | key  | key_len | ref   | rows | Extra       |</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+-------+------+-------------+</span><br><span class="line">|  1 | SIMPLE      | t1    | ref  | id            | id   | 5       | const |    1 | Using where |</span><br><span class="line">|  1 | SIMPLE      | t2    | ALL  | NULL          | NULL | NULL    | NULL  |    1 | Using where |</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+-------+------+-------------+</span><br></pre></td></tr></table></figure>
+<p>case1: order by字段能够使用index的有序性，所以没有使用filesort，也没有使用temporary。</p>
+<p>case 2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from t1 force index(id), t2 where t1.id=1 and t1.col1 = t2.col2 order by t1.col2;</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+-------+------+-----------------------------+</span><br><span class="line">| id | select_type | table | type | possible_keys | key  | key_len | ref   | rows | Extra                       |</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+-------+------+-----------------------------+</span><br><span class="line">|  1 | SIMPLE      | t1    | ref  | id            | id   | 5       | const |    1 | Using where; Using filesort |</span><br><span class="line">|  1 | SIMPLE      | t2    | ALL  | NULL          | NULL | NULL    | NULL  |    1 | Using where                 |</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+-------+------+-----------------------------+</span><br></pre></td></tr></table></figure>
+<p>case2: order by谓词，是在第一个表t1上完成，所以只需要在t1表上使用filesort，然后排序后的结果集join t2表。</p>
+<p>case 3:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from t1 force index(id), t2 where t1.id=1 and t1.col1 = t2.col2 order by t2.col1 ;</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+-------+------+----------------------------------------------+</span><br><span class="line">| id | select_type | table | type | possible_keys | key  | key_len | ref   | rows | Extra                                        |</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+-------+------+----------------------------------------------+</span><br><span class="line">|  1 | SIMPLE      | t1    | ref  | id            | id   | 5       | const |    1 | Using where; Using temporary; Using filesort |</span><br><span class="line">|  1 | SIMPLE      | t2    | ALL  | NULL          | NULL | NULL    | NULL  |    1 | Using where; Using join buffer               |</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+-------+------+----------------------------------------------+</span><br></pre></td></tr></table></figure>
+<p>case 3: order by的字段在t2表上，所以需要把t1，t2表join的结果保存到temporary表上，然后对临时表进行filesort，最后输出结果。</p>
+<p><strong>特别优化</strong></p>
+<p>MySQL对order by + limit的filesort做了特别优化，使用Priority queue来保存结果，即一个堆的结构，只保留top n的数据满足limit条件。</p>
+<p><strong>另外</strong></p>
+<p>filesort和temporary都会在tmp目录下创建文件，temporary创建的是MYI，MYD文件。但filesort的文件, 因为MySQL使用了create-&gt;open-&gt;unlink-&gt;使用-&gt;close的方式，隐藏了文件，以便进程异常结束的时候，临时文件能够自动回收掉，所以在评估tmp目录空间的时候，需要特别注意。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cua2FuY2xvdWQuY24vdGFvYmFvbXlzcWwvbW9udGhseS82NzE4MA==" title="https://www.kancloud.cn/taobaomysql/monthly/67180">文章原址<i class="fa fa-external-link"></i></span></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gpsimoy318j30do0dogp4.jpg" alt="image-20210422144113748"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> MySQL </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 索引 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[IoC和AOP学习]]></title>
+      <url>/IoC%E5%92%8CAOP%E5%AD%A6%E4%B9%A0.html</url>
+      <content type="html"><![CDATA[<p>作为一名 Java 开发，对 Spring 框架是再熟悉不过的了。Spring 支持的<strong>控制反转</strong>（Inversion of Control，缩写为IoC）和<strong>面向切面编程</strong>（Aspect-oriented programming，缩写为AOP）早已成为我们的开发习惯，仿佛 Java 开发天生就该如此。人总是会忽略习以为常的事物，所有人都熟练使用 IoC 和 AOP，却鲜有人说得清楚到底为什么要用 IoC 和 AOP。</p>
+<a id="more"></a>
+<p>技术肯定是为了解决某个问题而诞生，要弄清楚为什么使用 IoC 和 AOP，就得先弄清楚不用它们会碰到什么问题。</p>
+<h2 id="一、IoC"><a href="#一、IoC" class="headerlink" title="一、IoC"></a><strong>一、IoC</strong></h2><p>我们现在假设回到了没有 IoC 的时代，用传统的 Servlet 进行开发。</p>
+<p><strong>1. 传统开发模式的弊端</strong></p>
+<p>三层架构是经典的开发模式，我们一般将视图控制、业务逻辑和数据库操作分别抽离出来单独形成一个类，这样各个职责就非常清晰且易于复用和维护。大致代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/user"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 用于执行业务逻辑的对象</span></span><br><span class="line">    <span class="keyword">private</span> UserService userService = <span class="keyword">new</span> UserServiceImpl();</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// ...省略其他代码</span></span><br><span class="line">            </span><br><span class="line">        <span class="comment">// 执行业务逻辑</span></span><br><span class="line">        userService.doService();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// ...返回页面视图</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span></span>&#123;</span><br><span class="line">    <span class="comment">// 用于操作数据库的对象</span></span><br><span class="line">    <span class="keyword">private</span> UserDao userDao = <span class="keyword">new</span> UserDaoImpl();</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...省略业务逻辑代码</span></span><br><span class="line">            </span><br><span class="line">        <span class="comment">// 执行数据库操作</span></span><br><span class="line">        userDao.doUpdate();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// ...省略业务逻辑代码</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDaoImpl</span> <span class="keyword">implements</span> <span class="title">UserDao</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doUpdate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...省略JDBC代码</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上层依赖下层的抽象，代码就分为了三层：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gotl6e30eej305u0c9mxf.jpg" alt="img"></p>
+<p>业界普遍按这种分层方式组织代码，其核心思想是职责分离。层次越低复用程度越高，比如一个 DAO 对象往往会被多个 Service 对象使用，一个 Service 对象往往也会被多个 Controller 对象使用：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gotl69ftmlj31400h9myt.jpg" alt="img"></p>
+<p>条理分明，井然有序。这些被复用的对象就像一个个的组件，供多方使用。</p>
+<p>虽然这个倒三角看上去非常漂亮，然而我们目前的代码有一个比较大的问题，那就是我们只做到了<strong>逻辑复用</strong>，并没有做到<strong>资源复用</strong>。</p>
+<p>上层调用下一层时，必然会持有下一层的对象引用，即成员变量。目前我们每一个成员变量都会实例化一个对象，如下图所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gotl65f2afj3140083wf9.jpg" alt="img"></p>
+<p>每一个链路都创建了同样的对象，造成了极大的资源浪费。本应多个 Controller 复用同一个 Service，多个 Service 复用同一个 DAO。现在变成了一个 Controller创建多个重复的 Service，多个 Service 又创建了多个重复的 DAO，从倒三角变成了正三角。</p>
+<p>许多组件只需要实例化一个对象就够了，创建多个没有任何意义。针对对象重复创建的问题，我们自然而然想到了单例模式。只要编写类时都将其写为单例，这样就避免了资源浪费。但是，引入设计模式必然会带来复杂性，况且还是每一个类都为单例，每一个类都会有相似的代码，其弊端不言自明。</p>
+<p>有人可能会说，那我不在意“这点”资源浪费了，我服务器内存大无所谓，我只求开发便捷痛快不想写额外的代码。</p>
+<p>确实，三层架构达到逻辑复用已经非常方便了，还奢求其他的干什么呢。但就算不管资源问题，目前代码还有一个致命缺陷，那就是<strong>变化的代价太大</strong>。</p>
+<p>假设有 10 个 Controller 依赖了 UserService，最开始实例化的是 <code>UserServiceImpl</code>，后面需要换一个实现类 <code>OtherUserServiceImpl</code>，我就得逐个修改那 10 个 Controller，非常麻烦。更换实现类的需求可能不会太多，没多大说服力。那咱们看另一个情况。</p>
+<p>之前咱们演示的组件创建过程非常简单，<code>new</code> 一下就完了，可很多时候创建一个组件没那么容易。比如 DAO 对象要依赖一个这样的数据源组件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDaoImpl</span> <span class="keyword">implements</span> <span class="title">UserDao</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MyDataSource dataSource;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UserDaoImpl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 构造数据源</span></span><br><span class="line">        dataSource = <span class="keyword">new</span> MyDataSource(<span class="string">"jdbc:mysql://localhost:3306/test"</span>, <span class="string">"root"</span>, <span class="string">"password"</span>);</span><br><span class="line">        <span class="comment">// 进行一些其他配置</span></span><br><span class="line">        dataSource.setInitiaSize(<span class="number">10</span>);</span><br><span class="line">        dataSource.setMaxActive(<span class="number">100</span>);</span><br><span class="line">        <span class="comment">// ...省略更多配置项</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该数据源组件要想真正生效需要对其进行许多配置，这个创建和配置过程是非常麻烦的。而且配置可能会随着业务需求的变化经常更改，这时候你就需要修改每一个依赖该组件的地方，牵一发而动全身。这还只是演示了一个数据源的创建配置过程，真实开发中可有太多组件和太多配置需要编码了，其麻烦程度堪称恐怖。</p>
+<p>当然，这些问题都可以引入设计模式来解决，不过这样一来又绕回去了：设计模式本身也会带来复杂性。这就像一种死循环：传统开发模式编码复杂，要想解决这种复杂却得陷入另一种复杂。难道没有办法解决了吗？当然不是的，在讲优秀解决方案前，我们先来梳理一下目前出现的问题：</p>
+<ul>
+<li>创建了许多重复对象，造成大量资源浪费；</li>
+<li>更换实现类需要改动多个地方；</li>
+<li>创建和配置组件工作繁杂，给组件调用方带来极大不便。</li>
+</ul>
+<p>透过现象看本质，这些问题的出现都是同一个原因：<strong>组件的调用方参与了组件的创建和配置工作</strong>。</p>
+<p>其实调用方只需关注组件如何调用，至于这个组件如何创建和配置又与调用方有什么关系呢？就好比我去餐馆只需点菜，饭菜并不需要我亲自去做，餐馆自然会做好给我送过来。如果我们编码时，有一个「东西」能帮助我们创建和配置好那些组件，我们只负责调用该多好。这个「东西」就是容器。</p>
+<p>容器这一概念我们已接触过，Tomcat 就是 Servlet 的容器，它帮我们创建并配置好 Servlet，我们只需编写业务逻辑即可。试想一下，如果 Servlet 要我们自己创建，HttpRequest、HttpResponse 对象也需要我们自己配置，那代码量得有多恐怖。</p>
+<p>Tomcat 是 Servlet 容器，只负责管理 Servlet。我们平常使用的组件则需要另一种容器来管理，这种容器我们称之为 <strong>IoC 容器</strong>。</p>
+<p><strong>2. 控制反转和依赖注入</strong></p>
+<p>控制反转，是指对象的创建和配置的控制权从调用方转移给容器。好比在家自己做菜，菜的味道全部由自己控制；去餐馆吃饭，菜的味道则是交由餐馆控制。IoC 容器就担任了餐馆的角色。</p>
+<p>有了 IoC 容器，我们可以将对象交由容器管理，交由容器管理后的对象称之为 Bean。调用方不再负责组件的创建，要使用组件时直接获取 Bean 即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span></span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span> <span class="comment">// 获取 Bean</span></span><br><span class="line">    <span class="keyword">private</span> UserDao userDao;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用方只需按照约定声明依赖项，所需要的 Bean 就自动配置完毕了，就好像在调用方外部注入了一个依赖项给其使用，所以这种方式称之为 依赖注入（Dependency Injection，缩写为 DI）。<strong>控制反转和依赖注入是一体两面，都是同一种开发模式的表现形式</strong>。</p>
+<p>IoC 轻而易举地解决了我们刚刚总结的问题：</p>
+<p>对象交由容器管理后，默认是单例的，这就解决了资源浪费问题。</p>
+<p>若要更换实现类，只需更改 Bean 的声明配置，即可达到无感知更换：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将该实现类声明为 Bean</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OtherUserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在组件的使用和组件的创建与配置完全分离开来。调用方只需调用组件而无需关心其他工作，这极大提高了我们的开发效率，也让整个应用充满了灵活性、扩展性。</p>
+<p>这样看来，我们如此中意 IoC 不是没有道理的。</p>
+<h2 id="二、AOP"><a href="#二、AOP" class="headerlink" title="二、AOP"></a><strong>二、AOP</strong></h2><p>我们再来假设没有 AOP 会怎样。</p>
+<p><strong>1. 面向对象的局限性</strong></p>
+<p>面向对象编程（Object-oriented programming，缩写：OOP）的三大特性：封装、继承、多态，我们早已用得炉火纯青。OOP 的好处已无需赘言，相信大家都有体会。这里咱们来看一下 OOP 的局限性。</p>
+<p>当有重复代码出现时，可以就将其封装出来然后复用。我们通过分层、分包、分类来规划不同的逻辑和职责，就像之前讲解的三层架构。但这里的复用的都是<strong>核心业务逻辑</strong>，并不能复用一些<strong>辅助逻辑</strong>，比如：日志记录、性能统计、安全校验、事务管理，等等。这些边缘逻辑往往贯穿你整个核心业务，传统 OOP 很难将其封装：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"---安全校验---"</span>);</span><br><span class="line">        System.out.println(<span class="string">"---性能统计 Start---"</span>);</span><br><span class="line">        System.out.println(<span class="string">"---日志打印 Start---"</span>);</span><br><span class="line">        System.out.println(<span class="string">"---事务管理 Start---"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"业务逻辑"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"---事务管理 End---"</span>);</span><br><span class="line">        System.out.println(<span class="string">"---日志打印 End---"</span>);</span><br><span class="line">        System.out.println(<span class="string">"---性能统计 End---"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了方便演示，这里只用了打印语句，就算如此这代码看着也很难受，而且这些逻辑是所有业务方法都要加上，想想都恐怖。</p>
+<p>OOP 是至上而下的编程方式，犹如一个树状图，A调用B、B调用C，或者A继承B、B继承C。这种方式对于业务逻辑来说是合适的，通过调用或继承以复用。而辅助逻辑就像一把闸刀横向贯穿所有方法，如图2-4所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gotl5jrvmnj31400e70uo.jpg" alt="img"></p>
+<p>这一条条横线仿佛切开了 OOP 的树状结构，犹如一个大蛋糕被切开多层，每一层都会执行相同的辅助逻辑，所以大家将这些辅助逻辑称为层面或者切面。</p>
+<p>代理模式用来增加或增强原有功能再适合不过了，但切面逻辑的难点不是<strong>不修改原有业务</strong>，而是<strong>对所有业务生效</strong>。对一个业务类增强就得新建一个代理类，对所有业务增强，每个类都要新建代理类，这无疑是一场灾难。而且这里只是演示了一个日志打印的切面逻辑，如果我再加一个性能统计切面，就得新建一个切面代理类来代理日志打印的代理类，一旦切面多起来这个代理类嵌套就会非常深。</p>
+<p>面向切面编程（Aspect-oriented programming，缩写为 AOP）正是为了解决这一问题而诞生的技术。</p>
+<p><strong>2. 面向切面编程</strong></p>
+<p>AOP 不是 OOP 的对立面，它是对 OOP 的一种补充。OOP 是纵向的，AOP 是横向的，两者相结合方能构建出良好的程序结构。AOP 技术，<strong>让我们能够不修改原有代码，便能让切面逻辑在所有业务逻辑中生效</strong>。</p>
+<p>我们只需声明一个切面，写上切面逻辑：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span> <span class="comment">// 声明一个切面</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAspect</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 原业务方法执行前</span></span><br><span class="line">    <span class="meta">@Before</span>(<span class="string">"execution(public void com.rudecrab.test.service.*.doService())"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodBefore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"===AspectJ 方法执行前==="</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 原业务方法执行后</span></span><br><span class="line">    <span class="meta">@AfterReturning</span>(<span class="string">"execution(* com.rudecrab.test.service..doService(..))"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodAddAfterReturning</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"===AspectJ 方法执行后==="</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>无论你有一个业务方法，还是一万个业务方法，对我们开发者来说只需编写一次切面逻辑，就能让所有业务方法生效，极大提高了我们的开发效率。</p>
+<h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a><strong>三、总结</strong></h2><p>IoC 解决了以下问题：</p>
+<ul>
+<li>创建了许多重复对象，造成大量资源浪费；</li>
+<li>更换实现类需要改动多个地方；</li>
+<li>创建和配置组件工作繁杂，给组件调用方带来极大不便。</li>
+</ul>
+<p>AOP 解决了以下问题：</p>
+<ul>
+<li>切面逻辑编写繁琐，有多少个业务方法就需要编写多少次。</li>
+</ul>
+<hr>
+<blockquote>
+<p>作者：RudeCrab<br>链接：<span class="exturl" data-url="aHR0cHM6Ly9saW5rLnpoaWh1LmNvbS8/dGFyZ2V0PWh0dHBzJTNBLy93d3cuY25ibG9ncy5jb20vUnVkZUNyYWIvcC8xNDM2NTI5Ni5odG1s" title="https://link.zhihu.com/?target=https%3A//www.cnblogs.com/RudeCrab/p/14365296.html">https://www.cnblogs.com/RudeCrab/p/14365296.html<i class="fa fa-external-link"></i></span><br>来源：博客园<br>版权：本作品采用「<span class="exturl" data-url="aHR0cHM6Ly9saW5rLnpoaWh1LmNvbS8/dGFyZ2V0PWh0dHBzJTNBLy9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8=" title="https://link.zhihu.com/?target=https%3A//creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际<i class="fa fa-external-link"></i></span>」许可协议进行许可。</p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Spring </tag>
+            
+            <tag> AOP </tag>
+            
+            <tag> IOC </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[多态的学习2]]></title>
       <url>/%E5%A4%9A%E6%80%81%E7%9A%84%E5%AD%A6%E4%B9%A02.html</url>
       <content type="html"><![CDATA[<h2 id="从JVM结构开始谈多态"><a href="#从JVM结构开始谈多态" class="headerlink" title="从JVM结构开始谈多态"></a>从JVM结构开始谈多态</h2><p>Java 对于方法调用动态绑定的实现主要依赖于方法表，但通过类引用调用和接口引用调用的实现则有所不同。总体而言，当某个方法被调用时，JVM 首先要查找相应的常量池，得到方法的符号引用，并查找调用类的方法表以确定该方法的直接引用，最后才真正调用该方法。以下分别对该过程中涉及到的相关部分做详细介绍。</p>

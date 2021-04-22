@@ -286,7 +286,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">121</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">123</span></a>
 
   </li>
         
@@ -305,7 +305,7 @@
       
     
 
-    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">14</span></a>
+    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">15</span></a>
 
   </li>
         
@@ -324,7 +324,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">60</span></a>
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">63</span></a>
 
   </li>
         
@@ -462,6 +462,32 @@
         <h2>Java<small>分类</small>
         </h2>
       </div>
+
+      
+        
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h3 class="post-title">
+        
+          <a class="post-title-link" href="/Java内存区域与内存溢出异常.html" itemprop="url">
+            
+              <span itemprop="name">Java内存区域与内存溢出异常</span>
+            
+          </a>
+        
+      </h3>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2017-12-06T22:31:51+08:00" content="2017-12-06">
+          12-06
+        </time>
+      </div>
+
+    </header>
+  </article>
+
 
       
         
@@ -698,32 +724,6 @@
 
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/java中内存分配策略及堆和栈的比较.html" itemprop="url">
-            
-              <span itemprop="name">java中内存分配策略及堆和栈的比较</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-11-28T20:24:04+08:00" content="2017-11-28">
-          11-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
     </div>
 
   </div>
@@ -778,7 +778,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">121</span>
+                    <span class="site-state-item-count">123</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -823,7 +823,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">14</span>
+                      
+                    
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -960,7 +962,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">60</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">63</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1646,7 +1654,7 @@
       else if (!isArchive && !isCategory && !isTag) { //is index page
         var titles = [] //array to titles
 
-        var postsstr = 'titles.push("面试题：百度前200页都在这里了");titles.push("Java逃逸分析");titles.push("数据区、代码区、栈区、堆区");titles.push("Java常用类和方法重点总结");titles.push("给出一组年龄，用冒泡排序求最大年龄，最小年龄");titles.push("不使用第三个变量交换两变量的值");titles.push("使用Java倒序输出12345");titles.push("并发和并行的区别");titles.push("Java实现九九乘法表");titles.push("java中内存分配策略及堆和栈的比较");' //if you have a better way to get titles of posts, please change it
+        var postsstr = 'titles.push("Java内存区域与内存溢出异常");titles.push("面试题：百度前200页都在这里了");titles.push("Java逃逸分析");titles.push("数据区、代码区、栈区、堆区");titles.push("Java常用类和方法重点总结");titles.push("给出一组年龄，用冒泡排序求最大年龄，最小年龄");titles.push("不使用第三个变量交换两变量的值");titles.push("使用Java倒序输出12345");titles.push("并发和并行的区别");titles.push("Java实现九九乘法表");' //if you have a better way to get titles of posts, please change it
         eval(postsstr)
 
         var promises = titles.map(function (title) {
