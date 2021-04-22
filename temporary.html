@@ -147,7 +147,7 @@
 <meta property="og:description" content="背景 MySQL 执行查询语句， 对于order by谓词，可能会使用filesort或者temporary。比如explain一条语句的时候，会看到Extra字段中可能会出现，using filesort和using temporary。下面我们就来探讨下两个的区别和适用场景。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gpsimoy318j30do0dogp4.jpg">
-<meta property="og:updated_time" content="2021-04-22T06:41:36.274Z">
+<meta property="og:updated_time" content="2021-04-22T06:55:19.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="using filesort VS using temporary">
 <meta name="twitter:description" content="背景 MySQL 执行查询语句， 对于order by谓词，可能会使用filesort或者temporary。比如explain一条语句的时候，会看到Extra字段中可能会出现，using filesort和using temporary。下面我们就来探讨下两个的区别和适用场景。">
@@ -492,7 +492,7 @@
                 
               
 
-              <time title="创建时间：2021-04-22 14:36:44 / 修改时间：14:41:36" itemprop="dateCreated datePublished" datetime="2021-04-22T14:36:44+08:00">2021-04-22</time>
+              <time title="创建时间：2021-04-22 14:36:44 / 修改时间：14:55:19" itemprop="dateCreated datePublished" datetime="2021-04-22T14:36:44+08:00">2021-04-22</time>
             
 
             
@@ -608,6 +608,7 @@
 <p><strong>另外</strong></p>
 <p>filesort和temporary都会在tmp目录下创建文件，temporary创建的是MYI，MYD文件。但filesort的文件, 因为MySQL使用了create-&gt;open-&gt;unlink-&gt;使用-&gt;close的方式，隐藏了文件，以便进程异常结束的时候，临时文件能够自动回收掉，所以在评估tmp目录空间的时候，需要特别注意。</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cua2FuY2xvdWQuY24vdGFvYmFvbXlzcWwvbW9udGhseS82NzE4MA==" title="https://www.kancloud.cn/taobaomysql/monthly/67180">文章原址<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL215c3FsLnRhb2Jhby5vcmcvbW9udGhseS8=" title="http://mysql.taobao.org/monthly/">数据库内核月报<i class="fa fa-external-link"></i></span></p>
 <p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gpsimoy318j30do0dogp4.jpg" alt="image-20210422144113748"></p>
 
       
